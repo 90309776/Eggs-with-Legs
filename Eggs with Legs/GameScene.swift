@@ -9,88 +9,158 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
+    var maxEggs = 50
+    var keepRunning = true
+    var eggCount = 0
     
+    var eggArray: [Egg] = []
+    
+    //var eggTypeBasic: [String]
+    var basicEggAssets: [[SKTexture]] = [[]]
+    var listOfEggTypes: [[SKTexture]] = [[]]
+    
+    var eggCountLabel: SKLabelNode!
+    var fenceSprite: Fence!
+
     private var lastUpdateTime : TimeInterval = 0
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    
+    struct PhysicsCategory {
+        static let none       : UInt32 = 0
+        static let all        : UInt32 = 10
+        static let egg        : UInt32 = 1      // 1
+        static let fence      : UInt32 = 2      // 2
+    }
+    
     
     override func sceneDidLoad() {
-
         self.lastUpdateTime = 0
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+        physicsWorld.contactDelegate = self
+        
+        listOfEggTypes = [[SKTexture(imageNamed: "egg_1"), SKTexture(imageNamed:"egg_2")]]
+        guard let labelNode = childNode(withName: "eggCountLabel") as? SKLabelNode else {
+            fatalError("Label Nodes not loaded")
+        }
+        self.eggCountLabel = labelNode
+        
+        guard let spriteNode = childNode(withName: "fenceSprite") as? SKSpriteNode else {
+            fatalError("Label Nodes not loaded")
         }
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        fenceSprite = Fence(sprite: spriteNode)
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+        if keepRunning {
+            run(SKAction.repeat(SKAction.sequence([SKAction.run(addEgg), SKAction.wait(forDuration: 1.0)]), count: maxEggs))
         }
+        
     }
     
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
     }
     
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
+    func random(min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
     }
     
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
+    func addEgg() {
+        let ranNum = Int.random(in: 0 ..< listOfEggTypes.count)
+        let eggTextures = listOfEggTypes[ranNum]
+        let egg = BasicEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"))
+        egg.sprite.name = "basicEgg"
+        
+//      let eggAnimation = SKAction.animate(with: eggTextures, timePerFrame: 0.1)
+//      run(SKAction.repeatForever(eggAnimation))
+        
+        eggCount += 1
+        
+        let actualY = random(min: 0 - size.height / 2 + egg.sprite.size.height, max: 300)
+        //let actualY = CGFloat(0)
+        egg.sprite.position = CGPoint(x: (0 - size.width), y: actualY)
+        addChild(egg.sprite)
+        eggArray.append(egg)
+        
+        
+//        egg.physicsBody = SKPhysicsBody(rectangleOf: egg.size) // 1
+//        egg.physicsBody?.isDynamic = true // 2
+//        egg.sprite.physicsBody?.categoryBitMask = PhysicsCategory.egg // 3
+//        egg.sprite.physicsBody?.contactTestBitMask = PhysicsCategory.fence// 4
+//        egg.sprite.physicsBody?.collisionBitMask = PhysicsCategory.fence // 5
+        
+        
+//        print("actualY: \(actualY), min: \(egg.size.height), max: \(size.height)")
+        
+//
+//        let speed = 20
+//
+//        let actioove = SKAction.move(to: CGPoint(x: egg.size.width + size.width, y: actualY), duration: TimeInterval(speed))
+//        let actionMoveDone = SKAction.removeFromParent()
+//        let loseAction = SKAction.run() { [weak self] in
+//            guard let `self` = self else { return }
+//            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
+//            let gameOverScene = GameOverScene(size: self.size, won: false)
+//            self.view?.presentScene(gameOverScene, transition: reveal)
+//        }
+//        egg.run(SKAction.sequence([actionMove, actionMoveDone]))
+    
     }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let objectA = contact.bodyA.node as! SKSpriteNode
+        let objectB = contact.bodyB.node as! SKSpriteNode
+        
+        print("bodyA: \(String(describing: objectA.name))")
+        print("bodyB: \(String(describing: objectB.name))")
+    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
+        guard let touch = touches.first else { return }
+        let touchLocation = touch.location(in: self)
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        //Checks if an egg has been tapped
+        for egg in eggArray {
+            if egg.sprite.contains(touchLocation) {
+                egg.health = 0
+                egg.animationCount = 0
+                //egg.sprite.removeFromParent()
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+        guard let touch = touches.first else { return }
+        let touchLocation = touch.location(in: self)
+        print("\(touchLocation)")
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        eggCountLabel.text = "Egg Count: \(eggCount)"
+        
+        for egg in eggArray {
+            egg.animationCount += 1
+            if egg.health > 0 {
+                egg.move()
+                egg.animate()
+            } else {
+                egg.deathAnimation()
+            }
+            if egg.sprite.position.x > size.width {
+                egg.sprite.removeFromParent()
+            }
+        }
+        //print(eggArray[0].sprite.position)
         
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
@@ -101,10 +171,10 @@ class GameScene: SKScene {
         let dt = currentTime - self.lastUpdateTime
         
         // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
-        
+//        for entity in self.entities {
+//            entity.update(deltaTime: dt)
+//        }
+
         self.lastUpdateTime = currentTime
     }
 }

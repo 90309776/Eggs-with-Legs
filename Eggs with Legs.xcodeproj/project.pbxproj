@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		226C44A2216AC1040049A2E3 /* Egg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A1216AC1040049A2E3 /* Egg.swift */; };
+		226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A3216C0C560049A2E3 /* BasicEgg.swift */; };
+		226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */; };
+		226C44A9216C42460049A2E3 /* Fence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A8216C42450049A2E3 /* Fence.swift */; };
 		227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D5E2166BA08005E0560 /* AppDelegate.swift */; };
 		227B1D612166BA08005E0560 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D602166BA08005E0560 /* GameScene.sks */; };
 		227B1D632166BA08005E0560 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D622166BA08005E0560 /* Actions.sks */; };
@@ -17,6 +21,7 @@
 		227B1D6F2166BA0D005E0560 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D6D2166BA0D005E0560 /* LaunchScreen.storyboard */; };
 		227B1D7A2166BA0D005E0560 /* Eggs_with_LegsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D792166BA0D005E0560 /* Eggs_with_LegsTests.swift */; };
 		227B1D852166BA0D005E0560 /* Eggs_with_LegsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D842166BA0D005E0560 /* Eggs_with_LegsUITests.swift */; };
+		227B1D932166BA4C005E0560 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D922166BA4C005E0560 /* Tiles.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		226C44A1216AC1040049A2E3 /* Egg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Egg.swift; sourceTree = "<group>"; };
+		226C44A3216C0C560049A2E3 /* BasicEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEgg.swift; sourceTree = "<group>"; };
+		226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingEgg.swift; sourceTree = "<group>"; };
+		226C44A8216C42450049A2E3 /* Fence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fence.swift; sourceTree = "<group>"; };
 		227B1D5B2166BA08005E0560 /* Eggs with Legs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eggs with Legs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227B1D5E2166BA08005E0560 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		227B1D602166BA08005E0560 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -53,6 +62,7 @@
 		227B1D802166BA0D005E0560 /* Eggs with LegsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Eggs with LegsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227B1D842166BA0D005E0560 /* Eggs_with_LegsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggs_with_LegsUITests.swift; sourceTree = "<group>"; };
 		227B1D862166BA0D005E0560 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		227B1D922166BA4C005E0560 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +90,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		226C44A7216C0C770049A2E3 /* Egg Objects */ = {
+			isa = PBXGroup;
+			children = (
+				226C44A1216AC1040049A2E3 /* Egg.swift */,
+				226C44A3216C0C560049A2E3 /* BasicEgg.swift */,
+				226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */,
+			);
+			path = "Egg Objects";
+			sourceTree = "<group>";
+		};
 		227B1D522166BA07005E0560 = {
 			isa = PBXGroup;
 			children = (
@@ -105,9 +125,12 @@
 			children = (
 				227B1D5E2166BA08005E0560 /* AppDelegate.swift */,
 				227B1D602166BA08005E0560 /* GameScene.sks */,
+				227B1D922166BA4C005E0560 /* Tiles.sks */,
 				227B1D622166BA08005E0560 /* Actions.sks */,
 				227B1D642166BA08005E0560 /* GameScene.swift */,
+				226C44A8216C42450049A2E3 /* Fence.swift */,
 				227B1D662166BA08005E0560 /* GameViewController.swift */,
+				226C44A7216C0C770049A2E3 /* Egg Objects */,
 				227B1D682166BA08005E0560 /* Main.storyboard */,
 				227B1D6B2166BA0D005E0560 /* Assets.xcassets */,
 				227B1D6D2166BA0D005E0560 /* LaunchScreen.storyboard */,
@@ -241,6 +264,7 @@
 				227B1D6A2166BA08005E0560 /* Main.storyboard in Resources */,
 				227B1D612166BA08005E0560 /* GameScene.sks in Resources */,
 				227B1D6C2166BA0D005E0560 /* Assets.xcassets in Resources */,
+				227B1D932166BA4C005E0560 /* Tiles.sks in Resources */,
 				227B1D6F2166BA0D005E0560 /* LaunchScreen.storyboard in Resources */,
 				227B1D632166BA08005E0560 /* Actions.sks in Resources */,
 			);
@@ -268,8 +292,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				227B1D652166BA08005E0560 /* GameScene.swift in Sources */,
+				226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */,
 				227B1D672166BA08005E0560 /* GameViewController.swift in Sources */,
 				227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */,
+				226C44A2216AC1040049A2E3 /* Egg.swift in Sources */,
+				226C44A9216C42460049A2E3 /* Fence.swift in Sources */,
+				226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,7 +473,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 883DK65VTV;
 				INFOPLIST_FILE = "Eggs with Legs/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,7 +492,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 883DK65VTV;
 				INFOPLIST_FILE = "Eggs with Legs/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
