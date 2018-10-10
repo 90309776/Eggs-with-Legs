@@ -32,28 +32,53 @@ class BasicEgg: Egg {
                                        SKTexture(imageNamed: "BE_deathAnimation_2"),
                                        SKTexture(imageNamed: "BE_deathAnimation_3")]
     
-    override func animate() {
-        if self.animationCount == 7 {
-            self.sprite.texture = self.basicEggRunningAnimation[0]
-        } else if animationCount == 14  {
-            self.animationCount = 0
-            self.sprite.texture = self.basicEggRunningAnimation[1]
-        }
+    
+    //var anim: SKAction
+    
+    
+    override init(sprite: SKSpriteNode) {
+        super.init(sprite: sprite)
+        
+        self.eggRunningTextures = basicEggRunningAnimation
+        self.eggDeathTextures = basicEggDeathAnimation
+        
+        self.runAnimateAction = SKAction.animate(with: self.eggRunningTextures, timePerFrame: 0.25)
+        self.deathAnimateAction = SKAction.animate(with: self.eggDeathTextures, timePerFrame: 0.25)
+        self.animateAction = SKAction.repeatForever(runAnimateAction)
+        
     }
     
-    override func deathAnimation() {
-        if self.animationCount == 0 {
-            self.sprite.texture = self.basicEggDeathAnimation[0]
-        } else if animationCount == 4  {
-            self.sprite.texture = self.basicEggDeathAnimation[1]
-        } else if animationCount == 8  {
-            self.sprite.texture = self.basicEggDeathAnimation[2]
-        } else if animationCount == 12  {
-            self.sprite.texture = self.basicEggDeathAnimation[3]
-        } else if animationCount == 30 {
-            self.sprite.removeFromParent()
-        }
-    }
+    
+//    override func animate() {
+//        if self.health == 0 {
+//    }
+        
+//        if self.health == 10 {
+//            self.sprite.run(animateAction)
+//            print("animtaitng")
+//
+//        }
+//        if self.animationCount == 7 {
+//            self.sprite.texture = self.basicEggRunningAnimation[0]
+//        } else if animationCount == 14  {
+//            self.animationCount = 0
+//            self.sprite.texture = self.basicEggRunningAnimation[1]
+//        }
+    
+    
+//    override func deathAnimation() {
+//        if self.animationCount == 0 {
+//            self.sprite.texture = self.basicEggDeathAnimation[0]
+//        } else if animationCount == 4  {
+//            self.sprite.texture = self.basicEggDeathAnimation[1]
+//        } else if animationCount == 8  {
+//            self.sprite.texture = self.basicEggDeathAnimation[2]
+//        } else if animationCount == 12  {
+//            self.sprite.texture = self.basicEggDeathAnimation[3]
+//        } else if animationCount == 30 {
+//            self.sprite.removeFromParent()
+//        }
+//    }
     
     
 }

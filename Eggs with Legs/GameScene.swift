@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     //var eggTypeBasic: [String]
     var basicEggAssets: [[SKTexture]] = [[]]
-    var listOfEggTypes: [[SKTexture]] = [[]]
+    var listOfEggTypes: [String] = ["BasicEgg"]
     
     var eggCountLabel: SKLabelNode!
     var fenceSprite: Fence!
@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         physicsWorld.contactDelegate = self
         
-        listOfEggTypes = [[SKTexture(imageNamed: "egg_1"), SKTexture(imageNamed:"egg_2")]]
+        //listOfEggTypes = [[SKTexture(imageNamed: "egg_1"), SKTexture(imageNamed:"egg_2")]]
         guard let labelNode = childNode(withName: "eggCountLabel") as? SKLabelNode else {
             fatalError("Label Nodes not loaded")
         }
@@ -69,20 +69,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func addEgg() {
         let ranNum = Int.random(in: 0 ..< listOfEggTypes.count)
-        let eggTextures = listOfEggTypes[ranNum]
-        let egg = BasicEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"))
-        egg.sprite.name = "basicEgg"
+        let eggType = listOfEggTypes[ranNum]
+        let egg: Egg
         
-//      let eggAnimation = SKAction.animate(with: eggTextures, timePerFrame: 0.1)
-//      run(SKAction.repeatForever(eggAnimation))
+        if eggType == "BasicEgg" {
+            egg = BasicEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"))
+            egg.sprite.name = "basicEgg"
+            let actualY = random(min: 0 - size.height / 2 + egg.sprite.size.height, max: 300)
+            egg.sprite.position = CGPoint(x: (0 - (size.width / 2) - egg.sprite.size.width), y: actualY)
+            
+            addChild(egg.sprite)
+            egg.sprite.run(egg.animateAction, withKey: "run")
+            eggArray.append(egg)
+        }
+    
+
+        //addChild(egg.sprite)
+//        egg.sprite.run(egg.animateAction, withKey: "run")
         
         eggCount += 1
-        
-        let actualY = random(min: 0 - size.height / 2 + egg.sprite.size.height, max: 300)
-        //let actualY = CGFloat(0)
-        egg.sprite.position = CGPoint(x: (0 - size.width), y: actualY)
-        addChild(egg.sprite)
-        eggArray.append(egg)
         
         
 //        egg.physicsBody = SKPhysicsBody(rectangleOf: egg.size) // 1
@@ -109,6 +114,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     }
     
+    /*
+     This function is called everytime 2 Sprites with defined Physics bodies collide (ie: egg and fence)
+    */
     func didBegin(_ contact: SKPhysicsContact) {
         let objectA = contact.bodyA.node as! SKSpriteNode
         let objectB = contact.bodyB.node as! SKSpriteNode
@@ -127,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if egg.sprite.contains(touchLocation) {
                 egg.health = 0
                 egg.animationCount = 0
-                //egg.sprite.removeFromParent()
+                
             }
         }
     }
@@ -152,29 +160,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             egg.animationCount += 1
             if egg.health > 0 {
                 egg.move()
-                egg.animate()
             } else {
-                egg.deathAnimation()
+                /*
+                 Removes the Egg's sprite current SKAction (the running animation)
+                 If the Egg's health is 0 then the Egg's animateAction is set
+                 to repeat the deathAnimation for the specific Egg type
+                 Also runs the death animation a single time, once the animation
+                 is completed, the Egg's Sprite will be removed from all nodes
+                */
+                
+                egg.sprite.removeAction(forKey: "run")
+                egg.animateAction = SKAction.repeat(egg.deathAnimateAction, count: 1)
+                if egg.health == 0 {
+                    egg.sprite.run(SKAction.sequence([egg.animateAction, SKAction.removeFromParent()]))
+                    egg.health = -1
+                }
             }
+            // checks if the Eggs are offscreen to the right, then will remove the egg
             if egg.sprite.position.x > size.width {
                 egg.sprite.removeFromParent()
             }
         }
-        //print(eggArray[0].sprite.position)
         
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
             self.lastUpdateTime = currentTime
         }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-//        for entity in self.entities {
-//            entity.update(deltaTime: dt)
-//        }
-
+    
         self.lastUpdateTime = currentTime
     }
 }

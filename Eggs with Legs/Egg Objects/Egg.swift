@@ -26,6 +26,16 @@ class Egg {
     var health: Int
     var animateType: Int
     
+    //ANIMATIION VARIABLES
+    var runAnimateAction: SKAction!
+    var deathAnimateAction: SKAction!
+    var animateAction: SKAction!
+    
+    var eggRunningTextures: [SKTexture]!
+    var eggDeathTextures: [SKTexture]!
+    var eggKickingTextures: [SKTexture]!
+
+    
     init(sprite: SKSpriteNode) {
         self.sprite = sprite
         self.speed = 10
@@ -33,6 +43,18 @@ class Egg {
         self.animateType = 0
         self.animationCount = 0
         
+        
+//        let actualY = random(min: 0 - (self.sprite.scene.size.height) / 2 + self.sprite.size.height, max: 300)
+//        self.sprite.position = CGPoint(x: (0 - self.sprite.size.width), y: actualY)
+        //GameScene.addChild(self.sprite)
+        //self.sprite.addChild(self.sprite)
+        //self.sprite.run(self.animateAction, withKey: "run")
+        //GameScene.eggArray.append(self)
+        //self.sprite.scene.siz
+        
+        /*
+         Gives every Egg type physics properties
+        */
         self.sprite.physicsBody = SKPhysicsBody(rectangleOf: self.sprite.size) // 1
         self.sprite.physicsBody?.isDynamic = true // 2
         self.sprite.physicsBody?.affectedByGravity = false
@@ -45,6 +67,8 @@ class Egg {
         self.sprite.position.x += CGFloat(self.speed)
     }
     
+    //animate and deathAnamation should be overriden by their subclasses when called
+    //These are place holder functions so Swift stays happy
     func animate() {
         print("i dont have anyhting to animate")
     }
