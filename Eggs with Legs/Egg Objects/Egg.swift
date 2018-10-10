@@ -34,7 +34,7 @@ class Egg {
     var eggRunningTextures: [SKTexture]!
     var eggDeathTextures: [SKTexture]!
     var eggKickingTextures: [SKTexture]!
-
+//
     
     init(sprite: SKSpriteNode) {
         self.sprite = sprite
