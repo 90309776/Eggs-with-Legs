@@ -25,12 +25,19 @@ import Foundation
 
 class BasicEgg: Egg {
     
-    var basicEggRunningAnimation    = [SKTexture(imageNamed: "BE_RA_0"),
-                                       SKTexture(imageNamed: "BE_RA_1")]
-    var basicEggDeathAnimation      = [SKTexture(imageNamed: "BE_deathAnimation_0"),
-                                       SKTexture(imageNamed: "BE_deathAnimation_1"),
-                                       SKTexture(imageNamed: "BE_deathAnimation_2"),
-                                       SKTexture(imageNamed: "BE_deathAnimation_3")]
+    var basicEggRunningTextures        = [SKTexture(imageNamed: "BE_RA_0"),
+                                           SKTexture(imageNamed: "BE_RA_1")]
+    var basicEggCrackedTextures        = [SKTexture(imageNamed: "BE_cracked_anim_0"),
+                                           SKTexture(imageNamed: "BE_cracked_anim_1")]
+    var basicEggDeathTextures          = [SKTexture(imageNamed: "BE_death_anim_0"),
+                                           SKTexture(imageNamed: "BE_death_anim_1"),
+                                           SKTexture(imageNamed: "BE_death_anim_2"),
+                                           SKTexture(imageNamed: "BE_death_anim_3"),
+                                           SKTexture(imageNamed: "BE_death_anim_4")]
+    var basicEggKickingTextures        = [SKTexture(imageNamed: "egg_11"),
+                                           SKTexture(imageNamed: "egg_22")]
+    var basicEggCrackedKickingTextures = [SKTexture(imageNamed: "egg33"),
+                                           SKTexture(imageNamed: "egg44")]
     
     
     //var anim: SKAction
@@ -39,11 +46,18 @@ class BasicEgg: Egg {
     override init(sprite: SKSpriteNode) {
         super.init(sprite: sprite)
         
-        self.eggRunningTextures = basicEggRunningAnimation
-        self.eggDeathTextures = basicEggDeathAnimation
+        self.eggRunningTextures = basicEggRunningTextures
+        self.eggDeathTextures = basicEggDeathTextures
+        self.eggCrackedTextures = basicEggCrackedTextures
+        self.eggKickingTextures = basicEggKickingTextures
+        self.eggCrackedKickingTextures = basicEggCrackedKickingTextures
         
         self.runAnimateAction = SKAction.animate(with: self.eggRunningTextures, timePerFrame: 0.25)
         self.deathAnimateAction = SKAction.animate(with: self.eggDeathTextures, timePerFrame: 0.25)
+        self.crackedAnimateAction = SKAction.animate(with: self.eggCrackedTextures, timePerFrame: 0.25)
+        self.kickingAnimateAction = SKAction.animate(with: self.eggKickingTextures, timePerFrame: 0.25)
+        //make this a sequence
+        self.crackedKickingAnimateAction = SKAction.animate(with: self.eggCrackedKickingTextures , timePerFrame: 0.25)
         self.animateAction = SKAction.repeatForever(runAnimateAction)
         
     }

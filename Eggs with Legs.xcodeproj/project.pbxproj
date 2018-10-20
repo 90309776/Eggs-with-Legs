@@ -22,6 +22,15 @@
 		227B1D7A2166BA0D005E0560 /* Eggs_with_LegsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D792166BA0D005E0560 /* Eggs_with_LegsTests.swift */; };
 		227B1D852166BA0D005E0560 /* Eggs_with_LegsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D842166BA0D005E0560 /* Eggs_with_LegsUITests.swift */; };
 		227B1D932166BA4C005E0560 /* Tiles.sks in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D922166BA4C005E0560 /* Tiles.sks */; };
+		2282295421751FBC0019A009 /* Tower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2282295321751FBC0019A009 /* Tower.swift */; };
+		22822956217520720019A009 /* Projectile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22822955217520720019A009 /* Projectile.swift */; };
+		22AAB4B321769CC50075B5E4 /* StartScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22AAB4B221769CC50075B5E4 /* StartScene.sks */; };
+		22AAB4B521769E8B0075B5E4 /* StartScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4B421769E8B0075B5E4 /* StartScene.swift */; };
+		22AAB4B92176AA8A0075B5E4 /* WinScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22AAB4B82176AA8A0075B5E4 /* WinScene.sks */; };
+		22AAB4BB2177BC630075B5E4 /* LoseScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22AAB4BA2177BC630075B5E4 /* LoseScene.sks */; };
+		22AAB4BD2177F9FD0075B5E4 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4BC2177F9FD0075B5E4 /* GameData.swift */; };
+		22AAB4BF2177FC3A0075B5E4 /* LoseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4BE2177FC3A0075B5E4 /* LoseScene.swift */; };
+		22AAB4C12177FC440075B5E4 /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4C02177FC440075B5E4 /* WinScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +72,15 @@
 		227B1D842166BA0D005E0560 /* Eggs_with_LegsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eggs_with_LegsUITests.swift; sourceTree = "<group>"; };
 		227B1D862166BA0D005E0560 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		227B1D922166BA4C005E0560 /* Tiles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tiles.sks; sourceTree = "<group>"; };
+		2282295321751FBC0019A009 /* Tower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tower.swift; sourceTree = "<group>"; };
+		22822955217520720019A009 /* Projectile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projectile.swift; sourceTree = "<group>"; };
+		22AAB4B221769CC50075B5E4 /* StartScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartScene.sks; sourceTree = "<group>"; };
+		22AAB4B421769E8B0075B5E4 /* StartScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScene.swift; sourceTree = "<group>"; };
+		22AAB4B82176AA8A0075B5E4 /* WinScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = WinScene.sks; sourceTree = "<group>"; };
+		22AAB4BA2177BC630075B5E4 /* LoseScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LoseScene.sks; sourceTree = "<group>"; };
+		22AAB4BC2177F9FD0075B5E4 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
+		22AAB4BE2177FC3A0075B5E4 /* LoseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoseScene.swift; sourceTree = "<group>"; };
+		22AAB4C02177FC440075B5E4 /* WinScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,14 +108,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		226C44A7216C0C770049A2E3 /* Egg Objects */ = {
+		226C44A7216C0C770049A2E3 /* Eggs */ = {
 			isa = PBXGroup;
 			children = (
 				226C44A1216AC1040049A2E3 /* Egg.swift */,
 				226C44A3216C0C560049A2E3 /* BasicEgg.swift */,
 				226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */,
 			);
-			path = "Egg Objects";
+			path = Eggs;
 			sourceTree = "<group>";
 		};
 		227B1D522166BA07005E0560 = {
@@ -124,13 +142,14 @@
 			isa = PBXGroup;
 			children = (
 				227B1D5E2166BA08005E0560 /* AppDelegate.swift */,
-				227B1D602166BA08005E0560 /* GameScene.sks */,
 				227B1D922166BA4C005E0560 /* Tiles.sks */,
 				227B1D622166BA08005E0560 /* Actions.sks */,
-				227B1D642166BA08005E0560 /* GameScene.swift */,
-				226C44A8216C42450049A2E3 /* Fence.swift */,
+				22AAB4BC2177F9FD0075B5E4 /* GameData.swift */,
+				22AAB4C5217ABCFB0075B5E4 /* StartScene */,
+				22AAB4C4217ABCF40075B5E4 /* WinScene */,
+				22AAB4C3217ABCED0075B5E4 /* LoseScene */,
+				22AAB4C2217ABCD40075B5E4 /* GameScene */,
 				227B1D662166BA08005E0560 /* GameViewController.swift */,
-				226C44A7216C0C770049A2E3 /* Egg Objects */,
 				227B1D682166BA08005E0560 /* Main.storyboard */,
 				227B1D6B2166BA0D005E0560 /* Assets.xcassets */,
 				227B1D6D2166BA0D005E0560 /* LaunchScreen.storyboard */,
@@ -155,6 +174,54 @@
 				227B1D862166BA0D005E0560 /* Info.plist */,
 			);
 			path = "Eggs with LegsUITests";
+			sourceTree = "<group>";
+		};
+		2282295221751F7D0019A009 /* Tower */ = {
+			isa = PBXGroup;
+			children = (
+				2282295321751FBC0019A009 /* Tower.swift */,
+				22822955217520720019A009 /* Projectile.swift */,
+			);
+			path = Tower;
+			sourceTree = "<group>";
+		};
+		22AAB4C2217ABCD40075B5E4 /* GameScene */ = {
+			isa = PBXGroup;
+			children = (
+				227B1D642166BA08005E0560 /* GameScene.swift */,
+				227B1D602166BA08005E0560 /* GameScene.sks */,
+				226C44A8216C42450049A2E3 /* Fence.swift */,
+				2282295221751F7D0019A009 /* Tower */,
+				226C44A7216C0C770049A2E3 /* Eggs */,
+			);
+			path = GameScene;
+			sourceTree = "<group>";
+		};
+		22AAB4C3217ABCED0075B5E4 /* LoseScene */ = {
+			isa = PBXGroup;
+			children = (
+				22AAB4BE2177FC3A0075B5E4 /* LoseScene.swift */,
+				22AAB4BA2177BC630075B5E4 /* LoseScene.sks */,
+			);
+			path = LoseScene;
+			sourceTree = "<group>";
+		};
+		22AAB4C4217ABCF40075B5E4 /* WinScene */ = {
+			isa = PBXGroup;
+			children = (
+				22AAB4C02177FC440075B5E4 /* WinScene.swift */,
+				22AAB4B82176AA8A0075B5E4 /* WinScene.sks */,
+			);
+			path = WinScene;
+			sourceTree = "<group>";
+		};
+		22AAB4C5217ABCFB0075B5E4 /* StartScene */ = {
+			isa = PBXGroup;
+			children = (
+				22AAB4B421769E8B0075B5E4 /* StartScene.swift */,
+				22AAB4B221769CC50075B5E4 /* StartScene.sks */,
+			);
+			path = StartScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,8 +328,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22AAB4B92176AA8A0075B5E4 /* WinScene.sks in Resources */,
+				22AAB4B321769CC50075B5E4 /* StartScene.sks in Resources */,
 				227B1D6A2166BA08005E0560 /* Main.storyboard in Resources */,
 				227B1D612166BA08005E0560 /* GameScene.sks in Resources */,
+				22AAB4BB2177BC630075B5E4 /* LoseScene.sks in Resources */,
 				227B1D6C2166BA0D005E0560 /* Assets.xcassets in Resources */,
 				227B1D932166BA4C005E0560 /* Tiles.sks in Resources */,
 				227B1D6F2166BA0D005E0560 /* LaunchScreen.storyboard in Resources */,
@@ -294,8 +364,14 @@
 				227B1D652166BA08005E0560 /* GameScene.swift in Sources */,
 				226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */,
 				227B1D672166BA08005E0560 /* GameViewController.swift in Sources */,
+				22AAB4BF2177FC3A0075B5E4 /* LoseScene.swift in Sources */,
+				22AAB4B521769E8B0075B5E4 /* StartScene.swift in Sources */,
+				22AAB4BD2177F9FD0075B5E4 /* GameData.swift in Sources */,
 				227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */,
 				226C44A2216AC1040049A2E3 /* Egg.swift in Sources */,
+				22AAB4C12177FC440075B5E4 /* WinScene.swift in Sources */,
+				2282295421751FBC0019A009 /* Tower.swift in Sources */,
+				22822956217520720019A009 /* Projectile.swift in Sources */,
 				226C44A9216C42460049A2E3 /* Fence.swift in Sources */,
 				226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */,
 			);
