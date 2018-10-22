@@ -12,7 +12,8 @@ import Foundation
 
 class WinScene: SKScene {
     
-    var startButtonSprite: SKSpriteNode!
+    var nextButtonSprite: SKSpriteNode!
+    var increaseTowerFireRateSprite: SKSpriteNode!
     
     override func sceneDidLoad() {
         initNodes()
@@ -22,7 +23,8 @@ class WinScene: SKScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         
-        pressedStartButton(touchLocation: touchLocation)
+        pressedNextButton(touchLocation: touchLocation)
+        pressedIncreaseFireRateButton(touchLocation: touchLocation)
         
         
     }
@@ -33,20 +35,49 @@ class WinScene: SKScene {
      */
     
     func initNodes() {
-//        guard let startButtonSpriteNode = childNode(withName: "buttonSprite") as? SKSpriteNode else {
-//            fatalError("startButtonSpriteNode failed to load. Maybe not in childNode list?")
-//        }
-//        self.startButtonSprite = startButtonSpriteNode
+        guard let nextButtonSpriteNode = childNode(withName: "nextLevelButton") as? SKSpriteNode else {
+            fatalError("nextBUttonPSriteNode failed to load. Maybe not in childNode list?")
+        }
+        self.nextButtonSprite = nextButtonSpriteNode
+        
+        guard let increaseFireRateSpriteNode = childNode(withName: "increaseTowerFireRateButton") as? SKSpriteNode else {
+            fatalError("fire rate button failed to load. Maybe not in childNode list?")
+        }
+        self.increaseTowerFireRateSprite = increaseFireRateSpriteNode
     }
     
-    func pressedStartButton(touchLocation: CGPoint) {
-//        let gameScene = GameScene(fileNamed: "GameScene")
-//        gameScene?.scaleMode = .aspectFill
-//        
-//        if startButtonSprite.contains(touchLocation) {
-//            let reveal = SKTransition.fade(withDuration: 3)
-//            view!.presentScene(gameScene!, transition: reveal )
-//        }
+    func pressedIncreaseFireRateButton(touchLocation: CGPoint) {
+        if increaseTowerFireRateSprite.contains(touchLocation) {
+            if GameData.towerData.towerFireInterval > 0.5 {
+                GameData.towerData.towerFireInterval -= 0.20
+                print("fire rate: \(GameData.towerData.towerFireInterval)")
+            }
+        }
+    }
+    
+    
+    func pressedNextButton(touchLocation: CGPoint) {
+        let gameScene = GameScene(fileNamed: "GameScene")
+        gameScene?.scaleMode = .aspectFill
+        
+        
+        //sleep(5)
+        
+        if nextButtonSprite.contains(touchLocation) {
+            changeGameData(touchLocation: touchLocation)
+            let reveal = SKTransition.fade(withDuration: 2)
+            view!.presentScene(gameScene!, transition: reveal )
+        }
+    }
+    
+    func changeGameData(touchLocation: CGPoint) {
+        GameData.levelData.day += 1
+        GameData.fenceData.baseHealth += 20
+        //GameData.towerData.towerFireInterval -= 0.20
+        GameData.levelData.maxEggs += 5
+        GameData.eggData.basicEgg.baseDamage += 2
+        GameData.eggData.basicEgg.baseSpeed += 1
+        
     }
 }
 

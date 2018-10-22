@@ -16,6 +16,7 @@ class LoseScene: SKScene {
     
     override func sceneDidLoad() {
         initNodes()
+        //print("Day Count: \(GameData.DataStructure.day)")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

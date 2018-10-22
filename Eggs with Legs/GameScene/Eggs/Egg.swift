@@ -20,10 +20,19 @@ import Foundation
 
 class Egg {
     
-    var sprite:         SKSpriteNode
-    var speed:          Int
-    var maxhealth:      Int
-    var health:         Int
+    var sprite:     SKSpriteNode
+    
+    var baseSpeed:  Double = GameData.eggData.basicEgg.baseSpeed
+    var speed:      Double
+    
+    var baseHealth: Double = GameData.eggData.basicEgg.baseHealth
+    var health:     Double
+    var maxhealth:  Double
+    
+    var baseDamage: Int = GameData.eggData.basicEgg.baseDamage
+    var damage:     Int
+    
+    var hasContactProjectile: Bool
     var animateType:    Int
     
     //ANIMATIION VARIABLES
@@ -42,39 +51,32 @@ class Egg {
     var eggKickingTextures: [SKTexture]!
     var eggCrackedKickingTextures: [SKTexture]!
     
+    var gameScene = GameScene()
     //var scene: GameScene
     
 //
     
     init(sprite: SKSpriteNode) {
         self.sprite = sprite
-        self.speed = 10
-        self.health = 10
-        self.maxhealth = 10
+        self.speed = self.baseSpeed * GameData.eggData.speedMultiplier
+        self.health = self.baseHealth * GameData.eggData.healthMultiplier
+        self.maxhealth = self.health
+        self.damage = self.baseDamage * GameData.eggData.damageMultiplier
         self.animateType = 0
+        self.hasContactProjectile = false
         //self.scene = scene
         //self.animationCount = 0
         
+        //gameScene.addChild(self.sprite)
         self.animationState = "running"
-        
-        
-//        let actualY = random(min: 0 - (self.sprite.scene.size.height) / 2 + self.sprite.size.height, max: 300)
-//        self.sprite.position = CGPoint(x: (0 - self.sprite.size.width), y: actualY)
-        //GameScene.addChild(self.sprite)
-        //self.sprite.addChild(self.sprite)
-        //self.sprite.run(self.animateAction, withKey: "run")
-        //GameScene.eggArray.append(self)
-        //self.sprite.scene.siz
         
         /*
          Gives every Egg type physics properties
         */
         self.sprite.physicsBody = SKPhysicsBody(texture: self.sprite.texture!, size: CGSize(width: self.sprite.size.width, height: self.sprite.size.height))
-        //self.sprite.physicsBody = SKPhysicsBody(rectangleOf: self.sprite.size) // 1
         self.sprite.physicsBody?.isDynamic          = true // 2
         self.sprite.physicsBody?.affectedByGravity  = false
         self.sprite.physicsBody?.allowsRotation = false
-        //self.sprite.physicsBody?.mass = 10000
         self.sprite.physicsBody?.categoryBitMask    = GameScene.PhysicsCategory.egg // 3
         self.sprite.physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.fence
                                                     //| GameScene.PhysicsCategory.projectile
@@ -106,19 +108,23 @@ class Egg {
         }
     }
     
-    func checkDeathAnimate() {
-        if self.health == 0 && self.animationState != "death" {
+    func checkDeathAnimate(index: Int) {
+        if self.health <= 0.0 && self.animationState != "death" {
+            //gameScene.eggCount += 1
             self.sprite.removeAllActions()
             self.animateAction = SKAction.repeat(self.deathAnimateAction, count: 1)
             self.sprite.run(SKAction.sequence([self.animateAction, SKAction.removeFromParent()]), withKey: "death")
             self.animationState = "death"
+            if gameScene.eggArray.count > 0 {
+                gameScene.eggArray.remove(at: index)
+            }
         }
     }
     
     func kickAnimate(fenceSprite: Fence) {
         
         func decreaseFenceHealth() {
-            fenceSprite.health -= 1
+            fenceSprite.health -= self.damage
         }
         
         if self.animationState == "running" {

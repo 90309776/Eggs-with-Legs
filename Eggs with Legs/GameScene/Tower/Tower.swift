@@ -12,19 +12,18 @@ import Foundation
 class Tower {
     
     var sprite: SKSpriteNode
-    var fireInterval: Int
+    //var fireInterval: Double
     var gameScene: GameScene!
     
     init(sprite: SKSpriteNode, scene: GameScene) {
         self.sprite = sprite
-        self.fireInterval = 3
+        //self.fireInterval = GameData.towerData.towerFireInterval
         self.gameScene = scene
 //        self.sprite.run(
 //            SKAction.repeatForever(
 //                SKAction.sequence(
 //                    [SKAction.run(shootLinear), SKAction.wait(forDuration: TimeInterval(fireInterval))]
 //            )))
-        
     }
     
     
@@ -34,7 +33,7 @@ class Tower {
         let removeIndex = findTargetIndex(eggArray: eggArray)
         //eggArray[removeIndex].sprite.removeFromParent()
         eggArray[removeIndex].health = 0
-        eggArray[removeIndex].checkDeathAnimate()
+        //eggArray[removeIndex].checkDeathAnimate()
         newEggArray.remove(at: removeIndex)
         gameScene.eggArray = newEggArray
     }
@@ -44,13 +43,14 @@ class Tower {
     func shootLinear(eggArray: [Egg]) {
         //move interval is .25
         let targetEgg = findTarget(eggArray: eggArray)
-        let adjustedTargetPoint = CGPoint(x: targetEgg.sprite.position.x + CGFloat(Double(targetEgg.speed) / 0.25), y: targetEgg.sprite.position.y)
+        let adjustedTargetPoint = CGPoint(x: targetEgg.sprite.position.x + CGFloat(Double(targetEgg.speed) / 0.41), y: targetEgg.sprite.position.y)
         
         let projectile = Projectile(startPos: self.sprite.position, targetPos: adjustedTargetPoint, type: "projectile")
         projectile.sprite.size.height = 50
         projectile.sprite.size.width = 50
         gameScene.addChild(projectile.sprite)
-        projectile.projectileShootLinear()
+        gameScene.projectileArray.append(projectile)
+        projectile.projectileShootLinear(targetEgg: targetEgg)
         
         
     }

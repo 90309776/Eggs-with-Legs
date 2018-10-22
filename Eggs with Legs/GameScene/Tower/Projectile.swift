@@ -21,6 +21,7 @@ class Projectile {
     var sprite: SKSpriteNode!
     //var startPos: CGPoint
     var targetPos: CGPoint
+    var hasContact: Bool
     //var startPos: CGPoint
     
     init(startPos: CGPoint, targetPos: CGPoint, type: String) {
@@ -33,6 +34,7 @@ class Projectile {
         
         //Defining a projectile's physics properties and hitboxes
         self.targetPos = targetPos
+        self.hasContact = false
         self.sprite.name = "projectile"
         //self.sprite.physicsBody = SKPhysicsBody(texture: self.sprite.texture!, size: CGSize(width: self.sprite.size.width, height: self.sprite.size.height))
         self.sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
@@ -41,15 +43,25 @@ class Projectile {
         self.sprite.physicsBody?.mass = 10000
         //self.sprite.physicsBody.dam
         self.sprite.physicsBody?.categoryBitMask = GameScene.PhysicsCategory.projectile
-        //self.sprite.physicsBody?.collisionBitMask = GameScene.PhysicsCategory.egg
+        self.sprite.physicsBody?.collisionBitMask = GameScene.PhysicsCategory.egg
         self.sprite.physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.egg
     }
     //        let actioove = SKAction.move(to: CGPoint(x: egg.size.width + size.width, y: actualY), duration: TimeInterval(speed))
     
-    func projectileShootLinear() {
-        let actionMove = SKAction.move(to: self.targetPos, duration: 0.25)
-        self.sprite.run(actionMove)
+    func projectileShootLinear(targetEgg: Egg) {
+        func remove() {
+            self.sprite.removeFromParent()
+            targetEgg.hasContactProjectile = false
+        }
+        
+//        let actionMove = SKAction.move(to: self.targetPos, duration: 0.25)
+        let actionMoveAndRemove = SKAction.sequence([SKAction.move(to: self.targetPos, duration: 0.43), SKAction.wait(forDuration: 0), SKAction.run(remove)])
+        self.sprite.run(actionMoveAndRemove)
+//        SKAction.run {
+//            SKAction.sequence([self.sprite.run(actionMove)])
+//        }
     }
+
     
     func projectileShootArch() {
         

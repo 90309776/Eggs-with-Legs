@@ -7,3 +7,4 @@
 //
 
 import Foundation
+//dont forget to set defaults

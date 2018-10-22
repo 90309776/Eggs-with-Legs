@@ -6,22 +6,41 @@
 //  Copyright © 2018 Egg Beater. All rights reserved.
 //
 
+/*
+ BUG LIST
+ 1. Invincible Eggs
+        DESC: Probably because the egg is being removed from the egg array
+        and not being removed from the childnode.
+        CAUSE: Possibly from eliminating an egg at the same time as the tower elims one
+ 
+ 2. [FIXED] Projectile still on screen and causing collision with other eggs [FIXED]
+        CAUSE: Projectile is currently only removed from screen when it has been collided.
+        So if the Egg the projectile is targeting was eliminated before the proj. hits, then
+        projectile never gets removed.
+ 
+ 3. Int to Double changes (warning)
+        DESC: Not a real bug, but may mess up or crash some stuff
+ 
+*/
+
 import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    var maxEggs = 50
+    //var maxEggs = GameData.levelData.maxEggs
     var keepRunning = true
     var eggCount = 0
     
     var eggArray: [Egg] = []
+    var projectileArray: [Projectile] = []
     
-    var basicEggAssets: [[SKTexture]] = [[]]
+    //var basicEggAssets: [[SKTexture]] = [[]]
     var listOfEggTypes: [String] = ["BasicEgg"]
     
     var eggCountLabel: SKLabelNode!
     var fenceHealthLabel: SKLabelNode!
+    var dayLabel: SKLabelNode!
     var fenceSprite: Fence!
     
     var linearTowerSprite: Tower!
@@ -36,30 +55,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let egg        : UInt32 = 1      // 1
         static let fence      : UInt32 = 2      // 2
         static let projectile : UInt32 = 3
-        //var fenceSprite: Fence!
+    }
+    
+    override func didMove(to view: SKView) {
+        initNodes() //initializes nodes such as various sprites and labels
+        
+        run(
+            SKAction.repeat(
+                SKAction.sequence(
+                    [SKAction.run(addEgg), SKAction.wait(forDuration: 1.0)]),
+                count: GameData.levelData.maxEggs))
+        print("max eggs start \(GameData.levelData.maxEggs)")
     }
     
     override func sceneDidLoad() {
         physicsWorld.contactDelegate = self
         self.lastUpdateTime = 0
-        
-        initNodes() //initializes nodes such as various sprites and labels
-        
-        
-        if keepRunning {
-            run(
-                SKAction.repeat(
-                    SKAction.sequence(
-                        [SKAction.run(addEgg), SKAction.wait(forDuration: 1.0)]),
-                    count: maxEggs))
-        }
-//        linearTowerSprite.sprite.run(
-//            SKAction.repeatForever(
-//                SKAction.sequence(
-//                    [SKAction.run(linearTowerSprite!.shootLinear(eggArray: eggArray)), SKAction.wait(forDuration: TimeInterval(linearTowerSprite.fireInterval))]
-//        )))
-        
     }
+    
+    
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -81,42 +95,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             egg.sprite.position = CGPoint(x: (0 - (size.width / 2) - egg.sprite.size.width), y: actualY)
             
             addChild(egg.sprite)
-            //egg.sprite.run(egg.animateAction, withKey: "run")
             egg.runAnimate()
             eggArray.append(egg)
-    }
-    
-
-        //addChild(egg.sprite)
-//        egg.sprite.run(egg.animateAction, withKey: "run")
-        
-        eggCount += 1
-        //=============
-        //commented out to use for reference later maybe
-        //===========
-        
-//        egg.physicsBody = SKPhysicsBody(rectangleOf: egg.size) // 1
-//        egg.physicsBody?.isDynamic = true // 2
-//        egg.sprite.physicsBody?.categoryBitMask = PhysicsCategory.egg // 3
-//        egg.sprite.physicsBody?.contactTestBitMask = PhysicsCategory.fence// 4
-//        egg.sprite.physicsBody?.collisionBitMask = PhysicsCategory.fence // 5
-        
-        
-//        print("actualY: \(actualY), min: \(egg.size.height), max: \(size.height)")
-        
-//
-//        let speed = 20
-//
-//        let actioove = SKAction.move(to: CGPoint(x: egg.size.width + size.width, y: actualY), duration: TimeInterval(speed))
-//        let actionMoveDone = SKAction.removeFromParent()
-//        let loseAction = SKAction.run() { [weak self] in
-//            guard let `self` = self else { return }
-//            let reveal = SKTransition.flipHorizontal(withDuration: 0.5)
-//            let gameOverScene = GameOverScene(size: self.size, won: false)
-//            self.view?.presentScene(gameOverScene, transition: reveal)
-//        }
-//        egg.run(SKAction.sequence([actionMove, actionMoveDone]))
-    
+        }
     }
     
     /*
@@ -127,12 +108,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let objectA = contact.bodyA.node as! SKSpriteNode
         let objectB = contact.bodyB.node as! SKSpriteNode
         
-        print("bodyA: \(String(describing: objectA.name))")
-        print("bodyB: \(String(describing: objectB.name))")
-        
+        //print("bodyA: \(String(describing: objectA.name))")
+        //print("bodyB: \(String(describing: objectB.name))")
+        //maybe encapsulate this for the egg object function
         //If the detected objects are fence and an egg then the egg is given a kicking animation
         if objectB.name == "egg" && objectA.name == "fenceSprite" {
             for (index, egg) in eggArray.enumerated() {
+                //Want to rewrite so check if the object egg belongs to any of EggArray sprite
+                //then manipulate that one instead of creating an entirly new tempegg
                 if egg.sprite.position == objectB.position {
                     egg.sprite.removeFromParent()
                     let tempEgg = BasicEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"))
@@ -147,18 +130,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //checks if one object is a projectile and if the other object is a type of egg
         if  objectB.name == "projectile" && objectA.name?.range(of: "egg") != nil {
+            //print("contact")
+            //objectB.removeFromParent()
             for (index, egg) in eggArray.enumerated() {
-                if egg.sprite.position == objectA.position {
-                    egg.health = 0
-                    egg.checkDeathAnimate()
-                    eggArray.remove(at: index)
-                    objectB.removeFromParent()
+                if egg.sprite == objectA && egg.hasContactProjectile == false {
+                    egg.hasContactProjectile = true
+                    //print("egg hp: \(egg.health)")
+                    egg.health -= GameData.towerData.towerDamage
+                    //print("egg hp after: \(egg.health)")
+                    egg.checkDeathAnimate(index: index)
+                    
+                    
                 }
             }
-            
+        } else if objectA.name == "projectile" && objectB.name?.range(of: "egg") != nil {
+            //print("contact")
+            //objectA.removeFromParent()
+            for (index, egg) in eggArray.enumerated() {
+                if egg.sprite == objectB  && egg.hasContactProjectile == false {
+                    egg.hasContactProjectile = true
+                    egg.health -= GameData.towerData.towerDamage
+                    egg.checkDeathAnimate(index: index)
+                    //objectB.removeFromParent()
+                }
+            }
         }
-        
-        
     }
     
     //Default function called when screen is touched
@@ -178,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
+        //guard let touch = touches.first else { return }
         //let touchLocation = touch.location(in: self)
         //print("\(touchLocation)")
     }
@@ -200,7 +196,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         currentUpdateTime += currentTime - lastUpdateTime
         //handles the 3 second intervals of a tower shooting
-        if currentUpdateTime >= 3 {
+        if currentUpdateTime >= GameData.towerData.towerFireInterval {
             currentUpdateTime = 0
             if eggArray.count > 0 {
                 linearTowerSprite.shootLinear(eggArray: eggArray)
@@ -216,25 +212,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     */
     
     func checkWin() {
+        let reveal = SKTransition.fade(withDuration: 3)
         if fenceSprite.health <= 0 {
+            GameData.levelData.day += 1
             let loseScene = LoseScene(fileNamed: "LoseScene")
             loseScene?.scaleMode = .aspectFill
-            
-            
-            let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(loseScene!, transition: reveal )
-            
+        } else if eggCount == GameData.levelData.maxEggs {
+            let winScene = WinScene(fileNamed: "WinScene")
+            winScene?.scaleMode = .aspectFill
+            view!.presentScene(winScene!, transition: reveal )
         }
+        
     }
     
     func updateLabels() {
-        eggCountLabel.text = "Egg Count: \(eggCount)"
+        eggCountLabel.text = "Egg Count: \(eggCount)/\(GameData.levelData.maxEggs)"
         fenceHealthLabel.text = "Fence Health: \(fenceSprite.health)"
     }
     
     func moveAndAnimateEgg() {
         for (index, egg) in eggArray.enumerated() {
-            if egg.health > 0 {
+            if egg.health > 0.0 {
                 egg.move()
                 egg.checkCrackedRunAnimate()
             } else {
@@ -245,7 +244,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                  Also runs the death animation a single time, once the animation
                  is completed, the Egg's Sprite will be removed from all nodes
                  */
-                egg.checkDeathAnimate()
+                egg.checkDeathAnimate(index: index)
+                eggCount += 1
+                //egg.sprite.removeFromParent()
                 eggArray.remove(at: index)
                 
             }
@@ -262,6 +263,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             fatalError("Label Nodes not loaded")
         }
         self.eggCountLabel = eggLabelNode
+        
+        guard let dayLabelNode = childNode(withName: "dayLabel") as? SKLabelNode else {
+            fatalError("Label Nodes not loaded")
+        }
+        self.dayLabel = dayLabelNode
+        dayLabel.text = "Day: \(GameData.levelData.day)"
         
         guard let fenceLabelNode = childNode(withName: "fenceHealthLabel") as? SKLabelNode else {
             fatalError("Label Nodes not loaded")

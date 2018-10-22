@@ -12,11 +12,12 @@ import Foundation
 class Fence {
     
     var sprite: SKSpriteNode
+    var baseHealth = GameData.fenceData.baseHealth
     var health: Int
     
     init(sprite: SKSpriteNode) {
         self.sprite = sprite
-        self.health = 10
+        self.health = self.baseHealth * GameData.fenceData.healthMultiplier
         
         self.sprite.physicsBody?.categoryBitMask = GameScene.PhysicsCategory.fence // 3
         self.sprite.physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.egg // 4
