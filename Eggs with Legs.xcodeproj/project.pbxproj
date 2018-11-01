@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		222564712187B3B9008C7F2A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222564702187B3B9008C7F2A /* Player.swift */; };
+		22256474218A0F9A008C7F2A /* Rooster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22256473218A0F9A008C7F2A /* Rooster.swift */; };
+		22256476218A0FB1008C7F2A /* RollerbladingEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */; };
 		226C44A2216AC1040049A2E3 /* Egg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A1216AC1040049A2E3 /* Egg.swift */; };
 		226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A3216C0C560049A2E3 /* BasicEgg.swift */; };
 		226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */; };
@@ -51,6 +54,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		222564702187B3B9008C7F2A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		22256473218A0F9A008C7F2A /* Rooster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rooster.swift; sourceTree = "<group>"; };
+		22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollerbladingEgg.swift; sourceTree = "<group>"; };
 		226C44A1216AC1040049A2E3 /* Egg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Egg.swift; sourceTree = "<group>"; };
 		226C44A3216C0C560049A2E3 /* BasicEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEgg.swift; sourceTree = "<group>"; };
 		226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingEgg.swift; sourceTree = "<group>"; };
@@ -108,12 +114,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		222564722187B6C8008C7F2A /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				222564702187B3B9008C7F2A /* Player.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
 		226C44A7216C0C770049A2E3 /* Eggs */ = {
 			isa = PBXGroup;
 			children = (
 				226C44A1216AC1040049A2E3 /* Egg.swift */,
 				226C44A3216C0C560049A2E3 /* BasicEgg.swift */,
 				226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */,
+				22256473218A0F9A008C7F2A /* Rooster.swift */,
+				22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */,
 			);
 			path = Eggs;
 			sourceTree = "<group>";
@@ -191,6 +207,7 @@
 				227B1D642166BA08005E0560 /* GameScene.swift */,
 				227B1D602166BA08005E0560 /* GameScene.sks */,
 				226C44A8216C42450049A2E3 /* Fence.swift */,
+				222564722187B6C8008C7F2A /* Player */,
 				2282295221751F7D0019A009 /* Tower */,
 				226C44A7216C0C770049A2E3 /* Eggs */,
 			);
@@ -365,6 +382,8 @@
 				226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */,
 				227B1D672166BA08005E0560 /* GameViewController.swift in Sources */,
 				22AAB4BF2177FC3A0075B5E4 /* LoseScene.swift in Sources */,
+				222564712187B3B9008C7F2A /* Player.swift in Sources */,
+				22256476218A0FB1008C7F2A /* RollerbladingEgg.swift in Sources */,
 				22AAB4B521769E8B0075B5E4 /* StartScene.swift in Sources */,
 				22AAB4BD2177F9FD0075B5E4 /* GameData.swift in Sources */,
 				227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */,
@@ -372,6 +391,7 @@
 				22AAB4C12177FC440075B5E4 /* WinScene.swift in Sources */,
 				2282295421751FBC0019A009 /* Tower.swift in Sources */,
 				22822956217520720019A009 /* Projectile.swift in Sources */,
+				22256474218A0F9A008C7F2A /* Rooster.swift in Sources */,
 				226C44A9216C42460049A2E3 /* Fence.swift in Sources */,
 				226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */,
 			);

@@ -36,6 +36,11 @@ class StartScene: SKScene {
             fatalError("startButtonSpriteNode failed to load. Maybe not in childNode list?")
         }
         self.startButtonSprite = startButtonSpriteNode
+        
+//        guard let childTestNode = startButtonSprite.childNode(withName: "testSprite") as? SKSpriteNode else {
+//            fatalError()
+//        }
+        
     }
     
     func pressedStartButton(touchLocation: CGPoint) {

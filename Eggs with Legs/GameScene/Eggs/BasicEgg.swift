@@ -27,6 +27,8 @@ class BasicEgg: Egg {
     
     var basicEggRunningTextures        = [SKTexture(imageNamed: "BE_RA_0"),
                                            SKTexture(imageNamed: "BE_RA_1")]
+//    var basicEggRunningTextures        = [SKTexture(imageNamed: "rollingblade_0"),
+//                                          SKTexture(imageNamed: "rollingblade_1")]
     var basicEggCrackedTextures        = [SKTexture(imageNamed: "BE_cracked_anim_0"),
                                            SKTexture(imageNamed: "BE_cracked_anim_1")]
     var basicEggDeathTextures          = [SKTexture(imageNamed: "BE_death_anim_0"),
@@ -34,10 +36,20 @@ class BasicEgg: Egg {
                                            SKTexture(imageNamed: "BE_death_anim_2"),
                                            SKTexture(imageNamed: "BE_death_anim_3"),
                                            SKTexture(imageNamed: "BE_death_anim_4")]
-    var basicEggKickingTextures        = [SKTexture(imageNamed: "egg_11"),
-                                           SKTexture(imageNamed: "egg_22")]
-    var basicEggCrackedKickingTextures = [SKTexture(imageNamed: "egg33"),
-                                           SKTexture(imageNamed: "egg44")]
+    var basicEggKickingTextures        = [SKTexture(imageNamed: "egg_kick_white0"),
+                                          SKTexture(imageNamed: "egg_kick_white1"),
+                                          SKTexture(imageNamed: "egg_kick_white2"),
+                                          SKTexture(imageNamed: "egg_kick_white3"),
+                                          SKTexture(imageNamed: "egg_kick_white4"),
+                                          SKTexture(imageNamed: "egg_kick_white5")]
+    var basicEggCrackedKickingTextures = [SKTexture(imageNamed: "egg_cracked_kick0"),
+                                          SKTexture(imageNamed: "egg_cracked_kick1"),
+                                          SKTexture(imageNamed: "egg_cracked_kick2"),
+                                          SKTexture(imageNamed: "egg_cracked_kick3"),
+                                          SKTexture(imageNamed: "egg_cracked_kick4"),
+                                          SKTexture(imageNamed: "egg_cracked_kick5")]
+    
+    //var gameScene = GameScene()
     
     
     //var anim: SKAction
@@ -52,13 +64,24 @@ class BasicEgg: Egg {
         self.eggKickingTextures = basicEggKickingTextures
         self.eggCrackedKickingTextures = basicEggCrackedKickingTextures
         
-        self.runAnimateAction = SKAction.animate(with: self.eggRunningTextures, timePerFrame: 0.25)
+        self.runAnimateAction = SKAction.animate(with: self.eggRunningTextures, timePerFrame: 0.17)
         self.deathAnimateAction = SKAction.animate(with: self.eggDeathTextures, timePerFrame: 0.12)
-        self.crackedAnimateAction = SKAction.animate(with: self.eggCrackedTextures, timePerFrame: 0.25)
-        self.kickingAnimateAction = SKAction.animate(with: self.eggKickingTextures, timePerFrame: 0.25)
+        self.crackedAnimateAction = SKAction.animate(with: self.eggCrackedTextures, timePerFrame: 0.17)
+        self.kickingAnimateAction = SKAction.animate(with: self.eggKickingTextures, timePerFrame: 0.17)
         //make this a sequence
         self.crackedKickingAnimateAction = SKAction.animate(with: self.eggCrackedKickingTextures , timePerFrame: 0.25)
         self.animateAction = SKAction.repeatForever(runAnimateAction)
         
+    }
+    
+    override func addEgg() {
+        self.sprite.name = "BasicEgg"
+        let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
+        self.sprite.position = CGPoint(x: (0 - (gameScene.size.width / 2) - self.sprite.size.width), y: actualY)
+        self.sprite.scale(to: CGSize(width: 300, height: 300))
+        //gameScene.addChild(self.sprite)
+        self.runAnimate()
+        gameScene.eggArray.append(self)
+        print("s")
     }
 }

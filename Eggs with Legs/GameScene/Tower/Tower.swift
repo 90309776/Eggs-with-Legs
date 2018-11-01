@@ -12,21 +12,15 @@ import Foundation
 class Tower {
     
     var sprite: SKSpriteNode
-    //var fireInterval: Double
     var gameScene: GameScene!
     
     init(sprite: SKSpriteNode, scene: GameScene) {
         self.sprite = sprite
-        //self.fireInterval = GameData.towerData.towerFireInterval
         self.gameScene = scene
-//        self.sprite.run(
-//            SKAction.repeatForever(
-//                SKAction.sequence(
-//                    [SKAction.run(shootLinear), SKAction.wait(forDuration: TimeInterval(fireInterval))]
-//            )))
     }
     
     
+    //THIS FUNCTION IS NOT BEING USED JUST FOR TESTING PURPOSES
     //test function to see to eliminate the closes egg to the tower
     func eliminateNear(eggArray: [Egg]) {
         var newEggArray = eggArray
@@ -55,11 +49,6 @@ class Tower {
         
     }
     
-    func shootArch() {
-        
-        
-    }
-    
     //goes through every egg of the egg array that is sent and sees which is closes
     //to the current tower position
     //returns an egg type
@@ -79,7 +68,7 @@ class Tower {
     }
     
     //same as top but returns an index of the egg in the array
-    //used for testing
+    //used for testing not currently being used for final game
     func findTargetIndex(eggArray: [Egg]) -> Int {
         let towerPos = self.sprite.position
         var shortestDistance = calcDistance(pointA: towerPos, pointB: eggArray[0].sprite.position)
@@ -93,7 +82,6 @@ class Tower {
             }
             
         }
-        
         return shortestEggIndex
     }
     

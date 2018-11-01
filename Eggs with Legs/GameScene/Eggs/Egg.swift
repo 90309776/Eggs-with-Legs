@@ -51,6 +51,8 @@ class Egg {
     var eggKickingTextures: [SKTexture]!
     var eggCrackedKickingTextures: [SKTexture]!
     
+    var hasContactFence: Bool
+    
     var gameScene = GameScene()
     //var scene: GameScene
     
@@ -64,6 +66,8 @@ class Egg {
         self.damage = self.baseDamage * GameData.eggData.damageMultiplier
         self.animateType = 0
         self.hasContactProjectile = false
+        
+        self.hasContactFence = false
         //self.scene = scene
         //self.animationCount = 0
         
@@ -99,8 +103,13 @@ class Egg {
         self.animationState = "running"
     }
     
+    func addEgg() {
+        //Function is overriden by the respective child class
+        print("ye")
+    }
+    
     func checkCrackedRunAnimate() {
-        if self.health < self.maxhealth  - 1 && self.animationState != "cracked_running" {
+        if self.health < self.maxhealth  - 1 && self.animationState != "cracked_running" && self.animationState != "kicking" && self.animationState != "cracked_kicking"{
             self.sprite.removeAllActions()
             self.animateAction = SKAction.repeatForever(self.crackedAnimateAction)
             self.sprite.run(self.animateAction, withKey: "cracked_run")
@@ -112,16 +121,20 @@ class Egg {
         if self.health <= 0.0 && self.animationState != "death" {
             //gameScene.eggCount += 1
             self.sprite.removeAllActions()
+            self.sprite.zRotation = 0
             self.animateAction = SKAction.repeat(self.deathAnimateAction, count: 1)
             self.sprite.run(SKAction.sequence([self.animateAction, SKAction.removeFromParent()]), withKey: "death")
             self.animationState = "death"
-            if gameScene.eggArray.count > 0 {
+            if gameScene.eggArray.count > index {
                 gameScene.eggArray.remove(at: index)
             }
         }
     }
     
+    
+    
     func kickAnimate(fenceSprite: Fence) {
+        //print("\(self.animationState)")
         
         func decreaseFenceHealth() {
             fenceSprite.health -= self.damage
@@ -133,21 +146,32 @@ class Egg {
             self.animateAction = SKAction.repeatForever(SKAction.sequence([self.kickingAnimateAction, SKAction.run(decreaseFenceHealth), SKAction.wait(forDuration: 3)]))
             self.sprite.run(self.animateAction)
             self.animationState = "kicking"
-            self.sprite.name = "basicegg"
-        } else {
+            //self.sprite.name = "basicegg"
+        } else if self.animationState == "cracked_running"  {
             self.sprite.removeAllActions()
-            self.animateAction = SKAction.repeatForever(self.crackedKickingAnimateAction)
+            self.animateAction = SKAction.repeatForever(SKAction.sequence([self.crackedKickingAnimateAction, SKAction.run(decreaseFenceHealth), SKAction.wait(forDuration: 3)]))
             self.sprite.run(self.animateAction)
             self.animationState = "cracked_kicking"
-            self.sprite.name = "basicegg now"
+            //self.sprite.name = "basicegg now"
         }
         
         
         
     }
     
-    func crackedKickAnimate() {
+    func checkCrackedKickAnimate(fenceSprite: Fence) {
         
+        func decreaseFenceHealth() {
+            fenceSprite.health -= self.damage
+        }
+        
+        if self.animationState == "kicking"  && self.health < self.maxhealth{
+            self.sprite.removeAllActions()
+            self.animateAction = SKAction.repeatForever(SKAction.sequence([self.crackedKickingAnimateAction, SKAction.run(decreaseFenceHealth), SKAction.wait(forDuration: 3)]))
+            self.sprite.run(self.animateAction)
+            self.animationState = "cracked_kicking"
+            //self.sprite.name = "basicegg now"
+        }
     }
     
     func random() -> CGFloat {

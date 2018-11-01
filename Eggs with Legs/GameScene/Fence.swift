@@ -24,9 +24,17 @@ class Fence {
         self.sprite.physicsBody?.collisionBitMask = GameScene.PhysicsCategory.egg // 5
     }
     
+    func changeSprite() {
+        
+    }
+    
     func update() {
         if (self.health <= 0) {
-            self.sprite.removeFromParent()
+            //self.sprite.removeFromParent()
+            self.sprite.physicsBody?.categoryBitMask = GameScene.PhysicsCategory.none // 3
+            self.sprite.physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.none
+            self.sprite.physicsBody?.collisionBitMask = GameScene.PhysicsCategory.none
+            
         }
     }
 }

@@ -57,9 +57,6 @@ class Projectile {
 //        let actionMove = SKAction.move(to: self.targetPos, duration: 0.25)
         let actionMoveAndRemove = SKAction.sequence([SKAction.move(to: self.targetPos, duration: 0.43), SKAction.wait(forDuration: 0), SKAction.run(remove)])
         self.sprite.run(actionMoveAndRemove)
-//        SKAction.run {
-//            SKAction.sequence([self.sprite.run(actionMove)])
-//        }
     }
 
     
