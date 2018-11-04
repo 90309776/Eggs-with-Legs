@@ -35,6 +35,8 @@ class Egg {
     var hasContactProjectile: Bool
     var animateType:    Int
     
+    var coinRange: [Int] //2 Ints: [min, max]
+    
     //ANIMATIION VARIABLES
     var animationState:       String
     var animateAction:        SKAction!
@@ -53,13 +55,14 @@ class Egg {
     
     var hasContactFence: Bool
     
-    var gameScene = GameScene()
+    var gameScene: GameScene!
     //var scene: GameScene
     
 //
     
-    init(sprite: SKSpriteNode) {
+    init(sprite: SKSpriteNode, scene: GameScene) {
         self.sprite = sprite
+        self.gameScene = scene
         self.speed = self.baseSpeed * GameData.eggData.speedMultiplier
         self.health = self.baseHealth * GameData.eggData.healthMultiplier
         self.maxhealth = self.health
@@ -70,7 +73,7 @@ class Egg {
         self.hasContactFence = false
         //self.scene = scene
         //self.animationCount = 0
-        
+        self.coinRange = [0, 0] // value is set through child class
         //gameScene.addChild(self.sprite)
         self.animationState = "running"
         
@@ -125,9 +128,11 @@ class Egg {
             self.animateAction = SKAction.repeat(self.deathAnimateAction, count: 1)
             self.sprite.run(SKAction.sequence([self.animateAction, SKAction.removeFromParent()]), withKey: "death")
             self.animationState = "death"
-            if gameScene.eggArray.count > index {
-                gameScene.eggArray.remove(at: index)
-            }
+            self.addCoins()
+            //gameScene.eggCount += 1
+//            if gameScene.eggArray.count > index {
+//                gameScene.eggArray.remove(at: index)
+//            }
         }
     }
     
@@ -137,7 +142,7 @@ class Egg {
         //print("\(self.animationState)")
         
         func decreaseFenceHealth() {
-            fenceSprite.health -= self.damage
+            fenceSprite.health -= Int(self.damage)
         }
         
         if self.animationState == "running" {
@@ -162,7 +167,7 @@ class Egg {
     func checkCrackedKickAnimate(fenceSprite: Fence) {
         
         func decreaseFenceHealth() {
-            fenceSprite.health -= self.damage
+            fenceSprite.health -= Int(self.damage)
         }
         
         if self.animationState == "kicking"  && self.health < self.maxhealth{
@@ -173,6 +178,12 @@ class Egg {
             //self.sprite.name = "basicegg now"
         }
     }
+    
+    func addCoins() {
+        let randomCoinAmount = Int.random(in: coinRange[0]..<coinRange[1])
+        GameData.playerData.coins += randomCoinAmount
+    }
+    
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)

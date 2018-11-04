@@ -8,7 +8,11 @@
 import SpriteKit
 import Foundation
 
-//class GameData: NSObject, NSCoding {
+/*
+ These are basically super duper global variables.
+ prob not good programming practice but it works.
+ */
+
 class GameData {
 
     //THIS IS THE DEFAULT DATA SET
@@ -20,15 +24,27 @@ class GameData {
     }
     
     struct playerData {
-        static var coins = 1000
+        static var coins = 0
         static var playerDamage = 5.0
         static var maxTapCount = 10
         static var cooldownInterval: TimeInterval = 3
     }
     
     struct towerData {
+        static var tower_1Activated = false
+        static var tower_2Activated = false
+        
         static var towerFireInterval: TimeInterval = 3
         static var towerDamage = 5.0
+    }
+    
+    struct shopData {
+        static var buyTowerCost = 1500
+        static var upgradeWeaponCost = 200
+        static var increaseTowerFireRateCost = 500
+        static var upgradeFenceHealthCost = 250
+        static var increasePlayerDamageCost = 500
+        
     }
     
     struct eggData {
@@ -37,6 +53,7 @@ class GameData {
             static var baseSpeed = 10.0
             static var baseHealth = 10.0
             static var baseDamage = 1
+            static var coinRange = [50, 80]
         }
         
         struct rollingEgg {
@@ -44,6 +61,7 @@ class GameData {
             static var constantRadianRotationRate: CGFloat = 22.5
             static var baseHealth = 5.0
             static var baseDamage = 3
+            static var coinRange = [90, 150]
         }
 
         
@@ -53,7 +71,7 @@ class GameData {
     }
     
     struct fenceData {
-        static var baseHealth = 1000
+        static var baseHealth = 20
         static var healthMultiplier = 1
         static var fenceStage = 1
     }

@@ -22,6 +22,7 @@ class Projectile {
     //var startPos: CGPoint
     var targetPos: CGPoint
     var hasContact: Bool
+    var hasContactEgg = false
     //var startPos: CGPoint
     
     init(startPos: CGPoint, targetPos: CGPoint, type: String) {

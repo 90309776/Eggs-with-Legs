@@ -49,14 +49,14 @@ class BasicEgg: Egg {
                                           SKTexture(imageNamed: "egg_cracked_kick4"),
                                           SKTexture(imageNamed: "egg_cracked_kick5")]
     
-    //var gameScene = GameScene()
+    //var gameScene: GameScene!
     
     
     //var anim: SKAction
     
     
-    override init(sprite: SKSpriteNode) {
-        super.init(sprite: sprite)
+    override init(sprite: SKSpriteNode, scene: GameScene) {
+        super.init(sprite: sprite, scene: scene)
         
         self.eggRunningTextures = basicEggRunningTextures
         self.eggDeathTextures = basicEggDeathTextures
@@ -72,6 +72,8 @@ class BasicEgg: Egg {
         self.crackedKickingAnimateAction = SKAction.animate(with: self.eggCrackedKickingTextures , timePerFrame: 0.25)
         self.animateAction = SKAction.repeatForever(runAnimateAction)
         
+        self.coinRange = GameData.eggData.basicEgg.coinRange
+        
     }
     
     override func addEgg() {
@@ -79,9 +81,13 @@ class BasicEgg: Egg {
         let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
         self.sprite.position = CGPoint(x: (0 - (gameScene.size.width / 2) - self.sprite.size.width), y: actualY)
         self.sprite.scale(to: CGSize(width: 300, height: 300))
-        //gameScene.addChild(self.sprite)
         self.runAnimate()
+        
+        
+        
+        gameScene.addChild(self.sprite)
+        
         gameScene.eggArray.append(self)
-        print("s")
+        
     }
 }
