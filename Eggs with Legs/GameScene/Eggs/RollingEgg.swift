@@ -27,8 +27,8 @@ class RollingEgg: Egg {
     
     
     
-    override init(sprite: SKSpriteNode) {
-        super.init(sprite: sprite)
+    override init(sprite: SKSpriteNode, scene: GameScene) {
+        super.init(sprite: sprite, scene: scene)
         
         self.eggRunningTextures = rollingEggRunningTextures
         self.eggDeathTextures = rollingEggDeathTextures
@@ -45,6 +45,8 @@ class RollingEgg: Egg {
         self.maxhealth = self.health
         self.damage = self.baseDamage * GameData.eggData.damageMultiplier
         
+        self.coinRange = GameData.eggData.rollingEgg.coinRange
+        
         self.rotationAction = SKAction.run {
             self.sprite.zRotation -= GameData.eggData.rollingEgg.constantRadianRotationRate
         }
@@ -58,15 +60,15 @@ class RollingEgg: Egg {
         let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
         self.sprite.position = CGPoint(x: (0 - (gameScene.size.width / 2) - self.sprite.size.width), y: actualY)
         self.sprite.scale(to: CGSize(width: 300, height: 300))
-        //gameScene.addChild(self.sprite)
+        gameScene.addChild(self.sprite)
         self.runAnimate()
         gameScene.eggArray.append(self)
-         print("sssss")
+        
     }
     
     override func kickAnimate(fenceSprite: Fence) {
         
-        fenceSprite.health -= self.damage
+        fenceSprite.health -= Int(self.damage)
         
         self.health = 0
         for (index, egg) in gameScene.eggArray.enumerated() {
