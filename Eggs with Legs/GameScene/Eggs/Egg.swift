@@ -129,10 +129,11 @@ class Egg {
             self.sprite.run(SKAction.sequence([self.animateAction, SKAction.removeFromParent()]), withKey: "death")
             self.animationState = "death"
             self.addCoins()
-            //gameScene.eggCount += 1
-//            if gameScene.eggArray.count > index {
-//                gameScene.eggArray.remove(at: index)
-//            }
+            gameScene.eggCount += 1
+            if gameScene.eggArray.count > index {
+                gameScene.eggArray.remove(at: index)
+                gameScene.eggArrayNodes.remove(at: index)
+            }
         }
     }
     

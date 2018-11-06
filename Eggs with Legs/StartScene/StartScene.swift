@@ -44,12 +44,12 @@ class StartScene: SKScene {
     }
     
     func pressedStartButton(touchLocation: CGPoint) {
-        let gameScene = GameScene(fileNamed: "GameScene")
-        gameScene?.scaleMode = .aspectFill
+        let tutorialScene = TutorialScene(fileNamed: "TutorialScene")
+        tutorialScene?.scaleMode = .aspectFill
         
         if startButtonSprite.contains(touchLocation) {
             let reveal = SKTransition.fade(withDuration: 3)
-            view!.presentScene(gameScene!, transition: reveal )
+            view!.presentScene(tutorialScene!, transition: reveal )
         }
     }
 }
