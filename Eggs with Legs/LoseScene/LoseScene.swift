@@ -24,8 +24,6 @@ class LoseScene: SKScene {
         let touchLocation = touch.location(in: self)
         
         pressedStartButton(touchLocation: touchLocation)
-        
-        
     }
     
     
@@ -45,8 +43,54 @@ class LoseScene: SKScene {
         startScene?.scaleMode = .aspectFill
         
         if menuButtonSprite.contains(touchLocation) {
+            resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(startScene!, transition: reveal )
+            
         }
     }
+    
+    
+    func resetGameData() {
+        
+        GameData.levelData.day = 1
+        GameData.levelData.eggSpawnInterval = 1
+        GameData.levelData.maxEggs = 10
+        
+        GameData.playerData.coins = 0
+        GameData.playerData.maxTapCount = 10
+        GameData.playerData.playerDamage = 5
+        
+        GameData.towerData.tower_1Activated = false
+        GameData.towerData.tower_2Activated = false
+        GameData.towerData.towerDamage = 5.0
+        GameData.towerData.towerFireInterval = 3
+        
+        GameData.shopData.buyTowerCost = 1500
+        GameData.shopData.upgradeWeaponCost = 200
+        GameData.shopData.increaseTowerFireRateCost = 500
+        GameData.shopData.increasePlayerDamageCost = 500
+        GameData.shopData.upgradeFenceHealthCost = 250
+        
+        GameData.fenceData.baseHealth = 20
+        GameData.fenceData.fenceStage = 1
+        GameData.fenceData.healthMultiplier = 1
+        
+        GameData.eggData.basicEgg.baseDamage = 1
+        GameData.eggData.basicEgg.baseHealth = 10
+        GameData.eggData.basicEgg.baseSpeed = 10
+        GameData.eggData.basicEgg.coinRange = [90, 150]
+        
+        GameData.eggData.rollingEgg.baseDamage = 3
+        GameData.eggData.rollingEgg.baseHealth = 5
+        GameData.eggData.rollingEgg.baseSpeed = 12
+        
+        GameData.eggData.damageMultiplier = 1
+        GameData.eggData.healthMultiplier = 1.0
+        GameData.eggData.speedMultiplier = 1.0
+        
+        
+        
+    }
+    
 }

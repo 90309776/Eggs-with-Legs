@@ -41,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var eggCount = 0
     
     var eggArray: [Egg] = []
+    var eggArrayNodes: [SKSpriteNode] = []
     var towerArray: [Tower] = []
     
     var projectileArray: [Projectile] = [] //to lazy to remove proj's from array when used, so it gets really big
@@ -80,15 +81,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 SKAction.sequence(
                     [SKAction.run(addEgg), SKAction.wait(forDuration: GameData.levelData.eggSpawnInterval)]),
                 count: GameData.levelData.maxEggs))
-        print("max eggs start \(GameData.levelData.maxEggs)")
+        //print("max eggs start \(GameData.levelData.maxEggs)")
     }
     
     override func sceneDidLoad() {
         physicsWorld.contactDelegate = self
         self.lastUpdateTime = 0
     }
-    
-    
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
@@ -106,23 +105,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if eggType == "BasicEgg" {
             egg = BasicEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"), scene: self)
             egg.addEgg()
-//            egg.sprite.name = eggType
-//            let actualY = random(min: 0 - size.height / 2 + egg.sprite.size.height, max: 275)
-//            egg.sprite.position = CGPoint(x: (0 - (size.width / 2) - egg.sprite.size.width), y: actualY)
-//            egg.sprite.scale(to: CGSize(width: 300, height: 300))
-//            addChild(egg.sprite)
-//            egg.runAnimate()
-//            eggArray.append(egg)
         } else if eggType == "RollingEgg" {
             egg = RollingEgg(sprite: SKSpriteNode(imageNamed: "rolling_egg_0"), scene: self)
             egg.addEgg()
-//            egg.sprite.name = eggType
-//            let actualY = random(min: 0 - size.height / 2 + egg.sprite.size.height + 30, max: 250)
-//            egg.sprite.position = CGPoint(x: (0 - (size.width / 2) - egg.sprite.size.width), y: actualY)
-//            egg.sprite.scale(to: CGSize(width: 300, height: 300))
-//            addChild(egg.sprite)
-//            egg.runAnimate()
-//            eggArray.append(egg)
         }
     }
     
@@ -134,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let objectA = contact.bodyA.node as! SKSpriteNode
         let objectB = contact.bodyB.node as! SKSpriteNode
         
-       // print("bodyA: \(String(describing: objectA.name))")
+       // print("body A: \(String(describing: objectA.name))")
        // print("bodyB: \(String(describing: objectB.name))")
         //maybe encapsulate this for the egg object function
         //If the detected objects are fence and an egg then the egg is given a kicking animation
@@ -145,9 +130,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if egg.sprite == objectB && egg.hasContactFence == false{
                     egg.hasContactFence = true
                     egg.kickAnimate(fenceSprite: fenceSprite)
-                    
-                    //addChild(tempEgg.sprite)
-                    //eggArray[index] = tempEgg
                 }
             }
         }
@@ -163,7 +145,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         projectile.hasContactEgg = true
                         egg.health -= GameData.towerData.towerDamage
                         projectileArray.remove(at: index)
-                        //egg.checkDeathAnimate(index: index
                     }
                 }
             }
@@ -210,6 +191,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         fenceSprite.update()
         moveAndAnimateEgg()
         player.update()
+        verifyEggs()
         
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
@@ -235,10 +217,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.lastUpdateTime = currentTime
     }
     
-    
-    
-    
-    
     /*
      Referenced functions from above below
     */
@@ -251,7 +229,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for egg in eggArray {
                 
                 if egg.sprite.contains(touchLocation) {
-                    //player.tappedEgg(egg: egg)
                     egg.health -= GameData.playerData.playerDamage
                 }
             }
@@ -263,7 +240,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.animateCooldown()
         }
     }
-    
     
     func checkWin() {
         let reveal = SKTransition.fade(withDuration: 3)
@@ -286,14 +262,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             winScene?.scaleMode = .aspectFill
             view!.presentScene(winScene!, transition: reveal )
         }
-        
+    }
+    
+    func verifyEggs() {
+//        print("eggArrayNodes Size: \(eggArrayNodes.count)")
+//        print("eggArray size: \(eggArray.count)")
+        for (index, eggNode) in eggArrayNodes.enumerated() {
+            var verified = false
+            for egg in eggArray {
+                if egg.sprite == eggNode {
+                    verified = true
+                    break
+                }
+            }
+            if verified == false {
+                print("false veridyed")
+                eggArrayNodes.remove(at: index)
+                eggNode.removeFromParent()
+                eggCount += 1
+            }
+        }
     }
     
     func updateLabels() {
         eggCountLabel.text = "Egg Count: \(eggCount)/\(GameData.levelData.maxEggs)"
         fenceHealthLabel.text = "Fence Health: \(fenceSprite.health)"
         coinsLabel.text = "Coins: \(GameData.playerData.coins)"
-        tapCountLabel.text = "Taps: \(player.currentTapCount)"
+        tapCountLabel.text = "Ammo: \(player.currentTapCount)"
     }
     
     func moveAndAnimateEgg() {
@@ -311,20 +306,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                  is completed, the Egg's Sprite will be removed from all nodes
                  */
                 if egg.animationState != "death" {
-                    eggCount += 1
+                    //eggCount += 1
                     //print(eggCount)
                 }
                 egg.checkDeathAnimate(index: index)
                 
-                if eggArray.count > index + 1{
-                    eggArray.remove(at: index)
-                }
+//                if eggArray.count > index + 1{
+//                    eggArray.remove(at: index)
+//                }
             }
             // checks if the Eggs are offscreen to the right, then will remove the egg
-            if egg.sprite.position.x > size.width {
-                egg.sprite.removeFromParent()
-                eggArray.remove(at: index)
-            }
+//            if egg.sprite.position.x > size.width {
+//                egg.sprite.removeFromParent()
+//                eggArray.remove(at: index)
+//            }
         }
     }
     

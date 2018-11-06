@@ -18,7 +18,8 @@ class Player {
     var weaponSprite: SKSpriteNode!
     var maxTapCount = GameData.playerData.maxTapCount
     var currentTapCount: Int
-    var cooldownInterval = GameData.playerData.cooldownInterval
+    //var cooldownInterval = GameData.playerData.cooldownInterval
+    var cooldownInterval: TimeInterval = 1.2
     var canFire = true
     
     var weaponFireTextures = [SKTexture(imageNamed: "player_weapon_fire_0"),
@@ -30,29 +31,25 @@ class Player {
                                 SKTexture(imageNamed: "player_weapon_reload_1"),
                                 SKTexture(imageNamed: "player_weapon_reload_2"),
                                 SKTexture(imageNamed: "player_weapon_reload_3"),
-                                SKTexture(imageNamed: "player_weapon_reload_3")]
+                                SKTexture(imageNamed: "player_weapon_reload_3"),
+                                SKTexture(imageNamed: "player_weapon_reload_0")]
     
     var weaponFireAnimation: SKAction!
     var weaponReloadAnimation: SKAction!
     
     var isReloading = false
     
-    
-    
-    
-    
     init(sprite: SKSpriteNode) {
         self.currentTapCount = self.maxTapCount
         self.weaponSprite = sprite
         
         self.weaponFireAnimation = SKAction.animate(with: weaponFireTextures, timePerFrame: 0.10)
-        self.weaponReloadAnimation = SKAction.animate(with: weaponReloadTextures, timePerFrame: 0.5)
+        self.weaponReloadAnimation = SKAction.animate(with: weaponReloadTextures, timePerFrame: 0.20)
         
     }
     
     func tapped() {
         if currentTapCount > 0 && canFire {
-            //egg.health -= GameData.playerData.playerDamage
             self.currentTapCount -= 1
             animateFire()
         }
@@ -63,11 +60,11 @@ class Player {
     }
     
     func animateCooldown() {
-        print("called")
+       // print("called")
         func toggleCanFire() {
             self.canFire = true
-            self.currentTapCount = 10
-            print("ran")
+            self.currentTapCount = GameData.playerData.maxTapCount
+            //print("ran")
         }
        
         canFire = false
@@ -78,7 +75,7 @@ class Player {
     }
     
     func update() {
-        if self.currentTapCount == 0 && canFire{
+        if self.currentTapCount == 0 && canFire {
             animateCooldown()
         }
     }

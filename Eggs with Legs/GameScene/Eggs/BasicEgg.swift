@@ -80,13 +80,14 @@ class BasicEgg: Egg {
         self.sprite.name = "BasicEgg"
         let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
         self.sprite.position = CGPoint(x: (0 - (gameScene.size.width / 2) - self.sprite.size.width), y: actualY)
+        self.sprite.zPosition = 2
         self.sprite.scale(to: CGSize(width: 300, height: 300))
         self.runAnimate()
         
         
         
         gameScene.addChild(self.sprite)
-        
+        gameScene.eggArrayNodes.append(self.sprite)
         gameScene.eggArray.append(self)
         
     }
