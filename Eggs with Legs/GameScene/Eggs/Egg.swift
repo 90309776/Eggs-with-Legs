@@ -33,8 +33,7 @@ class Egg {
     var damage:     Int
     
     var hasContactProjectile: Bool
-    var animateType:    Int
-    
+    var shownHealthBar: Bool
     var coinRange: [Int] //2 Ints: [min, max]
     
     //ANIMATIION VARIABLES
@@ -55,10 +54,9 @@ class Egg {
     
     var hasContactFence: Bool
     
-    var gameScene: GameScene!
-    //var scene: GameScene
+    var healthBar: HealthBar
     
-//
+    var gameScene: GameScene!
     
     init(sprite: SKSpriteNode, scene: GameScene) {
         self.sprite = sprite
@@ -67,7 +65,8 @@ class Egg {
         self.health = self.baseHealth * GameData.eggData.healthMultiplier
         self.maxhealth = self.health
         self.damage = self.baseDamage * GameData.eggData.damageMultiplier
-        self.animateType = 0
+        self.shownHealthBar = false
+        //self.animateType = 0
         self.hasContactProjectile = false
         
         self.hasContactFence = false
@@ -77,6 +76,11 @@ class Egg {
         //gameScene.addChild(self.sprite)
         self.animationState = "running"
         
+        self.healthBar = HealthBar(eggSprite: self.sprite, scene: gameScene)
+        self.sprite.addChild(healthBar.healthBarBoarder)
+        self.sprite.addChild(healthBar.healthBar)
+        self.healthBar.healthBarBoarder.isHidden = true
+        self.healthBar.healthBar.isHidden = true
         /*
          Gives every Egg type physics properties
         */
@@ -88,12 +92,13 @@ class Egg {
         self.sprite.physicsBody?.contactTestBitMask = GameScene.PhysicsCategory.fence
                                                     //| GameScene.PhysicsCategory.projectile
         self.sprite.physicsBody?.collisionBitMask   = GameScene.PhysicsCategory.fence
-                                                    | GameScene.PhysicsCategory.egg // 5
+                                                    //| GameScene.PhysicsCategory.egg // 5
                                                     //| GameScene.PhysicsCategory.projectile
     }
     
     func move() {
         self.sprite.position.x += CGFloat(self.speed)
+        updateHealthBar()
     }
     
     //animate and deathAnamation should be overriden by their subclasses when called
@@ -123,16 +128,19 @@ class Egg {
     func checkDeathAnimate(index: Int) {
         if self.health <= 0.0 && self.animationState != "death" {
             //gameScene.eggCount += 1
+            self.healthBar.healthBar.size.width = 0
             self.sprite.removeAllActions()
             self.sprite.zRotation = 0
+            
             self.animateAction = SKAction.repeat(self.deathAnimateAction, count: 1)
             self.sprite.run(SKAction.sequence([self.animateAction, SKAction.removeFromParent()]), withKey: "death")
             self.animationState = "death"
             self.addCoins()
             gameScene.eggCount += 1
+            GameData.stats.totalEggsCracked += 1
             if gameScene.eggArray.count > index {
-                gameScene.eggArray.remove(at: index)
-                gameScene.eggArrayNodes.remove(at: index)
+                //gameScene.eggArray.remove(at: index)
+                //gameScene.eggArrayNodes.remove(at: index)
             }
         }
     }
@@ -144,6 +152,7 @@ class Egg {
         
         func decreaseFenceHealth() {
             fenceSprite.health -= Int(self.damage)
+            GameData.stats.totalDamageTaken += self.damage
         }
         
         if self.animationState == "running" {
@@ -167,16 +176,19 @@ class Egg {
     
     func checkCrackedKickAnimate(fenceSprite: Fence) {
         
-        func decreaseFenceHealth() {
-            fenceSprite.health -= Int(self.damage)
-        }
-        
         if self.animationState == "kicking"  && self.health < self.maxhealth{
             self.sprite.removeAllActions()
-            self.animateAction = SKAction.repeatForever(SKAction.sequence([self.crackedKickingAnimateAction, SKAction.run(decreaseFenceHealth), SKAction.wait(forDuration: 3)]))
+            self.animateAction = SKAction.repeatForever(SKAction.sequence([self.crackedKickingAnimateAction, SKAction.run({fenceSprite.health -= Int(self.damage)}), SKAction.wait(forDuration: 3)]))
             self.sprite.run(self.animateAction)
             self.animationState = "cracked_kicking"
             //self.sprite.name = "basicegg now"
+        }
+    }
+    
+    func checkShowHealthBar() {
+        if (self.health <= self.maxhealth - 1 && !self.shownHealthBar) {
+            self.healthBar.healthBarBoarder.isHidden = false
+            self.healthBar.healthBar.isHidden = false
         }
     }
     
@@ -185,6 +197,12 @@ class Egg {
         GameData.playerData.coins += randomCoinAmount
     }
     
+    func updateHealthBar() {
+        let healthPercentage = self.health / self.maxhealth
+        let healthBarWidth = Double(healthBar.healthBarMaxWidth) * healthPercentage
+        self.healthBar.healthBar.size = CGSize(width: healthBarWidth, height: 20)
+        //self.healthBar.healthBar.position.x = self.healthBar.healthBar.position.x - CGFloat(healthBarWidth)
+    }
     
     func random() -> CGFloat {
         return CGFloat(Float(arc4random()) / 0xFFFFFFFF)

@@ -12,35 +12,35 @@ import Foundation
 class StartScene: SKScene {
     
     var startButtonSprite: SKSpriteNode!
+    var mainLayer: SKNode!
+    
     
     override func sceneDidLoad() {
         initNodes()
+        scaleScene()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
-        
+        //If pressed, goes to tutorialScene
         pressedStartButton(touchLocation: touchLocation)
-        
-        
     }
-    
-    
+
     /*
      REFERENCED FUNCTIONS ARE BELOW
     */
     
     func initNodes() {
-        guard let startButtonSpriteNode = childNode(withName: "buttonSprite") as? SKSpriteNode else {
+        guard let mainLayerNode = childNode(withName: "mainLayer") else {
+            fatalError("mainlayer failed to load. Maybe not in childNode list?")
+        }
+        self.mainLayer = mainLayerNode
+        
+        guard let startButtonSpriteNode = mainLayer.childNode(withName: "buttonSprite") as? SKSpriteNode else {
             fatalError("startButtonSpriteNode failed to load. Maybe not in childNode list?")
         }
         self.startButtonSprite = startButtonSpriteNode
-        
-//        guard let childTestNode = startButtonSprite.childNode(withName: "testSprite") as? SKSpriteNode else {
-//            fatalError()
-//        }
-        
     }
     
     func pressedStartButton(touchLocation: CGPoint) {
@@ -52,4 +52,10 @@ class StartScene: SKScene {
             view!.presentScene(tutorialScene!, transition: reveal )
         }
     }
+    //Sets the scene's mainlayer to scale to the device's playable area
+    func scaleScene() {
+        mainLayer.yScale = GameData.sceneScaling.sceneYScale
+        mainLayer.position.y = GameData.sceneScaling.playableAreaOrigin.y
+    }
+    
 }

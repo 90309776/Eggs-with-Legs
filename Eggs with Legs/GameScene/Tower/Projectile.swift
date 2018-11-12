@@ -39,6 +39,7 @@ class Projectile {
         self.sprite.name = "projectile"
         //self.sprite.physicsBody = SKPhysicsBody(texture: self.sprite.texture!, size: CGSize(width: self.sprite.size.width, height: self.sprite.size.height))
         self.sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 50, height: 50))
+        //self.sprite.scale(to: CGSize(width: 0.2, height: 0.2))
         self.sprite.physicsBody?.isDynamic          = true // 2
         self.sprite.physicsBody?.affectedByGravity  = false
         self.sprite.physicsBody?.mass = 10000

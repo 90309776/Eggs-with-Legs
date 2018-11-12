@@ -10,18 +10,21 @@
 		222564712187B3B9008C7F2A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222564702187B3B9008C7F2A /* Player.swift */; };
 		22256474218A0F9A008C7F2A /* Rooster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22256473218A0F9A008C7F2A /* Rooster.swift */; };
 		22256476218A0FB1008C7F2A /* RollerbladingEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */; };
+		224B639821978DC90079CDAF /* LoadingScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 224B639721978DC90079CDAF /* LoadingScene.sks */; };
+		224B639A21978DDC0079CDAF /* LoadingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224B639921978DDC0079CDAF /* LoadingScene.swift */; };
 		225DB0AC218E1D9A007C972F /* ShopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225DB0AB218E1D9A007C972F /* ShopButton.swift */; };
 		225DB0AE218F5062007C972F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 225DB0AD218F5062007C972F /* GoogleService-Info.plist */; };
 		225DB1352190BC92007C972F /* TutorialScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 225DB1342190BC92007C972F /* TutorialScene.sks */; };
 		225DB1372190BCA1007C972F /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225DB1362190BCA1007C972F /* TutorialScene.swift */; };
 		225DB13921921109007C972F /* Todo List in Resources */ = {isa = PBXBuildFile; fileRef = 225DB13821921109007C972F /* Todo List */; };
+		225DB13C21925AE2007C972F /* HealthBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225DB13B21925AE2007C972F /* HealthBar.swift */; };
+		225DB13E21928B0F007C972F /* Change Log in Resources */ = {isa = PBXBuildFile; fileRef = 225DB13D21928B0F007C972F /* Change Log */; };
 		226C44A2216AC1040049A2E3 /* Egg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A1216AC1040049A2E3 /* Egg.swift */; };
 		226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A3216C0C560049A2E3 /* BasicEgg.swift */; };
 		226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */; };
 		226C44A9216C42460049A2E3 /* Fence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226C44A8216C42450049A2E3 /* Fence.swift */; };
 		227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D5E2166BA08005E0560 /* AppDelegate.swift */; };
 		227B1D612166BA08005E0560 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D602166BA08005E0560 /* GameScene.sks */; };
-		227B1D632166BA08005E0560 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D622166BA08005E0560 /* Actions.sks */; };
 		227B1D652166BA08005E0560 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D642166BA08005E0560 /* GameScene.swift */; };
 		227B1D672166BA08005E0560 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227B1D662166BA08005E0560 /* GameViewController.swift */; };
 		227B1D6A2166BA08005E0560 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 227B1D682166BA08005E0560 /* Main.storyboard */; };
@@ -62,12 +65,16 @@
 		222564702187B3B9008C7F2A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		22256473218A0F9A008C7F2A /* Rooster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rooster.swift; sourceTree = "<group>"; };
 		22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollerbladingEgg.swift; sourceTree = "<group>"; };
+		224B639721978DC90079CDAF /* LoadingScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LoadingScene.sks; sourceTree = "<group>"; };
+		224B639921978DDC0079CDAF /* LoadingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScene.swift; sourceTree = "<group>"; };
 		225DB0AB218E1D9A007C972F /* ShopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopButton.swift; sourceTree = "<group>"; };
 		225DB0AD218F5062007C972F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		225DB12B218F80A7007C972F /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = ../../../../Downloads/Firebase/module.modulemap; sourceTree = "<group>"; };
 		225DB1342190BC92007C972F /* TutorialScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TutorialScene.sks; sourceTree = "<group>"; };
 		225DB1362190BCA1007C972F /* TutorialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialScene.swift; sourceTree = "<group>"; };
 		225DB13821921109007C972F /* Todo List */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Todo List"; sourceTree = "<group>"; };
+		225DB13B21925AE2007C972F /* HealthBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthBar.swift; sourceTree = "<group>"; };
+		225DB13D21928B0F007C972F /* Change Log */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Change Log"; sourceTree = "<group>"; };
 		226C44A1216AC1040049A2E3 /* Egg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Egg.swift; sourceTree = "<group>"; };
 		226C44A3216C0C560049A2E3 /* BasicEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEgg.swift; sourceTree = "<group>"; };
 		226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollingEgg.swift; sourceTree = "<group>"; };
@@ -75,7 +82,6 @@
 		227B1D5B2166BA08005E0560 /* Eggs with Legs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Eggs with Legs.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		227B1D5E2166BA08005E0560 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		227B1D602166BA08005E0560 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		227B1D622166BA08005E0560 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		227B1D642166BA08005E0560 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		227B1D662166BA08005E0560 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		227B1D692166BA08005E0560 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -133,6 +139,15 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
+		224B639621978DA80079CDAF /* LoadingScene */ = {
+			isa = PBXGroup;
+			children = (
+				224B639721978DC90079CDAF /* LoadingScene.sks */,
+				224B639921978DDC0079CDAF /* LoadingScene.swift */,
+			);
+			path = LoadingScene;
+			sourceTree = "<group>";
+		};
 		225DB0AA218E1D75007C972F /* Shop */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,16 +164,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		225DB1332190BC73007C972F /* TutorialScene */ = {
+		225DB13A21925AC5007C972F /* Egg Healthbar */ = {
 			isa = PBXGroup;
 			children = (
+				225DB13B21925AE2007C972F /* HealthBar.swift */,
 			);
-			path = TutorialScene;
+			path = "Egg Healthbar";
 			sourceTree = "<group>";
 		};
 		226C44A7216C0C770049A2E3 /* Eggs */ = {
 			isa = PBXGroup;
 			children = (
+				225DB13A21925AC5007C972F /* Egg Healthbar */,
 				226C44A1216AC1040049A2E3 /* Egg.swift */,
 				226C44A3216C0C560049A2E3 /* BasicEgg.swift */,
 				226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */,
@@ -194,9 +211,10 @@
 			children = (
 				227B1D5E2166BA08005E0560 /* AppDelegate.swift */,
 				227B1D922166BA4C005E0560 /* Tiles.sks */,
-				227B1D622166BA08005E0560 /* Actions.sks */,
 				22AAB4BC2177F9FD0075B5E4 /* GameData.swift */,
 				225DB13821921109007C972F /* Todo List */,
+				225DB13D21928B0F007C972F /* Change Log */,
+				224B639621978DA80079CDAF /* LoadingScene */,
 				22AAB4C5217ABCFB0075B5E4 /* StartScene */,
 				22AAB4C4217ABCF40075B5E4 /* WinScene */,
 				22AAB4C3217ABCED0075B5E4 /* LoseScene */,
@@ -277,7 +295,6 @@
 				22AAB4B221769CC50075B5E4 /* StartScene.sks */,
 				225DB1362190BCA1007C972F /* TutorialScene.swift */,
 				225DB1342190BC92007C972F /* TutorialScene.sks */,
-				225DB1332190BC73007C972F /* TutorialScene */,
 			);
 			path = StartScene;
 			sourceTree = "<group>";
@@ -392,13 +409,14 @@
 				227B1D6A2166BA08005E0560 /* Main.storyboard in Resources */,
 				225DB13921921109007C972F /* Todo List in Resources */,
 				227B1D612166BA08005E0560 /* GameScene.sks in Resources */,
+				224B639821978DC90079CDAF /* LoadingScene.sks in Resources */,
 				22AAB4BB2177BC630075B5E4 /* LoseScene.sks in Resources */,
+				225DB13E21928B0F007C972F /* Change Log in Resources */,
 				227B1D6C2166BA0D005E0560 /* Assets.xcassets in Resources */,
 				225DB1352190BC92007C972F /* TutorialScene.sks in Resources */,
 				227B1D932166BA4C005E0560 /* Tiles.sks in Resources */,
 				225DB0AE218F5062007C972F /* GoogleService-Info.plist in Resources */,
 				227B1D6F2166BA0D005E0560 /* LaunchScreen.storyboard in Resources */,
-				227B1D632166BA08005E0560 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,9 +446,11 @@
 				227B1D672166BA08005E0560 /* GameViewController.swift in Sources */,
 				22AAB4BF2177FC3A0075B5E4 /* LoseScene.swift in Sources */,
 				222564712187B3B9008C7F2A /* Player.swift in Sources */,
+				224B639A21978DDC0079CDAF /* LoadingScene.swift in Sources */,
 				22256476218A0FB1008C7F2A /* RollerbladingEgg.swift in Sources */,
 				22AAB4B521769E8B0075B5E4 /* StartScene.swift in Sources */,
 				22AAB4BD2177F9FD0075B5E4 /* GameData.swift in Sources */,
+				225DB13C21925AE2007C972F /* HealthBar.swift in Sources */,
 				227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */,
 				226C44A2216AC1040049A2E3 /* Egg.swift in Sources */,
 				225DB1372190BCA1007C972F /* TutorialScene.swift in Sources */,
