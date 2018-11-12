@@ -78,10 +78,11 @@ class BasicEgg: Egg {
     
     override func addEgg() {
         self.sprite.name = "BasicEgg"
-        let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
-        self.sprite.position = CGPoint(x: (0 - (gameScene.size.width / 2) - self.sprite.size.width), y: actualY)
+        //let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
+        let actualY = random(min: self.sprite.size.height + 20, max: 600)
+        self.sprite.position = CGPoint(x: (0 - self.sprite.size.width), y: actualY)
         self.sprite.zPosition = 2
-        self.sprite.scale(to: CGSize(width: 300, height: 300))
+        self.sprite.scale(to: CGSize(width: 120, height: 120))
         self.runAnimate()
         
         

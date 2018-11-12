@@ -12,7 +12,22 @@ import Foundation
 
 class RollingEgg: Egg {
     
-    var rollingEggRunningTextures        = [SKTexture(imageNamed: "rolling_egg_0")]
+    var rollingEggRunningTextures        = [SKTexture(imageNamed: "rolling_egg_0"),
+                                            SKTexture(imageNamed: "rolling_egg_1"),
+                                            SKTexture(imageNamed: "rolling_egg_2"),
+                                            SKTexture(imageNamed: "rolling_egg_3"),
+                                            SKTexture(imageNamed: "rolling_egg_4"),
+                                            SKTexture(imageNamed: "rolling_egg_5"),
+                                            SKTexture(imageNamed: "rolling_egg_6"),
+                                            SKTexture(imageNamed: "rolling_egg_7"),
+                                            SKTexture(imageNamed: "rolling_egg_8"),
+                                            SKTexture(imageNamed: "rolling_egg_9"),
+                                            SKTexture(imageNamed: "rolling_egg_10"),
+                                            SKTexture(imageNamed: "rolling_egg_11"),
+                                            SKTexture(imageNamed: "rolling_egg_12"),
+                                            SKTexture(imageNamed: "rolling_egg_13"),
+                                            SKTexture(imageNamed: "rolling_egg_14"),
+                                            SKTexture(imageNamed: "rolling_egg_15")]
     var rollingEggCrackedTextures        = [SKTexture(imageNamed: "rolling_egg_0")]
     var rollingEggDeathTextures          = [SKTexture(imageNamed: "BE_death_anim_0"),
                                             SKTexture(imageNamed: "BE_death_anim_1"),
@@ -32,7 +47,7 @@ class RollingEgg: Egg {
         
         self.eggRunningTextures = rollingEggRunningTextures
         self.eggDeathTextures = rollingEggDeathTextures
-        self.eggCrackedTextures = rollingEggCrackedTextures
+        self.eggCrackedTextures = rollingEggRunningTextures
         self.eggKickingTextures = rollingEggKickingTextures
         self.eggCrackedKickingTextures = rollingEggCrackedKickingTextures
         
@@ -47,20 +62,25 @@ class RollingEgg: Egg {
         
         self.coinRange = GameData.eggData.rollingEgg.coinRange
         
-        self.rotationAction = SKAction.run {
-            self.sprite.zRotation -= GameData.eggData.rollingEgg.constantRadianRotationRate
-        }
-        self.runAnimateAction = SKAction.repeatForever(SKAction.sequence([rotationAction, SKAction.wait(forDuration: 0.05)]))
+        
+        
+//        self.rotationAction = SKAction.run {
+//            self.sprite.zRotation -= GameData.eggData.rollingEgg.constantRadianRotationRate
+//        }
+//        self.runAnimateAction = SKAction.repeatForever(SKAction.sequence([rotationAction, SKAction.wait(forDuration: 0.05)]))
+        self.runAnimateAction = SKAction.animate(with: self.eggRunningTextures, timePerFrame: 0.04)
+        self.animateAction = SKAction.repeatForever(runAnimateAction)
+        
         self.deathAnimateAction = SKAction.animate(with: self.eggDeathTextures, timePerFrame: 0.12)
         
     }
     
     override func addEgg() {
         self.sprite.name = "RollingEgg"
-        let actualY = random(min: 0 - gameScene.size.height / 2 + self.sprite.size.height, max: 275)
-        self.sprite.position = CGPoint(x: (0 - (gameScene.size.width / 2) - self.sprite.size.width), y: actualY)
+        let actualY = random(min: self.sprite.size.height + 20, max: 600)
+        self.sprite.position = CGPoint(x: (0 - self.sprite.size.width), y: actualY)
         self.sprite.zPosition = 2
-        self.sprite.scale(to: CGSize(width: 300, height: 300))
+        self.sprite.scale(to: CGSize(width: 120, height: 120))
         gameScene.addChild(self.sprite)
         gameScene.eggArrayNodes.append(self.sprite)
         self.runAnimate()
@@ -71,7 +91,8 @@ class RollingEgg: Egg {
     override func kickAnimate(fenceSprite: Fence) {
         
         fenceSprite.health -= Int(self.damage)
-        
+        GameData.stats.totalDamageTaken += self.damage
+
         self.health = 0
         for (index, egg) in gameScene.eggArray.enumerated() {
             if egg.sprite == self.sprite {

@@ -16,15 +16,16 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         if let view = self.view as! SKView? {
             view.preferredFramesPerSecond = 60
+            //setupSceneScaling()
 //            if let scene = GameScene(fileNamed: "GameScene") {
 //                scene.scaleMode = .aspectFill
 //
 //                view.presentScene(scene)
 //            }
             
-            if let scene = StartScene(fileNamed: "StartScene") {
+            if let scene = LoadingScene(fileNamed: "LoadingScene") {
                 scene.scaleMode = .aspectFill
-                
+
                 view.presentScene(scene)
             }
             view.ignoresSiblingOrder = true
@@ -33,6 +34,12 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
     }
+    
+    
+    func setupSceneScaling() {
+        
+    }
+    
 
     override var shouldAutorotate: Bool {
         return true

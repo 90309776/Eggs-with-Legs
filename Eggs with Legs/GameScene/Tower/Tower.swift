@@ -40,8 +40,8 @@ class Tower {
         let adjustedTargetPoint = CGPoint(x: targetEgg.sprite.position.x + CGFloat(Double(targetEgg.speed) / 0.41), y: targetEgg.sprite.position.y)
         
         let projectile = Projectile(startPos: self.sprite.position, targetPos: adjustedTargetPoint, type: "projectile")
-        projectile.sprite.size.height = 50
-        projectile.sprite.size.width = 50
+        projectile.sprite.size.height = 15
+        projectile.sprite.size.width = 15
         gameScene.addChild(projectile.sprite)
         gameScene.projectileArray.append(projectile)
         projectile.projectileShootLinear(targetEgg: targetEgg)

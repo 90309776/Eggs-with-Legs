@@ -17,7 +17,14 @@ class GameData {
 
     //THIS IS THE DEFAULT DATA SET
     //IS MODIFIED AFTER A PASSING OF A DAY
+    struct sceneScaling {
+        static var playableArea: CGRect = CGRect()
+        static var playableAreaOrigin: CGPoint = CGPoint()
+        static var sceneYScale: CGFloat = 0.0
+    }
+    
     struct levelData {
+        static var timeMax = 30
         static var day = 1
         static var maxEggs = 10
         static var eggSpawnInterval: TimeInterval = 1
@@ -50,18 +57,18 @@ class GameData {
     struct eggData {
         
         struct basicEgg {
-            static var baseSpeed = 10.0
+            static var baseSpeed = 4.0
             static var baseHealth = 10.0
             static var baseDamage = 1
-            static var coinRange = [50, 80]
+            static var coinRange = [20, 40]
         }
         
         struct rollingEgg {
-            static var baseSpeed = 12.0
+            static var baseSpeed = 6.0
             static var constantRadianRotationRate: CGFloat = 22.5
             static var baseHealth = 5.0
             static var baseDamage = 3
-            static var coinRange = [90, 150]
+            static var coinRange = [40, 70]
         }
 
         
@@ -74,6 +81,62 @@ class GameData {
         static var baseHealth = 20
         static var healthMultiplier = 1
         static var fenceStage = 1
+    }
+    
+    
+    struct stats {
+        static var totalEggsCracked = 0
+        static var totalDamageTaken = 0
+    }
+    
+    //This is prob really inefficient maybe replace if find new method
+    static func saveLocalData() {
+        //LEVELDATA
+        UserDefaults.standard.set(GameData.levelData.day, forKey: "levelDataDay")
+        UserDefaults.standard.set(GameData.levelData.maxEggs, forKey: "levelDataMaxEggs")
+        UserDefaults.standard.set(GameData.levelData.eggSpawnInterval, forKey: "levelDataSpawnInterval")
+        
+        //PLAYERDATA
+        UserDefaults.standard.set(GameData.playerData.coins, forKey: "playerDataCoins")
+        UserDefaults.standard.set(GameData.playerData.playerDamage, forKey: "playerDataDamage")
+        UserDefaults.standard.set(GameData.playerData.maxTapCount, forKey: "playerDataMaxTapCount")
+        UserDefaults.standard.set(GameData.playerData.cooldownInterval, forKey: "playerDataCoolDownInterval")
+        
+        //TOWERDATA
+        UserDefaults.standard.set(GameData.towerData.tower_1Activated, forKey: "towerDataTower1")
+        UserDefaults.standard.set(GameData.towerData.tower_2Activated, forKey: "towerDataTower2")
+        UserDefaults.standard.set(GameData.towerData.towerFireInterval, forKey: "towerDataFireInterval")
+        UserDefaults.standard.set(GameData.towerData.towerDamage, forKey: "towerDataDamage")
+        
+        //SHOPDATA
+        UserDefaults.standard.set(GameData.shopData.buyTowerCost, forKey: "shopDataBuyTowerCost")
+        UserDefaults.standard.set(GameData.shopData.upgradeWeaponCost, forKey: "shopDataUpgradeWeaponCost")
+        UserDefaults.standard.set(GameData.shopData.increaseTowerFireRateCost, forKey: "shopDataIncreaseFireRateCost")
+        UserDefaults.standard.set(GameData.shopData.upgradeFenceHealthCost, forKey: "shopDataUpgradeFenceHealthCost")
+        UserDefaults.standard.set(GameData.shopData.increasePlayerDamageCost, forKey: "shopDataIncreasePlayerDamageCost")
+        
+        //EGGDATA - BASICEGG
+        
+        UserDefaults.standard.set(GameData.eggData.basicEgg.baseSpeed, forKey: "basicEggSpeed")
+        UserDefaults.standard.set(GameData.eggData.basicEgg.baseHealth, forKey: "basicEggHealth")
+        UserDefaults.standard.set(GameData.eggData.basicEgg.baseDamage, forKey: "basicEggDamage")
+        UserDefaults.standard.set(GameData.eggData.basicEgg.coinRange, forKey: "basicEggCoinRange")
+        //EGGDATA - ROLLINGEGG
+        UserDefaults.standard.set(GameData.eggData.rollingEgg.baseSpeed, forKey: "rollingEggSpeed")
+        UserDefaults.standard.set(GameData.eggData.rollingEgg.baseHealth, forKey: "rollingEggHealth")
+        UserDefaults.standard.set(GameData.eggData.rollingEgg.baseDamage, forKey: "rollingEggDamage")
+        UserDefaults.standard.set(GameData.eggData.rollingEgg.coinRange, forKey: "rollingEggCoinRange")
+        //EGGDATA
+        UserDefaults.standard.set(GameData.eggData.speedMultiplier, forKey: "eggDataSpeedMulti")
+        UserDefaults.standard.set(GameData.eggData.healthMultiplier, forKey: "eggDataHealthMulti")
+        UserDefaults.standard.set(GameData.eggData.damageMultiplier, forKey: "eggDataDamageMulti")
+        
+        //FENCEDATA
+        UserDefaults.standard.set(GameData.fenceData.baseHealth, forKey: "fenceDataHealth")
+        UserDefaults.standard.set(GameData.fenceData.healthMultiplier, forKey: "fenceDataHealthMulti")
+        UserDefaults.standard.set(GameData.fenceData.fenceStage, forKey: "fenceDataStage")
+        
+        print("Saved UserDefaults")
     }
     
     

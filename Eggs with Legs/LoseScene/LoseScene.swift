@@ -16,7 +16,6 @@ class LoseScene: SKScene {
     
     override func sceneDidLoad() {
         initNodes()
-        //print("Day Count: \(GameData.DataStructure.day)")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -25,7 +24,6 @@ class LoseScene: SKScene {
         
         pressedStartButton(touchLocation: touchLocation)
     }
-    
     
     /*
      REFERENCED FUNCTIONS ARE BELOW
@@ -46,16 +44,17 @@ class LoseScene: SKScene {
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(startScene!, transition: reveal )
-            
         }
     }
     
-    
+    //Resets all local game data variables
+    //Super ineffiecient will fix and change
     func resetGameData() {
         
         GameData.levelData.day = 1
         GameData.levelData.eggSpawnInterval = 1
         GameData.levelData.maxEggs = 10
+        GameData.levelData.timeMax = 45
         
         GameData.playerData.coins = 0
         GameData.playerData.maxTapCount = 10
@@ -78,18 +77,19 @@ class LoseScene: SKScene {
         
         GameData.eggData.basicEgg.baseDamage = 1
         GameData.eggData.basicEgg.baseHealth = 10
-        GameData.eggData.basicEgg.baseSpeed = 10
-        GameData.eggData.basicEgg.coinRange = [90, 150]
+        GameData.eggData.basicEgg.baseSpeed = 4
+        GameData.eggData.basicEgg.coinRange = [20, 40]
         
         GameData.eggData.rollingEgg.baseDamage = 3
         GameData.eggData.rollingEgg.baseHealth = 5
-        GameData.eggData.rollingEgg.baseSpeed = 12
+        GameData.eggData.rollingEgg.baseSpeed = 6
+        GameData.eggData.rollingEgg.coinRange = [40, 70]
         
         GameData.eggData.damageMultiplier = 1
         GameData.eggData.healthMultiplier = 1.0
         GameData.eggData.speedMultiplier = 1.0
         
-        
+        GameData.saveLocalData()
         
     }
     
