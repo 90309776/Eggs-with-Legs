@@ -14,10 +14,13 @@ class TutorialScene: SKScene {
     
     var nextButton: SKSpriteNode!
     var mainLayer: SKNode!
+    var gameScene: GameScene!
     
     override func didMove(to view: SKView) {
         initNodes()
         scaleScene()
+        gameScene = GameScene()
+        gameScene.musicLoop(SoundName: "MenuLoop")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -31,6 +34,7 @@ class TutorialScene: SKScene {
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
         if nextButton.contains(touchLocation) {
+            gameScene!.stopMusic()
             let reveal = SKTransition.fade(withDuration: 1.5)
             view!.presentScene(gameScene!, transition: reveal )
         }

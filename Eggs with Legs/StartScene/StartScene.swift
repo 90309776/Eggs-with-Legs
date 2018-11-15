@@ -25,6 +25,7 @@ class StartScene: SKScene {
         let touchLocation = touch.location(in: self)
         //If pressed, goes to tutorialScene
         pressedStartButton(touchLocation: touchLocation)
+        //music doesn't stop till after tutorial
     }
 
     /*

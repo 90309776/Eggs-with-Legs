@@ -46,6 +46,7 @@ class Tower {
         gameScene.projectileArray.append(projectile)
         projectile.projectileShootLinear(targetEgg: targetEgg)
         
+        gameScene.gunshot()
         
     }
     

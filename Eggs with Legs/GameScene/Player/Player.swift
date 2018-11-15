@@ -7,6 +7,7 @@
 //
 import SpriteKit
 import Foundation
+import AVFoundation
 
 //class handles the cooldown for tapping
 
@@ -14,6 +15,8 @@ class Player {
     
     
     //Variables referenced are public variables from GameData class
+    
+    var playStuff: AVAudioPlayer?
     
     var weaponSprite: SKSpriteNode!
     var maxTapCount = GameData.playerData.maxTapCount
@@ -31,7 +34,11 @@ class Player {
                                 SKTexture(imageNamed: "player_weapon_reload_1"),
                                 SKTexture(imageNamed: "player_weapon_reload_2"),
                                 SKTexture(imageNamed: "player_weapon_reload_3"),
-                                SKTexture(imageNamed: "player_weapon_reload_3"),
+                                SKTexture(imageNamed: "player_weapon_reload_4"),
+                                SKTexture(imageNamed: "player_weapon_reload_0"),
+                                SKTexture(imageNamed: "player_weapon_reload_0"), //"Pauses" to fit with reload sound
+                                SKTexture(imageNamed: "player_weapon_reload_0"),
+                                SKTexture(imageNamed: "player_weapon_reload_4"),
                                 SKTexture(imageNamed: "player_weapon_reload_0")]
     
     var weaponFireAnimation: SKAction!
@@ -68,6 +75,7 @@ class Player {
         }
        
         canFire = false
+        playSound(SoundName: "GunFullReload")
         let runSequence = SKAction.sequence([weaponReloadAnimation, SKAction.wait(forDuration: self.cooldownInterval), SKAction.run(
                 toggleCanFire)])
         self.weaponSprite.run(runSequence)
@@ -79,4 +87,25 @@ class Player {
             animateCooldown()
         }
     }
+    
+    func playSound(SoundName: String) {
+        
+        let path = Bundle.main.path(forResource: SoundName, ofType : "wav")!
+        
+        let url = URL(fileURLWithPath : path)
+  
+        do {
+            
+            playStuff = try AVAudioPlayer(contentsOf: url)
+            
+            playStuff?.play()
+     
+        } catch {
+ 
+            print ("Something's gone terribly wrong")
+   
+        }
+        
+    }
+
 }
