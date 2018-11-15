@@ -23,6 +23,10 @@ class GameData {
         static var sceneYScale: CGFloat = 0.0
     }
     
+    struct settingsData {
+        static var vibration = true
+    }
+    
     struct levelData {
         static var timeMax = 30
         static var day = 1
@@ -31,7 +35,7 @@ class GameData {
     }
     
     struct playerData {
-        static var coins = 0
+        static var coins = 100000
         static var playerDamage = 5.0
         static var maxTapCount = 10
         static var cooldownInterval: TimeInterval = 3
@@ -51,6 +55,7 @@ class GameData {
         static var increaseTowerFireRateCost = 500
         static var upgradeFenceHealthCost = 250
         static var increasePlayerDamageCost = 500
+        static var upgradeTowerDamageCost = 500
         
     }
     

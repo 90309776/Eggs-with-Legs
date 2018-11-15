@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221A9C22219A312D00A2D487 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221A9C21219A312D00A2D487 /* SettingsScene.swift */; };
 		222564712187B3B9008C7F2A /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222564702187B3B9008C7F2A /* Player.swift */; };
 		22256474218A0F9A008C7F2A /* Rooster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22256473218A0F9A008C7F2A /* Rooster.swift */; };
 		22256476218A0FB1008C7F2A /* RollerbladingEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */; };
 		224B639821978DC90079CDAF /* LoadingScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 224B639721978DC90079CDAF /* LoadingScene.sks */; };
 		224B639A21978DDC0079CDAF /* LoadingScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224B639921978DDC0079CDAF /* LoadingScene.swift */; };
-		225DB0AC218E1D9A007C972F /* ShopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225DB0AB218E1D9A007C972F /* ShopButton.swift */; };
+		225DB0AC218E1D9A007C972F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225DB0AB218E1D9A007C972F /* Button.swift */; };
 		225DB0AE218F5062007C972F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 225DB0AD218F5062007C972F /* GoogleService-Info.plist */; };
 		225DB1352190BC92007C972F /* TutorialScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 225DB1342190BC92007C972F /* TutorialScene.sks */; };
 		225DB1372190BCA1007C972F /* TutorialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225DB1362190BCA1007C972F /* TutorialScene.swift */; };
@@ -42,6 +43,8 @@
 		22AAB4BD2177F9FD0075B5E4 /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4BC2177F9FD0075B5E4 /* GameData.swift */; };
 		22AAB4BF2177FC3A0075B5E4 /* LoseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4BE2177FC3A0075B5E4 /* LoseScene.swift */; };
 		22AAB4C12177FC440075B5E4 /* WinScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AAB4C02177FC440075B5E4 /* WinScene.swift */; };
+		22B1BBC0219A3845005600EC /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22B1BBBF219A3844005600EC /* SettingsScene.sks */; };
+		22B1BBC3219A40B4005600EC /* LabelSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B1BBC2219A40B4005600EC /* LabelSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,12 +65,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		221A9C21219A312D00A2D487 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		222564702187B3B9008C7F2A /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		22256473218A0F9A008C7F2A /* Rooster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rooster.swift; sourceTree = "<group>"; };
 		22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RollerbladingEgg.swift; sourceTree = "<group>"; };
 		224B639721978DC90079CDAF /* LoadingScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = LoadingScene.sks; sourceTree = "<group>"; };
 		224B639921978DDC0079CDAF /* LoadingScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScene.swift; sourceTree = "<group>"; };
-		225DB0AB218E1D9A007C972F /* ShopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopButton.swift; sourceTree = "<group>"; };
+		225DB0AB218E1D9A007C972F /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		225DB0AD218F5062007C972F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		225DB12B218F80A7007C972F /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = ../../../../Downloads/Firebase/module.modulemap; sourceTree = "<group>"; };
 		225DB1342190BC92007C972F /* TutorialScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TutorialScene.sks; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 		22AAB4BC2177F9FD0075B5E4 /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
 		22AAB4BE2177FC3A0075B5E4 /* LoseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoseScene.swift; sourceTree = "<group>"; };
 		22AAB4C02177FC440075B5E4 /* WinScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinScene.swift; sourceTree = "<group>"; };
+		22B1BBBF219A3844005600EC /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
+		22B1BBC2219A40B4005600EC /* LabelSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,14 +152,6 @@
 				224B639921978DDC0079CDAF /* LoadingScene.swift */,
 			);
 			path = LoadingScene;
-			sourceTree = "<group>";
-		};
-		225DB0AA218E1D75007C972F /* Shop */ = {
-			isa = PBXGroup;
-			children = (
-				225DB0AB218E1D9A007C972F /* ShopButton.swift */,
-			);
-			path = Shop;
 			sourceTree = "<group>";
 		};
 		225DB12A218F80A7007C972F /* Frameworks */ = {
@@ -217,6 +215,7 @@
 				224B639621978DA80079CDAF /* LoadingScene */,
 				22AAB4C5217ABCFB0075B5E4 /* StartScene */,
 				22AAB4C4217ABCF40075B5E4 /* WinScene */,
+				22B1BBC1219A3F4D005600EC /* Custom Classes */,
 				22AAB4C3217ABCED0075B5E4 /* LoseScene */,
 				22AAB4C2217ABCD40075B5E4 /* GameScene */,
 				227B1D662166BA08005E0560 /* GameViewController.swift */,
@@ -283,7 +282,6 @@
 			children = (
 				22AAB4C02177FC440075B5E4 /* WinScene.swift */,
 				22AAB4B82176AA8A0075B5E4 /* WinScene.sks */,
-				225DB0AA218E1D75007C972F /* Shop */,
 			);
 			path = WinScene;
 			sourceTree = "<group>";
@@ -295,8 +293,19 @@
 				22AAB4B221769CC50075B5E4 /* StartScene.sks */,
 				225DB1362190BCA1007C972F /* TutorialScene.swift */,
 				225DB1342190BC92007C972F /* TutorialScene.sks */,
+				221A9C21219A312D00A2D487 /* SettingsScene.swift */,
+				22B1BBBF219A3844005600EC /* SettingsScene.sks */,
 			);
 			path = StartScene;
+			sourceTree = "<group>";
+		};
+		22B1BBC1219A3F4D005600EC /* Custom Classes */ = {
+			isa = PBXGroup;
+			children = (
+				225DB0AB218E1D9A007C972F /* Button.swift */,
+				22B1BBC2219A40B4005600EC /* LabelSet.swift */,
+			);
+			path = "Custom Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,6 +422,7 @@
 				22AAB4BB2177BC630075B5E4 /* LoseScene.sks in Resources */,
 				225DB13E21928B0F007C972F /* Change Log in Resources */,
 				227B1D6C2166BA0D005E0560 /* Assets.xcassets in Resources */,
+				22B1BBC0219A3845005600EC /* SettingsScene.sks in Resources */,
 				225DB1352190BC92007C972F /* TutorialScene.sks in Resources */,
 				227B1D932166BA4C005E0560 /* Tiles.sks in Resources */,
 				225DB0AE218F5062007C972F /* GoogleService-Info.plist in Resources */,
@@ -445,6 +455,7 @@
 				226C44A6216C0C6A0049A2E3 /* RollingEgg.swift in Sources */,
 				227B1D672166BA08005E0560 /* GameViewController.swift in Sources */,
 				22AAB4BF2177FC3A0075B5E4 /* LoseScene.swift in Sources */,
+				22B1BBC3219A40B4005600EC /* LabelSet.swift in Sources */,
 				222564712187B3B9008C7F2A /* Player.swift in Sources */,
 				224B639A21978DDC0079CDAF /* LoadingScene.swift in Sources */,
 				22256476218A0FB1008C7F2A /* RollerbladingEgg.swift in Sources */,
@@ -456,8 +467,9 @@
 				225DB1372190BCA1007C972F /* TutorialScene.swift in Sources */,
 				22AAB4C12177FC440075B5E4 /* WinScene.swift in Sources */,
 				2282295421751FBC0019A009 /* Tower.swift in Sources */,
+				221A9C22219A312D00A2D487 /* SettingsScene.swift in Sources */,
 				22822956217520720019A009 /* Projectile.swift in Sources */,
-				225DB0AC218E1D9A007C972F /* ShopButton.swift in Sources */,
+				225DB0AC218E1D9A007C972F /* Button.swift in Sources */,
 				22256474218A0F9A008C7F2A /* Rooster.swift in Sources */,
 				226C44A9216C42460049A2E3 /* Fence.swift in Sources */,
 				226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */,
