@@ -11,12 +11,18 @@ import Foundation
 
 class StartScene: SKScene {
     
-    var startButtonSprite: SKSpriteNode!
     var mainLayer: SKNode!
+    var menuLayer: SKNode!
+    var settingsLayer: SKNode!
+    
+    var playButton: Button!
+    var settingsButton: Button!
+    var vibrationButton: Button!
     
     
     override func sceneDidLoad() {
         initNodes()
+        initObjects()
         scaleScene()
     }
     
@@ -24,12 +30,18 @@ class StartScene: SKScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         //If pressed, goes to tutorialScene
-        pressedStartButton(touchLocation: touchLocation)
+        pressedPlayButton(touchLocation: touchLocation)
+        pressedSettingsButton(touchLocation: touchLocation)
+        if !settingsLayer.isHidden {
+            pressedVibrationButton(touchLocation: touchLocation)
+        }
     }
 
     /*
      REFERENCED FUNCTIONS ARE BELOW
     */
+    
+    var backgroundSprite: SKSpriteNode!
     
     func initNodes() {
         guard let mainLayerNode = childNode(withName: "mainLayer") else {
@@ -37,21 +49,68 @@ class StartScene: SKScene {
         }
         self.mainLayer = mainLayerNode
         
-        guard let startButtonSpriteNode = mainLayer.childNode(withName: "buttonSprite") as? SKSpriteNode else {
-            fatalError("startButtonSpriteNode failed to load. Maybe not in childNode list?")
+        guard let menuLayerNode = mainLayer.childNode(withName: "menuLayer") else {
+            fatalError("mainlayer failed to load. Maybe not in childNode list?")
         }
-        self.startButtonSprite = startButtonSpriteNode
+        self.menuLayer = menuLayerNode
+        
+        guard let settingsLayerNode = mainLayer.childNode(withName: "settingsLayer") else {
+            fatalError("mainlayer failed to load. Maybe not in childNode list?")
+        }
+        self.settingsLayer = settingsLayerNode
+        
+        guard let backgroundNode = mainLayer.childNode(withName: "background") as? SKSpriteNode else {
+            fatalError("mainlayer failed to load. Maybe not in childNode list?")
+        }
+        self.backgroundSprite = backgroundNode
+        print(backgroundSprite.texture)
+        
+        
+        settingsLayer.alpha = 1
+        settingsLayer.isHidden = true
+        
+        
     }
     
-    func pressedStartButton(touchLocation: CGPoint) {
+    func initObjects() {
+        playButton = Button(children: menuLayer.children, name: "playButton")
+        settingsButton = Button(children: menuLayer.children, name: "settingsButton")
+        vibrationButton = Button(children: settingsLayer.children, name: "vibrationButton")
+        if !GameData.settingsData.vibration {
+            vibrationButton.spriteButton.texture = SKTexture(imageNamed: "switch_off")
+        }
+    }
+    
+    func pressedPlayButton(touchLocation: CGPoint) {
         let tutorialScene = TutorialScene(fileNamed: "TutorialScene")
         tutorialScene?.scaleMode = .aspectFill
         
-        if startButtonSprite.contains(touchLocation) {
+        if playButton.hasTouched(touchLocation: touchLocation) {
             let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(tutorialScene!, transition: reveal )
         }
     }
+    
+    func pressedSettingsButton(touchLocation: CGPoint) {
+        if settingsButton.hasTouched(touchLocation: touchLocation) {
+            settingsLayer.isHidden = !settingsLayer.isHidden
+        }
+    }
+    
+    func pressedVibrationButton(touchLocation: CGPoint) {
+        if vibrationButton.hasTouched(touchLocation: touchLocation) {
+            if vibrationButton.isTapped {
+                vibrationButton.spriteButton.texture = SKTexture(imageNamed: "switch_off")
+                GameData.settingsData.vibration = false
+                vibrationButton.isTapped = !vibrationButton.isTapped
+            } else {
+                vibrationButton.spriteButton.texture = SKTexture(imageNamed: "switch_on")
+                GameData.settingsData.vibration = true
+                vibrationButton.isTapped = !vibrationButton.isTapped
+            }
+        }
+    }
+    
     //Sets the scene's mainlayer to scale to the device's playable area
     func scaleScene() {
         mainLayer.yScale = GameData.sceneScaling.sceneYScale

@@ -70,6 +70,7 @@ class LoseScene: SKScene {
         GameData.shopData.increaseTowerFireRateCost = 500
         GameData.shopData.increasePlayerDamageCost = 500
         GameData.shopData.upgradeFenceHealthCost = 250
+        GameData.shopData.upgradeTowerDamageCost = 500
         
         GameData.fenceData.baseHealth = 20
         GameData.fenceData.fenceStage = 1

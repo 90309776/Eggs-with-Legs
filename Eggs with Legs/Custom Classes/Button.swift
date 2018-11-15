@@ -9,7 +9,7 @@
 import SpriteKit
 import Foundation
 
-class ShopButton {
+class Button {
     
     /*
      This is the framework for every button.
@@ -19,12 +19,15 @@ class ShopButton {
      Class is designed specifically for uses in a shop for now
     */
     
+    //button uses a label set!!!
+    
     var spriteButton: SKSpriteNode!
     var descLabel: SKLabelNode!
     var secondaryLabel: SKLabelNode!
     var costLabel: SKLabelNode!
     var itemCost: Int!
     var isButtonEnabled: Bool
+    var isTapped: Bool
 
     var winSceneChildrenNodes: [SKNode]
     
@@ -32,6 +35,7 @@ class ShopButton {
         self.winSceneChildrenNodes = children
         self.itemCost = 0
         self.isButtonEnabled = true
+        self.isTapped = false
         
         for node in winSceneChildrenNodes {
             if node.name == name {
@@ -50,4 +54,9 @@ class ShopButton {
             }
         }
     }
+    
+    func hasTouched(touchLocation: CGPoint) -> Bool{
+        return self.spriteButton.contains(touchLocation)
+    }
+    //Idea add another constructor to accept a second sktexture for an on tapping texture and release
 }
