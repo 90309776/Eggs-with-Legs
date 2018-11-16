@@ -12,8 +12,10 @@ import Foundation
 
 class TutorialScene: SKScene {
     
-    var nextButton: SKSpriteNode!
+    var nextButton: Button!
+    var nextCameraPosButton: Button!
     var mainLayer: SKNode!
+    var mainCamera: SKCameraNode!
     
     override func didMove(to view: SKView) {
         initNodes()
@@ -25,14 +27,23 @@ class TutorialScene: SKScene {
         let touchLocation = touch.location(in: self)
         //If pressed, goes to gameScene
         pressedNextButton(touchLocation: touchLocation)
+        pressedNextPositionButton(touchLocation: touchLocation)
     }
     
     func pressedNextButton(touchLocation: CGPoint) {
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
-        if nextButton.contains(touchLocation) {
+        if nextButton.hasTouched(touchLocation: touchLocation) {
             let reveal = SKTransition.fade(withDuration: 1.5)
-            view!.presentScene(gameScene!, transition: reveal )
+            view!.presentScene(gameScene!, transition: reveal)
+        }
+    }
+    
+    func pressedNextPositionButton(touchLocation: CGPoint) {
+        if nextCameraPosButton.hasTouched(touchLocation: touchLocation) {
+            mainCamera.position.x += 300
+            print("\(mainCamera.position.x)")
+            print("moved")
         }
     }
     
@@ -48,9 +59,13 @@ class TutorialScene: SKScene {
         }
         self.mainLayer = mainLayerNode
         
-        guard let nextButtonNode = mainLayer.childNode(withName: "nextButton") as? SKSpriteNode else {
+        guard let cameraNode = childNode(withName: "camera") as? SKCameraNode else {
             fatalError("didnt load lol")
         }
-        self.nextButton = nextButtonNode
+        self.mainCamera = cameraNode
+        self.camera = mainCamera
+        
+        nextButton = Button(children: mainLayer.children, name: "nextButton")
+        nextCameraPosButton = Button(children: mainLayer.children, name: "nextPosition")
     }
 }

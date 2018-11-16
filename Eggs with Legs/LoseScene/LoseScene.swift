@@ -12,7 +12,9 @@ import Foundation
 
 class LoseScene: SKScene {
     
-    var menuButtonSprite: SKSpriteNode!
+    var mainLayer: SKNode!
+    var menuButtonSprite: Button!
+    
     
     override func sceneDidLoad() {
         initNodes()
@@ -30,20 +32,24 @@ class LoseScene: SKScene {
      */
     
     func initNodes() {
-        guard let mainMenuButtonSpriteNode = childNode(withName: "menuButtonSprite") as? SKSpriteNode else {
+        
+        guard let mainLayerNode = childNode(withName: "mainLayer") else {
             fatalError("menuButtonSprite failed to load. Maybe not in childNode list?")
         }
-        self.menuButtonSprite = mainMenuButtonSpriteNode
+        self.mainLayer = mainLayerNode
+        
+        menuButtonSprite = Button(children: mainLayer.children, name: "menuButton")
+        
     }
     
     func pressedStartButton(touchLocation: CGPoint) {
         let startScene = StartScene(fileNamed: "StartScene")
         startScene?.scaleMode = .aspectFill
         
-        if menuButtonSprite.contains(touchLocation) {
+        if menuButtonSprite.hasTouched(touchLocation: touchLocation) {
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
-            view!.presentScene(startScene!, transition: reveal )
+            view!.presentScene(startScene!, transition: reveal)
         }
     }
     

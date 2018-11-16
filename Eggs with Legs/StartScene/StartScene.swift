@@ -23,7 +23,7 @@ class StartScene: SKScene {
     override func sceneDidLoad() {
         initNodes()
         initObjects()
-        scaleScene()
+        //scaleScene()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
