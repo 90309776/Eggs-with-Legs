@@ -12,8 +12,14 @@ import Foundation
 
 class LoseScene: SKScene {
     
+
     var menuButtonSprite: SKSpriteNode!
     var gameScene: GameScene!
+
+    var mainLayer: SKNode!
+    var menuButtonSprite: Button!
+    
+
     
     override func sceneDidLoad() {
         initNodes()
@@ -33,21 +39,26 @@ class LoseScene: SKScene {
      */
     
     func initNodes() {
-        guard let mainMenuButtonSpriteNode = childNode(withName: "menuButtonSprite") as? SKSpriteNode else {
+        
+        guard let mainLayerNode = childNode(withName: "mainLayer") else {
             fatalError("menuButtonSprite failed to load. Maybe not in childNode list?")
         }
-        self.menuButtonSprite = mainMenuButtonSpriteNode
+        self.mainLayer = mainLayerNode
+        
+        menuButtonSprite = Button(children: mainLayer.children, name: "menuButton")
+        
     }
     
     func pressedStartButton(touchLocation: CGPoint) {
         let startScene = StartScene(fileNamed: "StartScene")
         startScene?.scaleMode = .aspectFill
-        
-        if menuButtonSprite.contains(touchLocation) {
-            gameScene.stopMusic()
+       
+        if menuButtonSprite.hasTouched(touchLocation: touchLocation) {
+
+          gameScene.stopMusic()
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
-            view!.presentScene(startScene!, transition: reveal )
+            view!.presentScene(startScene!, transition: reveal)
         }
     }
     
@@ -74,6 +85,7 @@ class LoseScene: SKScene {
         GameData.shopData.increaseTowerFireRateCost = 500
         GameData.shopData.increasePlayerDamageCost = 500
         GameData.shopData.upgradeFenceHealthCost = 250
+        GameData.shopData.upgradeTowerDamageCost = 500
         
         GameData.fenceData.baseHealth = 20
         GameData.fenceData.fenceStage = 1

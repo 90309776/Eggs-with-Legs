@@ -55,6 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let projectile : UInt32 = 3
     }
     
+    //CODE THAT IS RAN WHEN THE SCENE HAS BEEN MOVED TO THIS GAMESCENE
     override func didMove(to view: SKView) {
         initNodes() //initializes nodes such as various sprites and labels
         initObjects() //initizzes objects. //these are bootleg init functions
@@ -199,8 +200,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /*
      Referenced functions from above below
     */
-    
-    
+
     func checkTappedEgg(touchLocation: CGPoint) {
         //Checks if an egg has been tapped
         if player.currentTapCount > 0 && player.canFire {
@@ -351,11 +351,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             fatalError("Label Nodes not loaded")
         }
         self.tower_1 = Tower(sprite: linearTowerNode, scene: self)
+        tower_1.sprite.isHidden = true
         
         guard let archTowerNode = mainLayer.childNode(withName: "archTowerSprite") as? SKSpriteNode else {
             fatalError("Label Nodes not loaded")
         }
         self.tower_2 = Tower(sprite: archTowerNode, scene: self)
+        tower_2.sprite.isHidden = true
+        
+        
+        
+        if GameData.towerData.tower_1Activated {
+            tower_1.sprite.isHidden = false
+        }
+        if GameData.towerData.tower_2Activated {
+            tower_2.sprite.isHidden = false
+        }
     }
     
     func initObjects() {

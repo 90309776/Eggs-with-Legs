@@ -7,13 +7,15 @@
 //
 import SpriteKit
 import Foundation
+
 import AVFoundation
+
+
+import AudioToolbox
 
 //class handles the cooldown for tapping
 
 class Player {
-    
-    
     //Variables referenced are public variables from GameData class
     
     var playStuff: AVAudioPlayer?
@@ -35,10 +37,12 @@ class Player {
                                 SKTexture(imageNamed: "player_weapon_reload_2"),
                                 SKTexture(imageNamed: "player_weapon_reload_3"),
                                 SKTexture(imageNamed: "player_weapon_reload_4"),
+
                                 SKTexture(imageNamed: "player_weapon_reload_0"),
                                 SKTexture(imageNamed: "player_weapon_reload_0"), //"Pauses" to fit with reload sound
                                 SKTexture(imageNamed: "player_weapon_reload_0"),
                                 SKTexture(imageNamed: "player_weapon_reload_4"),
+
                                 SKTexture(imageNamed: "player_weapon_reload_0")]
     
     var weaponFireAnimation: SKAction!
@@ -71,15 +75,16 @@ class Player {
         func toggleCanFire() {
             self.canFire = true
             self.currentTapCount = GameData.playerData.maxTapCount
-            //print("ran")
         }
-       
+        
+        if GameData.settingsData.vibration {
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        }
         canFire = false
         playSound(SoundName: "GunFullReload")
         let runSequence = SKAction.sequence([weaponReloadAnimation, SKAction.wait(forDuration: self.cooldownInterval), SKAction.run(
                 toggleCanFire)])
         self.weaponSprite.run(runSequence)
-        
     }
     
     func update() {

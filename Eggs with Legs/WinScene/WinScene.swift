@@ -29,23 +29,24 @@ class WinScene: SKScene {
     var coinSprite: SKSpriteNode!
     var coinAmountLabel: SKLabelNode!
     
-    var dayStatLabel: SKLabelNode!
-    var eggsCrackedStatLabel: SKLabelNode!
-    var playerDamageStatLabel: SKLabelNode!
-    var towerDamageStatLabel: SKLabelNode!
-    var towerFireRateStatLabel: SKLabelNode!
-    var fenceHealthStatLabel: SKLabelNode!
-    var totalDamageTakenStatLabel: SKLabelNode!
+    var dayStatLabelSet: LabelSet!
+    var eggsCrackedStatLabelSet: LabelSet!
+    var playerDamageStatLabelSet: LabelSet!
+    var towerDamageStatLabelSet: LabelSet!
+    var towerFireRateStatLabelSet: LabelSet!
+    var fenceHealthStatLabelSet: LabelSet!
+    var totalDamageTakenStatLabelSet: LabelSet!
     
     
-    var increasePlayerDamageButton: ShopButton!
-    var increaseTowerFireRateButton: ShopButton!
-    var upgradeFenceButton: ShopButton!
-    var upgradeWeaponButton: ShopButton!
-    var buyTowerButton: ShopButton!
+    var increasePlayerDamageButton: Button!
+    var increaseTowerFireRateButton: Button!
+    var upgradeFenceButton: Button!
+    var upgradeWeaponButton: Button!
+    var buyTowerButton: Button!
+    var upgradeTowerDamageButton: Button!
     
-    var shopTabButton: ShopButton!
-    var statsTabButton: ShopButton!
+    var shopTabButton: Button!
+    var statsTabButton: Button!
     
     override func didMove(to view: SKView) {
         initNodes()
@@ -74,6 +75,7 @@ class WinScene: SKScene {
         pressedUpgradeFenceButton(touchLocation: touchLocation)
         pressedUpgradeWeaponButton(touchLocation: touchLocation)
         pressedBuyTowerButton(touchLocation: touchLocation)
+        pressedUpgradeTowerDamageButton(touchLocation: touchLocation)
         
         pressedShopButton(touchLocation: touchLocation)
         pressedStatsButton(touchLocation: touchLocation)
@@ -120,6 +122,8 @@ class WinScene: SKScene {
         
     }
     
+    //not used yet playying around with saving local data
+    //im pretty sure this is not how its supposed to be
     func saveLocalData() {
         //LEVELDATA
         UserDefaults.standard.set(GameData.levelData.day, forKey: "levelDataDay")
@@ -185,7 +189,7 @@ class WinScene: SKScene {
                 GameData.towerData.towerFireInterval -= 0.20
                 increaseTowerFireRateButton.secondaryLabel.text = "Rate: \(String(format: "%.2f", 1 / GameData.towerData.towerFireInterval))/s"
                 
-                GameData.shopData.increaseTowerFireRateCost += Int(Double(GameData.shopData.increaseTowerFireRateCost) * 0.10)
+                GameData.shopData.increaseTowerFireRateCost += Int(Double(GameData.shopData.increaseTowerFireRateCost) * 0.20)
             }
         }
     }
@@ -208,7 +212,7 @@ class WinScene: SKScene {
                 GameData.playerData.cooldownInterval -= 0.25
             }
             
-            GameData.shopData.upgradeWeaponCost += Int(Double(GameData.shopData.upgradeWeaponCost) * 0.15)
+            GameData.shopData.upgradeWeaponCost += Int(Double(GameData.shopData.upgradeWeaponCost) * 0.25) + 20
         }
     }
     
@@ -217,7 +221,7 @@ class WinScene: SKScene {
             GameData.playerData.coins -= GameData.shopData.upgradeFenceHealthCost
             GameData.fenceData.baseHealth += 20
             
-            GameData.shopData.upgradeFenceHealthCost += Int(Double(GameData.shopData.upgradeFenceHealthCost) * 0.20)
+            GameData.shopData.upgradeFenceHealthCost += Int(Double(GameData.shopData.upgradeFenceHealthCost) * 0.33)
         }
     }
     
@@ -238,6 +242,14 @@ class WinScene: SKScene {
                 
                 //buyTowerButton.spriteButton.isHidden = true
             }
+        }
+    }
+    
+    func pressedUpgradeTowerDamageButton(touchLocation: CGPoint) {
+        if upgradeTowerDamageButton.hasTouched(touchLocation: touchLocation) && GameData.playerData.coins >= GameData.shopData.buyTowerCost && upgradeTowerDamageButton.isButtonEnabled {
+            GameData.towerData.towerDamage += 1
+            GameData.playerData.coins -= GameData.shopData.upgradeTowerDamageCost
+            GameData.shopData.upgradeTowerDamageCost += Int(Double(GameData.shopData.upgradeTowerDamageCost) * 0.33)
         }
     }
     
@@ -279,6 +291,7 @@ class WinScene: SKScene {
         increasePlayerDamageButton.costLabel.text = String(GameData.shopData.increasePlayerDamageCost)
         upgradeFenceButton.costLabel.text = String(GameData.shopData.upgradeFenceHealthCost)
         upgradeWeaponButton.costLabel.text = String(GameData.shopData.upgradeWeaponCost)
+        upgradeTowerDamageButton.costLabel.text = String(GameData.shopData.upgradeTowerDamageCost)
         if GameData.towerData.tower_2Activated {
             buyTowerButton.descLabel.text = "SOLD OUT"
         } else if GameData.towerData.tower_1Activated {
@@ -289,14 +302,16 @@ class WinScene: SKScene {
         }
         
         if !statsLayer.isHidden {
-            dayStatLabel.text = "Day \(GameData.levelData.day)"
-            eggsCrackedStatLabel.text = "Total Eggs Cracked: \(GameData.stats.totalEggsCracked)"
-            playerDamageStatLabel.text = "Current Damage: \(GameData.playerData.playerDamage)"
-            towerDamageStatLabel.text = "Tower Damage: \(GameData.towerData.towerDamage)"
-            towerFireRateStatLabel.text = "Tower Fire Rate: \(String(format: "%.2f", 1 / GameData.towerData.towerFireInterval))/s"
-            fenceHealthStatLabel.text = "Fence Health: \(GameData.fenceData.baseHealth)"
-            totalDamageTakenStatLabel.text = "Total Damage Taken: \(GameData.stats.totalDamageTaken)"
+            dayStatLabelSet.mainLabel.text = "Day \(GameData.levelData.day)"
+            eggsCrackedStatLabelSet.secondaryLabel.text = "\(GameData.stats.totalEggsCracked)"
+            playerDamageStatLabelSet.secondaryLabel.text = "\(GameData.playerData.playerDamage)"
+            towerDamageStatLabelSet.secondaryLabel.text = "\(GameData.towerData.towerDamage)"
+            towerFireRateStatLabelSet.secondaryLabel.text = "\(String(format: "%.2f", 1 / GameData.towerData.towerFireInterval))/s"
+            fenceHealthStatLabelSet.secondaryLabel.text = "\(GameData.fenceData.baseHealth)"
+            totalDamageTakenStatLabelSet.secondaryLabel.text = "\(GameData.stats.totalDamageTaken)"
         }
+        
+        
         
         
     }
@@ -344,50 +359,8 @@ class WinScene: SKScene {
         
         self.coinAmountLabel = coinLabelNode
         self.coinAmountLabel.text = String(Int(GameData.playerData.coins))
-        
-        guard let dayStatNode = statsLayer.childNode(withName: "dayStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.dayStatLabel = dayStatNode
-        
-//        var dayStatLabel: SKLabelNode!
-//        var eggsCrackedStatLabel: SKLabelNode!
-//        var playerDamageStatLabel: SKLabelNode!
-//        var towerDamageStatLabel: SKLabelNode!
-//        var towerFireRateStatLabel: SKLabelNode!
-//        var fenceHealthStatLabel: SKLabelNode!
-//        var totalDamageTakenStatLabel: SKLabelNode!
-        
-        guard let eggsCrackedNode = statsLayer.childNode(withName: "eggsCrackedStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.eggsCrackedStatLabel = eggsCrackedNode
-        
-        guard let playerDamageNode = statsLayer.childNode(withName: "playerDamageStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.playerDamageStatLabel = playerDamageNode
-        
-        guard let towerDamageNode = statsLayer.childNode(withName: "towerDamageStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.towerDamageStatLabel = towerDamageNode
-        
-        guard let towerFireStat = statsLayer.childNode(withName: "towerFireRateStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.towerFireRateStatLabel = towerFireStat
-        
-        guard let fenceHealthNode = statsLayer.childNode(withName: "fenceHealthStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.fenceHealthStatLabel = fenceHealthNode
-        
-        guard let totalDamageNode = statsLayer.childNode(withName: "totalDamageTakenStat") as? SKLabelNode else {
-            fatalError("dayStat failed to load. Maybe not in childNode list?")
-        }
-        self.totalDamageTakenStatLabel = totalDamageNode
-        
+
+        shopLayer.alpha = 1
         statsLayer.alpha = 1
         statsLayer.isHidden = true
         
@@ -395,14 +368,26 @@ class WinScene: SKScene {
     
     //Initializes the custom button object for every "Button" in the scene
     func initObjects() {
-        increasePlayerDamageButton = ShopButton(children: shopLayer.children, name: "increasePlayerDamageSprite")
-        increaseTowerFireRateButton = ShopButton(children: shopLayer.children, name: "increaseTowerFireRateButton")
-        upgradeWeaponButton = ShopButton(children: shopLayer.children, name: "upgradeWeaponButton")
-        upgradeFenceButton = ShopButton(children: shopLayer.children, name: "upgradeFenceButton")
-        buyTowerButton = ShopButton(children: shopLayer.children, name: "buyTowerButton")
+        increasePlayerDamageButton = Button(children: shopLayer.children, name: "increasePlayerDamageSprite")
+        increaseTowerFireRateButton = Button(children: shopLayer.children, name: "increaseTowerFireRateButton")
+        upgradeWeaponButton = Button(children: shopLayer.children, name: "upgradeWeaponButton")
+        upgradeFenceButton = Button(children: shopLayer.children, name: "upgradeFenceButton")
+        buyTowerButton = Button(children: shopLayer.children, name: "buyTowerButton")
+        upgradeTowerDamageButton = Button(children: shopLayer.children, name: "upgradeTowerDamage")
         
-        shopTabButton = ShopButton(children: secondaryLayer.children, name: "shopTabButton")
-        statsTabButton = ShopButton(children: secondaryLayer.children, name: "statsTabButton")
+        shopTabButton = Button(children: secondaryLayer.children, name: "shopTabButton")
+        statsTabButton = Button(children: secondaryLayer.children, name: "statsTabButton")
+        
+        dayStatLabelSet = LabelSet(children: statsLayer.children, name: "dayStat")
+        eggsCrackedStatLabelSet = LabelSet(children: statsLayer.children, name: "eggsCrackedStat")
+        playerDamageStatLabelSet = LabelSet(children: statsLayer.children, name: "playerDamageStat")
+        towerDamageStatLabelSet = LabelSet(children: statsLayer.children, name: "towerDamageStat")
+        towerFireRateStatLabelSet = LabelSet(children: statsLayer.children, name: "towerFireRateStat")
+        fenceHealthStatLabelSet = LabelSet(children: statsLayer.children, name: "fenceHealthStat")
+        totalDamageTakenStatLabelSet = LabelSet(children: statsLayer.children, name: "totalDamageTakenStat")
+        
+        
+        
         
         
     }
