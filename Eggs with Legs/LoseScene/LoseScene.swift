@@ -12,12 +12,19 @@ import Foundation
 
 class LoseScene: SKScene {
     
+
+    var menuButtonSprite: SKSpriteNode!
+    var gameScene: GameScene!
+
     var mainLayer: SKNode!
     var menuButtonSprite: Button!
     
+
     
     override func sceneDidLoad() {
         initNodes()
+        gameScene = GameScene()
+        gameScene.musicLoop(SoundName: "GameOverSong")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -45,8 +52,10 @@ class LoseScene: SKScene {
     func pressedStartButton(touchLocation: CGPoint) {
         let startScene = StartScene(fileNamed: "StartScene")
         startScene?.scaleMode = .aspectFill
-        
+       
         if menuButtonSprite.hasTouched(touchLocation: touchLocation) {
+
+          gameScene.stopMusic()
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(startScene!, transition: reveal)

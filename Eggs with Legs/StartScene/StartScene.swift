@@ -30,11 +30,13 @@ class StartScene: SKScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         //If pressed, goes to tutorialScene
+
         pressedPlayButton(touchLocation: touchLocation)
         pressedSettingsButton(touchLocation: touchLocation)
         if !settingsLayer.isHidden {
             pressedVibrationButton(touchLocation: touchLocation)
         }
+
     }
 
     /*

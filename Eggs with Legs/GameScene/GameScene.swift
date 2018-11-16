@@ -10,10 +10,14 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //Shoutout to global variables
     var eggCount = 0
+    
+    var playStuff: AVAudioPlayer?
+    var playStuffToo: AVAudioPlayer?
     
     var eggArray: [Egg] = []
     var eggArrayNodes: [SKSpriteNode] = []
@@ -58,6 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         startDayTimer()
         drawPlayableArea()
         scaleScene()
+        musicLoop(SoundName: "MainLoop")
     }
     
     override func sceneDidLoad() {
@@ -141,7 +146,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchLocation = touch.location(in: self)
         checkTappedEgg(touchLocation: touchLocation)
         checkTappedWeapon(touchLocation: touchLocation)
+        gunshot()
+        
     }
+    
+    
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
@@ -224,6 +233,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }]))
             //eggCount == GameData.levelData.maxEggs
         } else if gameTimer == 0 {
+            stopMusic()
             let winScene = WinScene(fileNamed: "WinScene")
             winScene?.scaleMode = .aspectFill
             view!.presentScene(winScene!, transition: reveal )
@@ -361,6 +371,47 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func initObjects() {
         player = Player(sprite: weaponSprite)
+    }
+    
+    func playSound(SoundName: String) {
+        
+        let path = Bundle.main.path(forResource: SoundName, ofType : "wav")!
+        
+        let url = URL(fileURLWithPath : path)
+   
+        do {
+            
+            playStuff = try AVAudioPlayer(contentsOf: url)
+            
+            playStuff?.play()
+            
+        } catch {
+            
+            print ("Something's gone terribly wrong")
+
+            
+        }
+        
+    }
+    
+    func gunshot(){
+        if player.canFire {
+            let randomInt = Int.random(in: 0..<3)
+            playSound(SoundName: "Gunshot" + String(randomInt+1))
+        }
+    }
+    
+    func musicLoop(SoundName: String) {
+        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: SoundName, ofType: "wav")!)
+        playStuffToo = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
+        playStuffToo!.prepareToPlay()
+        playStuffToo!.numberOfLoops = -1
+        playStuffToo!.play()
+    }
+    func stopMusic(){
+        if (playStuffToo?.isPlaying ?? false){
+        playStuffToo!.stop()
+        }
     }
     
 }

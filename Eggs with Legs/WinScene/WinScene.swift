@@ -9,8 +9,13 @@
 import SpriteKit
 import GameplayKit
 import Foundation
+import AVFoundation
 
 class WinScene: SKScene {
+    
+    var GameSceneMusical: GameScene!
+    
+    var playStuff: AVAudioPlayer?
     
     var shopLayer: SKNode!
     var statsLayer: SKNode!
@@ -49,6 +54,8 @@ class WinScene: SKScene {
         scaleScene()
         //saveLocalData()
         GameData.saveLocalData()
+        GameSceneMusical = GameScene()
+        GameSceneMusical.musicLoop(SoundName: "Roads")
     }
     
     override func sceneDidLoad() {
@@ -384,5 +391,6 @@ class WinScene: SKScene {
         
         
     }
+    
 }
 

@@ -15,11 +15,17 @@ class TutorialScene: SKScene {
     var nextButton: Button!
     var nextCameraPosButton: Button!
     var mainLayer: SKNode!
+
+    var gameScene: GameScene!
+
     var mainCamera: SKCameraNode!
+
     
     override func didMove(to view: SKView) {
         initNodes()
         scaleScene()
+        gameScene = GameScene()
+        gameScene.musicLoop(SoundName: "MenuLoop")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -33,7 +39,11 @@ class TutorialScene: SKScene {
     func pressedNextButton(touchLocation: CGPoint) {
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
+            
+
         if nextButton.hasTouched(touchLocation: touchLocation) {
+
+          gameScene!.stopMusic()
             let reveal = SKTransition.fade(withDuration: 1.5)
             view!.presentScene(gameScene!, transition: reveal)
         }
