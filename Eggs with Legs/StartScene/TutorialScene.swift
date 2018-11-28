@@ -33,17 +33,18 @@ class TutorialScene: SKScene {
         let touchLocation = touch.location(in: self)
         //If pressed, goes to gameScene
         pressedNextButton(touchLocation: touchLocation)
-        pressedNextPositionButton(touchLocation: touchLocation)
+        //pressedNextPositionButton(touchLocation: touchLocation)
     }
     
     func pressedNextButton(touchLocation: CGPoint) {
-        let gameScene = GameScene(fileNamed: "GameScene")
+        let gameScene = TutorialLevel1(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
+        
             
 
         if nextButton.hasTouched(touchLocation: touchLocation) {
 
-          gameScene!.stopMusic()
+          //gameScene!.stopMusic()
             let reveal = SKTransition.fade(withDuration: 1.5)
             view!.presentScene(gameScene!, transition: reveal)
         }
