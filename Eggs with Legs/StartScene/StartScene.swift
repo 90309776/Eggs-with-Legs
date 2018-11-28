@@ -19,10 +19,13 @@ class StartScene: SKScene {
     var settingsButton: Button!
     var vibrationButton: Button!
     
+    var highScoreLabel: SKLabelNode!
+    var eggCrackedLabel: SKLabelNode!
     
     override func sceneDidLoad() {
         initNodes()
         initObjects()
+        //makeButtons()
         scaleScene()
     }
     
@@ -30,6 +33,7 @@ class StartScene: SKScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         //If pressed, goes to tutorialScene
+
         pressedPlayButton(touchLocation: touchLocation)
         pressedSettingsButton(touchLocation: touchLocation)
         if !settingsLayer.isHidden {
@@ -63,12 +67,25 @@ class StartScene: SKScene {
             fatalError("mainlayer failed to load. Maybe not in childNode list?")
         }
         self.backgroundSprite = backgroundNode
-        print(backgroundSprite.texture)
-        
-        
+
         settingsLayer.alpha = 1
         settingsLayer.isHidden = true
         
+        guard let highscoreNode = mainLayer.childNode(withName: "highscore") as? SKLabelNode else {
+            fatalError("mainlayer failed to load. Maybe not in childNode list?")
+        }
+        self.highScoreLabel = highscoreNode
+        GameData.levelData.highscore = UserDefaults.standard.value(forKey: "highScore") as! Int
+        self.highScoreLabel.text = "Highscore: \(GameData.levelData.highscore!)"
+        print(GameData.levelData.highscore!)
+        print(UserDefaults.standard.value(forKey: "highscore"))
+        
+        guard let eggsCrackedNode = mainLayer.childNode(withName: "eggsCracked") as? SKLabelNode else {
+            fatalError("mainlayer failed to load. Maybe not in childNode list?")
+        }
+        self.eggCrackedLabel = eggsCrackedNode
+        let eggCount = UserDefaults.standard.value(forKey: "eggscracked") as! Int
+        eggCrackedLabel.text = "Eggs Cracked: \(eggCount)"
         
     }
     
@@ -82,12 +99,19 @@ class StartScene: SKScene {
     }
     
     func pressedPlayButton(touchLocation: CGPoint) {
-        let tutorialScene = TutorialScene(fileNamed: "TutorialScene")
-        tutorialScene?.scaleMode = .aspectFill
+        let reveal = SKTransition.fade(withDuration: 3)
         
         if playButton.hasTouched(touchLocation: touchLocation) {
-            let reveal = SKTransition.fade(withDuration: 3)
-            view!.presentScene(tutorialScene!, transition: reveal )
+            if GameData.settingsData.hasPlayedTutorial {
+                let tutorialScene = GameScene(fileNamed: "GameScene")
+                tutorialScene?.scaleMode = .aspectFill
+                view!.presentScene(tutorialScene!, transition: reveal)
+            } else {
+                let tutorialScene = TutorialLevel1(fileNamed: "TutorialLevel1")
+                GameData.settingsData.hasPlayedTutorial = true
+                tutorialScene?.scaleMode = .aspectFill
+                view!.presentScene(tutorialScene!, transition: reveal)
+            }
         }
     }
     
@@ -110,6 +134,21 @@ class StartScene: SKScene {
             }
         }
     }
+    
+    func makeButtons() {
+        var playSpriteButton = SKSpriteNode(color: UIColor.clear, size: CGSize(width: 450, height: 130))
+        playSpriteButton.position = CGPoint(x: GameData.sceneScaling.playableAreaOrigin.x + 540, y: GameData.sceneScaling.playableAreaOrigin.y + 720)
+        
+        
+        var playSpriteText = SKLabelNode(text: "Play")
+        playSpriteButton.addChild(playSpriteText)
+        playSpriteText.position = CGPoint(x: -10, y: -10)
+        playSpriteText.name = "descLabel"
+        
+        addChild(playSpriteButton)
+        
+    }
+    
     
     //Sets the scene's mainlayer to scale to the device's playable area
     func scaleScene() {

@@ -12,10 +12,19 @@ import Foundation
 
 class LoseScene: SKScene {
     
-    var menuButtonSprite: SKSpriteNode!
+
+    //var menuButtonSprite: SKSpriteNode!
+    var gameScene: GameScene!
+
+    var mainLayer: SKNode!
+    var menuButtonSprite: Button!
+    
+
     
     override func sceneDidLoad() {
         initNodes()
+        gameScene = GameScene()
+        gameScene.musicLoop(SoundName: "GameOverSong")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -30,20 +39,26 @@ class LoseScene: SKScene {
      */
     
     func initNodes() {
-        guard let mainMenuButtonSpriteNode = childNode(withName: "menuButtonSprite") as? SKSpriteNode else {
+        
+        guard let mainLayerNode = childNode(withName: "mainLayer") else {
             fatalError("menuButtonSprite failed to load. Maybe not in childNode list?")
         }
-        self.menuButtonSprite = mainMenuButtonSpriteNode
+        self.mainLayer = mainLayerNode
+        
+        menuButtonSprite = Button(children: mainLayer.children, name: "menuButton")
+        
     }
     
     func pressedStartButton(touchLocation: CGPoint) {
         let startScene = StartScene(fileNamed: "StartScene")
         startScene?.scaleMode = .aspectFill
-        
-        if menuButtonSprite.contains(touchLocation) {
+       
+        if menuButtonSprite.hasTouched(touchLocation: touchLocation) {
+
+          gameScene.stopMusic()
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
-            view!.presentScene(startScene!, transition: reveal )
+            view!.presentScene(startScene!, transition: reveal)
         }
     }
     
@@ -51,7 +66,11 @@ class LoseScene: SKScene {
     //Super ineffiecient will fix and change
     func resetGameData() {
         
+        GameData.levelData.highscore = GameData.levelData.day
+        UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        
         GameData.levelData.day = 1
+        
         GameData.levelData.eggSpawnInterval = 1
         GameData.levelData.maxEggs = 10
         GameData.levelData.timeMax = 45
@@ -59,6 +78,10 @@ class LoseScene: SKScene {
         GameData.playerData.coins = 0
         GameData.playerData.maxTapCount = 10
         GameData.playerData.playerDamage = 5
+        GameData.playerData.tapBarDepletionRate = 0.003
+        GameData.playerData.tapBarIncreaseRate = 0.13
+        
+        
         
         GameData.towerData.tower_1Activated = false
         GameData.towerData.tower_2Activated = false
@@ -66,7 +89,7 @@ class LoseScene: SKScene {
         GameData.towerData.towerFireInterval = 3
         
         GameData.shopData.buyTowerCost = 1500
-        GameData.shopData.upgradeWeaponCost = 200
+        GameData.shopData.upgradeTapBarCost = 200
         GameData.shopData.increaseTowerFireRateCost = 500
         GameData.shopData.increasePlayerDamageCost = 500
         GameData.shopData.upgradeFenceHealthCost = 250

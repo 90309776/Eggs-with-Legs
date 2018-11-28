@@ -25,6 +25,7 @@ class GameData {
     
     struct settingsData {
         static var vibration = true
+        static var hasPlayedTutorial = false
     }
     
     struct levelData {
@@ -32,31 +33,37 @@ class GameData {
         static var day = 1
         static var maxEggs = 10
         static var eggSpawnInterval: TimeInterval = 1
+        static var listOfEggs = ["BasicEgg"]
+        
+        static var highscore = UserDefaults.standard.value(forKey: "highscore")
     }
     
     struct playerData {
-        static var coins = 100000
+        static var coins = 0
         static var playerDamage = 5.0
         static var maxTapCount = 10
         static var cooldownInterval: TimeInterval = 3
+        //0.01
+        static var tapBarIncreaseRate = 0.13
+        //static var tapBarDepletionRate = 0.0035
+        static var tapBarDepletionRate = 0.0035
     }
     
     struct towerData {
         static var tower_1Activated = false
         static var tower_2Activated = false
         
-        static var towerFireInterval: TimeInterval = 3
+        static var towerFireInterval: TimeInterval = 1
         static var towerDamage = 5.0
     }
     
     struct shopData {
         static var buyTowerCost = 1500
-        static var upgradeWeaponCost = 200
+        static var upgradeTapBarCost = 200
         static var increaseTowerFireRateCost = 500
         static var upgradeFenceHealthCost = 250
         static var increasePlayerDamageCost = 500
         static var upgradeTowerDamageCost = 500
-        
     }
     
     struct eggData {
@@ -66,6 +73,13 @@ class GameData {
             static var baseHealth = 10.0
             static var baseDamage = 1
             static var coinRange = [20, 40]
+        }
+        
+        struct eggNog {
+            static var baseSpeed = 2.0
+            static var baseHealth = 20.0
+            static var baseDamage = 3
+            static var coinRange = [20, 100]
         }
         
         struct rollingEgg {
@@ -86,6 +100,14 @@ class GameData {
         static var baseHealth = 20
         static var healthMultiplier = 1
         static var fenceStage = 1
+    }
+    
+    struct PhysicsCategory {
+        static let none       : UInt32 = 0
+        static let all        : UInt32 = 10
+        static let egg        : UInt32 = 1
+        static let fence      : UInt32 = 2
+        static let projectile : UInt32 = 3
     }
     
     
@@ -115,7 +137,7 @@ class GameData {
         
         //SHOPDATA
         UserDefaults.standard.set(GameData.shopData.buyTowerCost, forKey: "shopDataBuyTowerCost")
-        UserDefaults.standard.set(GameData.shopData.upgradeWeaponCost, forKey: "shopDataUpgradeWeaponCost")
+        UserDefaults.standard.set(GameData.shopData.upgradeTapBarCost, forKey: "shopDataupgradeTapBarCost")
         UserDefaults.standard.set(GameData.shopData.increaseTowerFireRateCost, forKey: "shopDataIncreaseFireRateCost")
         UserDefaults.standard.set(GameData.shopData.upgradeFenceHealthCost, forKey: "shopDataUpgradeFenceHealthCost")
         UserDefaults.standard.set(GameData.shopData.increasePlayerDamageCost, forKey: "shopDataIncreasePlayerDamageCost")

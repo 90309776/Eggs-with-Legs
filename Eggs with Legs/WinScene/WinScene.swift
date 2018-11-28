@@ -9,8 +9,13 @@
 import SpriteKit
 import GameplayKit
 import Foundation
+import AVFoundation
 
 class WinScene: SKScene {
+    
+    var GameSceneMusical: GameScene!
+    
+    var soundPlayer: AVAudioPlayer?
     
     var shopLayer: SKNode!
     var statsLayer: SKNode!
@@ -36,7 +41,7 @@ class WinScene: SKScene {
     var increasePlayerDamageButton: Button!
     var increaseTowerFireRateButton: Button!
     var upgradeFenceButton: Button!
-    var upgradeWeaponButton: Button!
+    var upgradeTapBarButton: Button!
     var buyTowerButton: Button!
     var upgradeTowerDamageButton: Button!
     
@@ -49,6 +54,9 @@ class WinScene: SKScene {
         scaleScene()
         //saveLocalData()
         GameData.saveLocalData()
+        GameSceneMusical = GameScene()
+        //GameSceneMusical.musicLoop(SoundName: "Roads")
+        musicLoop(SoundName: "ShopSong")
     }
     
     override func sceneDidLoad() {
@@ -66,7 +74,7 @@ class WinScene: SKScene {
         pressedIncreasePlayerDamageButton(touchLocation: touchLocation)
         pressedIncreaseFireRateButton(touchLocation: touchLocation)
         pressedUpgradeFenceButton(touchLocation: touchLocation)
-        pressedUpgradeWeaponButton(touchLocation: touchLocation)
+        pressedupgradeTapBarButton(touchLocation: touchLocation)
         pressedBuyTowerButton(touchLocation: touchLocation)
         pressedUpgradeTowerDamageButton(touchLocation: touchLocation)
         
@@ -77,43 +85,7 @@ class WinScene: SKScene {
     }
     
     //Makes the game scale in difficulty every time a day is passed
-    func changeGameData(touchLocation: CGPoint) {
-        GameData.levelData.day += 1
-        GameData.levelData.maxEggs += 5
-        GameData.fenceData.baseHealth += 10
-        
-        //When day is less than 10
-        if GameData.levelData.day <= 10 {
-            //For ever 2 days that is less than 10 days
-            if GameData.levelData.day % 2 == 0 {
-                GameData.eggData.basicEgg.baseHealth += 1
-                GameData.eggData.rollingEgg.baseHealth += 2
-            }
-            
-            
-        }
-        
-        if GameData.levelData.day % 2 == 0 && GameData.levelData.day <= 16 {
-            GameData.eggData.basicEgg.baseDamage += 1
-            GameData.eggData.basicEgg.baseSpeed += 0.5
-            
-            GameData.eggData.rollingEgg.baseDamage += 2
-            GameData.eggData.rollingEgg.baseSpeed += 0.33
-        }
-        
-        if GameData.levelData.day % 5 == 0 && GameData.levelData.day < 30 {
-            GameData.eggData.speedMultiplier += 0.10
-            
-        }
-        
-        //Every 10 days
-        if GameData.levelData.day % 10 == 0 {
-            GameData.levelData.maxEggs += 10
-            GameData.eggData.healthMultiplier += 0.15
-            GameData.eggData.speedMultiplier += 0.10
-        }
-        
-    }
+    
     
     //not used yet playying around with saving local data
     //im pretty sure this is not how its supposed to be
@@ -137,7 +109,7 @@ class WinScene: SKScene {
         
         //SHOPDATA
         UserDefaults.standard.set(GameData.shopData.buyTowerCost, forKey: "shopDataBuyTowerCost")
-        UserDefaults.standard.set(GameData.shopData.upgradeWeaponCost, forKey: "shopDataUpgradeWeaponCost")
+        UserDefaults.standard.set(GameData.shopData.upgradeTapBarCost, forKey: "shopDataupgradeTapBarCost")
         UserDefaults.standard.set(GameData.shopData.increaseTowerFireRateCost, forKey: "shopDataIncreaseFireRateCost")
         UserDefaults.standard.set(GameData.shopData.upgradeFenceHealthCost, forKey: "shopDataUpgradeFenceHealthCost")
         UserDefaults.standard.set(GameData.shopData.increasePlayerDamageCost, forKey: "shopDataIncreasePlayerDamageCost")
@@ -182,7 +154,7 @@ class WinScene: SKScene {
                 GameData.towerData.towerFireInterval -= 0.20
                 increaseTowerFireRateButton.secondaryLabel.text = "Rate: \(String(format: "%.2f", 1 / GameData.towerData.towerFireInterval))/s"
                 
-                GameData.shopData.increaseTowerFireRateCost += Int(Double(GameData.shopData.increaseTowerFireRateCost) * 0.20)
+                GameData.shopData.increaseTowerFireRateCost += Int(Double(GameData.shopData.increaseTowerFireRateCost) * 0.20) + 150
             }
         }
     }
@@ -193,19 +165,18 @@ class WinScene: SKScene {
             GameData.playerData.playerDamage += 2
             increasePlayerDamageButton.secondaryLabel.text = "Dmg: \(String(Int(GameData.playerData.playerDamage)))"
             
-            GameData.shopData.increasePlayerDamageCost += Int(Double(GameData.shopData.increasePlayerDamageCost) * 0.30)
+            GameData.shopData.increasePlayerDamageCost += Int(Double(GameData.shopData.increasePlayerDamageCost) * 0.35) + 100
         }
     }
     
-    func pressedUpgradeWeaponButton(touchLocation: CGPoint) {
-        if upgradeWeaponButton.spriteButton.contains(touchLocation) && GameData.playerData.coins >= GameData.shopData.upgradeWeaponCost {
-            GameData.playerData.coins -= GameData.shopData.upgradeWeaponCost
-            GameData.playerData.maxTapCount += 4
-            if GameData.playerData.cooldownInterval >= 0.5 {
-                GameData.playerData.cooldownInterval -= 0.25
+    func pressedupgradeTapBarButton(touchLocation: CGPoint) {
+        if upgradeTapBarButton.hasTouched(touchLocation: touchLocation) && GameData.playerData.coins >= GameData.shopData.upgradeTapBarCost {
+            GameData.playerData.coins -= GameData.shopData.upgradeTapBarCost
+            if GameData.playerData.tapBarDepletionRate <= 0.01 {
+                GameData.playerData.cooldownInterval += 0.000125
             }
             
-            GameData.shopData.upgradeWeaponCost += Int(Double(GameData.shopData.upgradeWeaponCost) * 0.25) + 20
+            GameData.shopData.upgradeTapBarCost += Int(Double(GameData.shopData.upgradeTapBarCost) * 0.425) + 100
         }
     }
     
@@ -214,7 +185,7 @@ class WinScene: SKScene {
             GameData.playerData.coins -= GameData.shopData.upgradeFenceHealthCost
             GameData.fenceData.baseHealth += 20
             
-            GameData.shopData.upgradeFenceHealthCost += Int(Double(GameData.shopData.upgradeFenceHealthCost) * 0.33)
+            GameData.shopData.upgradeFenceHealthCost += Int(Double(GameData.shopData.upgradeFenceHealthCost) * 0.33) + 100
         }
     }
     
@@ -239,7 +210,7 @@ class WinScene: SKScene {
     }
     
     func pressedUpgradeTowerDamageButton(touchLocation: CGPoint) {
-        if upgradeTowerDamageButton.hasTouched(touchLocation: touchLocation) && GameData.playerData.coins >= GameData.shopData.buyTowerCost && upgradeTowerDamageButton.isButtonEnabled {
+        if upgradeTowerDamageButton.hasTouched(touchLocation: touchLocation) && GameData.playerData.coins >= GameData.shopData.upgradeTowerDamageCost && upgradeTowerDamageButton.isButtonEnabled {
             GameData.towerData.towerDamage += 1
             GameData.playerData.coins -= GameData.shopData.upgradeTowerDamageCost
             GameData.shopData.upgradeTowerDamageCost += Int(Double(GameData.shopData.upgradeTowerDamageCost) * 0.33)
@@ -251,7 +222,8 @@ class WinScene: SKScene {
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
         if  nextLevelButton.contains(touchLocation){
-            changeGameData(touchLocation: touchLocation)
+            changeEggData()
+            changeListEggs()
             let reveal = SKTransition.fade(withDuration: 2)
             view!.presentScene(gameScene!, transition: reveal )
         }
@@ -283,7 +255,7 @@ class WinScene: SKScene {
         increaseTowerFireRateButton.costLabel.text = String(GameData.shopData.increaseTowerFireRateCost)
         increasePlayerDamageButton.costLabel.text = String(GameData.shopData.increasePlayerDamageCost)
         upgradeFenceButton.costLabel.text = String(GameData.shopData.upgradeFenceHealthCost)
-        upgradeWeaponButton.costLabel.text = String(GameData.shopData.upgradeWeaponCost)
+        upgradeTapBarButton.costLabel.text = String(GameData.shopData.upgradeTapBarCost)
         upgradeTowerDamageButton.costLabel.text = String(GameData.shopData.upgradeTowerDamageCost)
         if GameData.towerData.tower_2Activated {
             buyTowerButton.descLabel.text = "SOLD OUT"
@@ -303,10 +275,6 @@ class WinScene: SKScene {
             fenceHealthStatLabelSet.secondaryLabel.text = "\(GameData.fenceData.baseHealth)"
             totalDamageTakenStatLabelSet.secondaryLabel.text = "\(GameData.stats.totalDamageTaken)"
         }
-        
-        
-        
-        
     }
     
     func scaleScene() {
@@ -357,13 +325,15 @@ class WinScene: SKScene {
         statsLayer.alpha = 1
         statsLayer.isHidden = true
         
+        UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        
     }
     
     //Initializes the custom button object for every "Button" in the scene
     func initObjects() {
         increasePlayerDamageButton = Button(children: shopLayer.children, name: "increasePlayerDamageSprite")
         increaseTowerFireRateButton = Button(children: shopLayer.children, name: "increaseTowerFireRateButton")
-        upgradeWeaponButton = Button(children: shopLayer.children, name: "upgradeWeaponButton")
+        upgradeTapBarButton = Button(children: shopLayer.children, name: "upgradeTapBarButton")
         upgradeFenceButton = Button(children: shopLayer.children, name: "upgradeFenceButton")
         buyTowerButton = Button(children: shopLayer.children, name: "buyTowerButton")
         upgradeTowerDamageButton = Button(children: shopLayer.children, name: "upgradeTowerDamage")
@@ -379,10 +349,81 @@ class WinScene: SKScene {
         fenceHealthStatLabelSet = LabelSet(children: statsLayer.children, name: "fenceHealthStat")
         totalDamageTakenStatLabelSet = LabelSet(children: statsLayer.children, name: "totalDamageTakenStat")
         
-        
-        
+    }
+    
+    func changeListEggs() {
+        if GameData.levelData.day == 2 {
+            GameData.levelData.listOfEggs = ["BasicEgg", "RollingEgg"]
+            GameData.levelData.eggSpawnInterval = 1.25
+        } else if GameData.levelData.day == 3 {
+            GameData.levelData.listOfEggs = ["RollingEgg"]
+            GameData.levelData.eggSpawnInterval = 1.25
+        } else if GameData.levelData.day == 4 {
+            GameData.levelData.listOfEggs = ["BasicEgg", "EggNog"]
+            GameData.levelData.eggSpawnInterval = 1
+        } else if GameData.levelData.day == 5 {
+            GameData.levelData.listOfEggs = ["EggNog"]
+            GameData.levelData.eggSpawnInterval = 1.3
+        } else {
+            GameData.levelData.listOfEggs = ["BasicEgg", "RollingEgg", "EggNog"]
+            GameData.levelData.eggSpawnInterval = 1.2
+        }
         
         
     }
+    
+    func changeEggData() {
+        GameData.levelData.day += 1
+        GameData.levelData.maxEggs += 5
+        GameData.fenceData.baseHealth += 10
+        
+        //When day is less than 10
+        if GameData.levelData.day <= 10 {
+            //For ever 2 days that is less than 10 days
+            if GameData.levelData.day % 2 == 0 {
+                GameData.eggData.basicEgg.baseHealth += 1
+                GameData.eggData.rollingEgg.baseHealth += 2
+            }
+        }
+        
+        if GameData.levelData.day % 2 == 0 && GameData.levelData.day <= 12 {
+            GameData.eggData.basicEgg.baseDamage += 1
+            GameData.eggData.basicEgg.baseSpeed += 0.15
+            
+            GameData.eggData.rollingEgg.baseDamage += 2
+            GameData.eggData.rollingEgg.baseSpeed += 0.18
+        }
+        
+        if GameData.levelData.day % 3 == 0 && GameData.levelData.day <= 20 {
+            GameData.eggData.eggNog.baseDamage += 2
+            GameData.eggData.eggNog.baseHealth += 6
+            GameData.eggData.eggNog.baseSpeed += 0.1
+            
+        }
+        
+        if GameData.levelData.day % 5 == 0 && GameData.levelData.day < 30 {
+            GameData.eggData.speedMultiplier += 0.07
+            
+        }
+        
+        //Every 10 days
+        if GameData.levelData.day % 10 == 0 {
+            GameData.levelData.maxEggs += 10
+            GameData.eggData.healthMultiplier += 0.15
+            GameData.eggData.speedMultiplier += 0.05
+            
+            GameData.playerData.tapBarIncreaseRate -= 0.01
+        }
+        
+    }
+    
+    func musicLoop(SoundName: String) {
+        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: SoundName, ofType: "wav")!)
+        soundPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
+        soundPlayer!.prepareToPlay()
+        soundPlayer!.numberOfLoops = -1
+        soundPlayer!.play()
+    }
+    
 }
 
