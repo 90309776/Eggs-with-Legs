@@ -87,21 +87,35 @@ class TutorialLevel1: GameScene {
     }
     
     func stage2() {
-        let message1 = SKAction.sequence([SKAction.run {
-            self.tutorialLabel2.mainLabel.text = "Be careful and manage your ammo."
-            }, SKAction.wait(forDuration: 3), fadeTutorialMessageOutAction])
-        
-        let message2 = SKAction.sequence([SKAction.run {
-            self.tutorialLabel2.mainLabel.text = "Reloading your weapon takes time."
-            }, fadeTutorialMessageInAction, SKAction.wait(forDuration: 3), fadeTutorialMessageOutAction])
-        
         let arrowFadeOut = SKAction.sequence([SKAction.fadeAlpha(to: 0.3, duration: 0.2), SKAction.wait(forDuration: 0.2)])
         self.arrow.isHidden = false
         let arrowAction = SKAction.repeatForever(SKAction.sequence([fadeTutorialMessageInAction, arrowFadeOut]))
         
+        let hideArrowAction = SKAction.run {
+            self.arrow.isHidden = true
+        }
+        
+        let stageFinishedAction = SKAction.run {
+            self.nextStageReady = true
+        }
+        
+        self.tutorialLabel2.mainLabel.text = "This is your tap meter."
+        let message1 = SKAction.sequence([SKAction.run {
+            self.tutorialLabel2.mainLabel.text = "This is your tap meter."; self.arrow.run(arrowAction)
+            }, SKAction.wait(forDuration: 3), fadeTutorialMessageOutAction])
+        
+        let message2 = SKAction.sequence([SKAction.run {
+            self.tutorialLabel2.mainLabel.text = "Tapping to fast increases the meter."
+            }, fadeTutorialMessageInAction, SKAction.wait(forDuration: 3), fadeTutorialMessageOutAction])
+        
+        let sampleCooldown = SKAction.run {
+            self.player.tapBar.bar.size.width = CGFloat(self.player.tapBar.barMaxWidth)
+            self.player.animateCooldown()
+        }
+        
         let message3 = SKAction.sequence([SKAction.run {
-            self.tutorialLabel2.mainLabel.text = "Tap the icon to manually reload."
-            }, fadeTutorialMessageInAction, SKAction.run{self.arrow.run(arrowAction); self.checkForAnAction = true}, SKAction.wait(forDuration: 5)])
+            self.tutorialLabel2.mainLabel.text = "If the meter overflows, then taps are on cooldown"
+            }, fadeTutorialMessageInAction,sampleCooldown ,SKAction.wait(forDuration: 5), hideArrowAction, stageFinishedAction, fadeTutorialMessageOutAction, SKAction.wait(forDuration: 3)])
 
         let runSequence = SKAction.sequence([fadeTutorialMessageInAction, message1, message2, message3])
         tutorialLabel2.mainLabel.run(runSequence)
@@ -116,6 +130,8 @@ class TutorialLevel1: GameScene {
         self.fenceHealthLabel.isHidden = false
         self.coinsLabel.isHidden = false
         self.arrow.position = CGPoint(x: fenceSprite.sprite.position.x - 300, y: fenceSprite.sprite.size.height / 2)
+        
+        self.tutorialLabel.mainLabel.text = "This is your only defense."
         let message1 = SKAction.sequence([SKAction.run {
             self.tutorialLabel.mainLabel.text = "This is your only defense."; self.arrow.run(arrowAction)
             }, SKAction.wait(forDuration: 4), fadeTutorialMessageOutAction])
@@ -165,6 +181,8 @@ class TutorialLevel1: GameScene {
     }
     
     func stage5() {
+        self.tutorialLabel.mainLabel.text = "Another wave of eggs are coming!"
+        
         let message1 = SKAction.sequence([SKAction.run {
             self.tutorialLabel.mainLabel.text = "Another wave of eggs are coming!"},
                 SKAction.wait(forDuration: 3), fadeTutorialMessageOutAction])
@@ -258,8 +276,8 @@ class TutorialLevel1: GameScene {
     override func checkWin() {
         if maxEggs == 0 && eggCount == 4 && tutorialStart && tutorialStage == 1 {
             tutorialStart = false
-            tutorialStage = 3
-            stage3()
+            tutorialStage = 2
+            stage2()
             //play pass tutorial scene
         } else if nextStageReady && tutorialStage == 2 {
             tutorialStart = false
@@ -270,7 +288,8 @@ class TutorialLevel1: GameScene {
             nextStageReady = false
             tutorialStage = 4
             stage5()
-        } else if maxEggs == 0 && eggCount == 15 && tutorialStart && tutorialStage == 4 {
+        } else if maxEggs == 0 && eggCount == 10 && tutorialStart && tutorialStage == 4 {
+            print("4444")
             let gameScene = GameScene(fileNamed: "GameScene")
             GameData.playerData.coins = 0
             gameScene?.scaleMode = .aspectFill

@@ -76,9 +76,9 @@ class StartScene: SKScene {
         }
         self.highScoreLabel = highscoreNode
         GameData.levelData.highscore = UserDefaults.standard.value(forKey: "highScore") as! Int
-        self.highScoreLabel.text = "Highscore: \(GameData.levelData.highscore!)"
-        print(GameData.levelData.highscore!)
-        print(UserDefaults.standard.value(forKey: "highscore"))
+        self.highScoreLabel.text = "Highscore: Day \(GameData.levelData.highscore!)"
+        //print(GameData.levelData.highscore!)
+        //print(UserDefaults.standard.value(forKey: "highscore"))
         
         guard let eggsCrackedNode = mainLayer.childNode(withName: "eggsCracked") as? SKLabelNode else {
             fatalError("mainlayer failed to load. Maybe not in childNode list?")
@@ -86,7 +86,6 @@ class StartScene: SKScene {
         self.eggCrackedLabel = eggsCrackedNode
         let eggCount = UserDefaults.standard.value(forKey: "eggscracked") as! Int
         eggCrackedLabel.text = "Eggs Cracked: \(eggCount)"
-        
     }
     
     func initObjects() {

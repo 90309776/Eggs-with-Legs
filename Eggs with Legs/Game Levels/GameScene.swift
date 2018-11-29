@@ -221,6 +221,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         spawnUpdateTime += currentTime - lastUpdateTime
         if spawnUpdateTime >= GameData.levelData.eggSpawnInterval && startGame {
+            var ranSpawnAmount = Int.random(in: 0..<GameData.levelData.spawnAmountMaxNum)
+            
+            //for amount in ranSpawnAmount
+            
             addEgg()
             spawnUpdateTime = 0
         }
@@ -250,7 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    }
     
     func checkTappedPause(touchLocation: CGPoint) {
-        print("ye")
+        //print("ye")
         //let point = CGPoint(x: touchLocation.x, y: touchLocation.y - 100)
         if pauseButton.spriteButton.contains(touchLocation){
             print("touched")
@@ -274,8 +278,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 scene!.view?.isPaused = false
                 pause.texture = SKTexture(imageNamed: "button_pause")
                 pauseLayer.isHidden = true
-                print(pauseButton.spriteButton.texture)
-                print("unpaused")
+                //print(pauseButton.spriteButton.texture)
+                //print("unpaused")
             }
         }
     }
@@ -292,9 +296,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func checkTappedMenu(touchLocation: CGPoint) {
         let reveal = SKTransition.fade(withDuration: 1.5)
-        let startScene = StartScene(fileNamed: "StartScene")
-        if pauseMenuButton.hasTouched(touchLocation: touchLocation) {
+        
+        if pauseMenuButton.hasTouched(touchLocation: touchLocation) && !pauseLayer.isHidden {
+            print("")
+            scene!.view?.isPaused = false
+            let startScene = StartScene(fileNamed: "StartScene")
             startScene?.scaleMode = .aspectFill
+            
             //startScene?.scaleMode = .aspectFill
             view!.presentScene(startScene!, transition: reveal)
         }
