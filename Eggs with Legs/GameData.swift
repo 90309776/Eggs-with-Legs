@@ -35,6 +35,8 @@ class GameData {
         static var eggSpawnInterval: TimeInterval = 1
         static var listOfEggs = ["BasicEgg"]
         
+        static var spawnAmountMaxNum = 1
+        
         static var highscore = UserDefaults.standard.value(forKey: "highscore")
     }
     
@@ -50,11 +52,13 @@ class GameData {
     }
     
     struct towerData {
-        static var tower_1Activated = false
-        static var tower_2Activated = false
+        static var tower_1Activated = true
+        static var tower_2Activated = true
         
         static var towerFireInterval: TimeInterval = 1
         static var towerDamage = 5.0
+        
+        
     }
     
     struct shopData {
