@@ -43,7 +43,6 @@ class TutorialLevel1: GameScene {
     
     override func didMove(to view: SKView) {
         sound = Sound()
-        sound.musicLoop(SoundName: "MenuLoop")
         initNodes() //initializes nodes such as various sprites and labels
         initObjects() //initizzes objects. //these are bootleg init functions
         tutorialSetup()

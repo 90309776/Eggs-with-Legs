@@ -59,6 +59,7 @@
 		9EB5FAFF219DC82600C6BD21 /* GameOverSong.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAFE219DC82500C6BD21 /* GameOverSong.wav */; };
 		9EB5FB01219DCC4100C6BD21 /* Roads.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FB00219DCC4100C6BD21 /* Roads.wav */; };
 		9EC51FAB21B06E1C002B6445 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC51FAA21B06E1C002B6445 /* Sound.swift */; };
+		9EC51FAD21B1BC0D002B6445 /* GetTheWater.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EC51FAC21B1BC0D002B6445 /* GetTheWater.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +139,7 @@
 		9EB5FAFE219DC82500C6BD21 /* GameOverSong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameOverSong.wav; sourceTree = "<group>"; };
 		9EB5FB00219DCC4100C6BD21 /* Roads.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Roads.wav; sourceTree = "<group>"; };
 		9EC51FAA21B06E1C002B6445 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		9EC51FAC21B1BC0D002B6445 /* GetTheWater.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GetTheWater.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		2244E22621A3781400A04174 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				9EC51FAC21B1BC0D002B6445 /* GetTheWater.wav */,
 				9EB5FAF62199FC4600C6BD21 /* GunFullReload.wav */,
 				9EB5FAF22199F6E000C6BD21 /* Gunshot3.wav */,
 				9EB5FAF42199F6E800C6BD21 /* Gunshot2.wav */,
@@ -489,6 +492,7 @@
 				9EB5FAF52199F6E800C6BD21 /* Gunshot2.wav in Resources */,
 				9EB5FAFF219DC82600C6BD21 /* GameOverSong.wav in Resources */,
 				2244E22521A33C3900A04174 /* ShopSong.wav in Resources */,
+				9EC51FAD21B1BC0D002B6445 /* GetTheWater.wav in Resources */,
 				22B1BBC0219A3845005600EC /* SettingsScene.sks in Resources */,
 				225DB1352190BC92007C972F /* TutorialScene.sks in Resources */,
 				227B1D932166BA4C005E0560 /* Tiles.sks in Resources */,
