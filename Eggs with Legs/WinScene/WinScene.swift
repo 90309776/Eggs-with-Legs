@@ -13,7 +13,7 @@ import AVFoundation
 
 class WinScene: SKScene {
     
-    var GameSceneMusical: GameScene!
+    var sound: Sound!
     
     var soundPlayer: AVAudioPlayer?
     
@@ -54,9 +54,8 @@ class WinScene: SKScene {
         scaleScene()
         //saveLocalData()
         GameData.saveLocalData()
-        GameSceneMusical = GameScene()
-        //GameSceneMusical.musicLoop(SoundName: "Roads")
-        musicLoop(SoundName: "ShopSong")
+        sound = Sound()
+        sound.musicLoop(SoundName: "ShopSong")
     }
     
     override func sceneDidLoad() {
@@ -219,6 +218,7 @@ class WinScene: SKScene {
     
     
     func pressedNextButton(touchLocation: CGPoint) {
+        sound.stopMusic()
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
         if  nextLevelButton.contains(touchLocation){
@@ -415,14 +415,6 @@ class WinScene: SKScene {
             GameData.playerData.tapBarIncreaseRate -= 0.01
         }
         
-    }
-    
-    func musicLoop(SoundName: String) {
-        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: SoundName, ofType: "wav")!)
-        soundPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
-        soundPlayer!.prepareToPlay()
-        soundPlayer!.numberOfLoops = -1
-        soundPlayer!.play()
     }
     
 }

@@ -10,14 +10,10 @@
 
 import SpriteKit
 import GameplayKit
-import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //Shoutout to global variables
     var eggCount = 0
-    
-    var playStuff: AVAudioPlayer?
-    var playStuffToo: AVAudioPlayer?
     
     var eggArray: [Egg] = []
     var eggArrayNodes: [SKSpriteNode] = []
@@ -54,6 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var fenceSprite: Fence!
     var tower_1: Tower!
     var tower_2: Tower!
+    var sound: Sound!
 
     var lastUpdateTime : TimeInterval = 0
     var spawnUpdateTime: TimeInterval = 0
@@ -68,12 +65,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
+        sound = Sound()
         initNodes() //initializes nodes such as various sprites and labels
         initObjects() //initizzes objects. //these are bootleg init functions
         //startDayTimer()
         //drawPlayableArea()
         scaleScene()
-        musicLoop(SoundName: "MainLoop")
+        sound.musicLoop(SoundName: "MainLoop")
         makePauseButton()
         introScene()
         
@@ -176,7 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let touchLocation = touch.location(in: self)
         checkTappedEgg(touchLocation: touchLocation)
         //checkTappedWeapon(touchLocation: touchLocation)
-        gunshot()
+       
         checkTappedPause(touchLocation: touchLocation)
         checkTappedUnpause(touchLocation: touchLocation)
         checkTappedMenu(touchLocation: touchLocation)
@@ -311,6 +309,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func checkWin() {
         let reveal = SKTransition.fade(withDuration: 3)
         if fenceSprite.health <= 0 {
+            sound.stopMusic()
             fenceSprite!.sprite.texture = SKTexture(imageNamed: "fence-4")
             func fenceFallingScene() {
                 let loseScene = LoseScene(fileNamed: "LoseScene")
@@ -321,7 +320,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 fenceFallingScene()
                 }]))
         } else if gameTimer == 0 {
-            stopMusic()
+            sound.stopMusic()
             let winScene = WinScene(fileNamed: "WinScene")
             winScene?.scaleMode = .aspectFill
             view!.presentScene(winScene!, transition: reveal )
@@ -492,37 +491,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         unpauseButton = Button(children: pauseLayer.children, name: "unpause")
         pauseMenuButton = Button(children: pauseLayer.children, name: "menu")
         
-    }
-    
-    func playSound(SoundName: String) {
-        let path = Bundle.main.path(forResource: SoundName, ofType : "wav")!
-        let url = URL(fileURLWithPath : path)
-        do {
-            playStuff = try AVAudioPlayer(contentsOf: url)
-            playStuff?.play()
-        } catch {
-            print ("Something's gone terribly wrong")
-        }
-    }
-    
-    func gunshot(){
-        if player.canTap {
-            let randomInt = Int.random(in: 0..<3)
-            playSound(SoundName: "Gunshot" + String(randomInt+1))
-        }
-    }
-    
-    func musicLoop(SoundName: String) {
-        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: SoundName, ofType: "wav")!)
-        playStuffToo = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
-        playStuffToo!.prepareToPlay()
-        playStuffToo!.numberOfLoops = -1
-        playStuffToo!.play()
-    }
-    func stopMusic(){
-        if (playStuffToo?.isPlaying ?? false){
-        playStuffToo!.stop()
-        }
     }
     
 }
