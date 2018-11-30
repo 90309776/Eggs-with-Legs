@@ -154,7 +154,7 @@ class WinScene: SKScene {
                 GameData.towerData.towerFireInterval -= 0.20
                 increaseTowerFireRateButton.secondaryLabel.text = "Rate: \(String(format: "%.2f", 1 / GameData.towerData.towerFireInterval))/s"
                 
-                GameData.shopData.increaseTowerFireRateCost += Int(Double(GameData.shopData.increaseTowerFireRateCost) * 0.20) + 150
+                GameData.shopData.increaseTowerFireRateCost += Int(Double(GameData.shopData.increaseTowerFireRateCost) * 0.20) + 100
             }
         }
     }
@@ -165,7 +165,7 @@ class WinScene: SKScene {
             GameData.playerData.playerDamage += 2
             increasePlayerDamageButton.secondaryLabel.text = "Dmg: \(String(Int(GameData.playerData.playerDamage)))"
             
-            GameData.shopData.increasePlayerDamageCost += Int(Double(GameData.shopData.increasePlayerDamageCost) * 0.35) + 100
+            GameData.shopData.increasePlayerDamageCost += Int(Double(GameData.shopData.increasePlayerDamageCost) * 0.30) + 100
         }
     }
     
