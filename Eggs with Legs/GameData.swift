@@ -52,10 +52,10 @@ class GameData {
     }
     
     struct towerData {
-        static var tower_1Activated = true
-        static var tower_2Activated = true
+        static var tower_1Activated = false
+        static var tower_2Activated = false
         
-        static var towerFireInterval: TimeInterval = 1
+        static var towerFireInterval: TimeInterval = 2.5
         static var towerDamage = 5.0
         
         
