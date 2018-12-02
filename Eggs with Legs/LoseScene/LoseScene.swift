@@ -67,13 +67,21 @@ class LoseScene: SKScene {
     func resetGameData() {
         
         GameData.levelData.highscore = GameData.levelData.day
-        UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        
+        var highscore = UserDefaults.standard.value(forKey: "highScore") as! Int
+        
+        if GameData.levelData.day - 1 >= highscore {
+            UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        }
+        
+        
         
         GameData.levelData.day = 1
         
         GameData.levelData.eggSpawnInterval = 1
         GameData.levelData.maxEggs = 10
         GameData.levelData.timeMax = 45
+        GameData.levelData.listOfEggs = ["BasicEgg"]
         
         GameData.playerData.coins = 0
         GameData.playerData.maxTapCount = 10
