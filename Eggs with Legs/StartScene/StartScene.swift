@@ -18,15 +18,18 @@ class StartScene: SKScene {
     var playButton: Button!
     var settingsButton: Button!
     var vibrationButton: Button!
+    var sound: Sound!
     
     var highScoreLabel: SKLabelNode!
     var eggCrackedLabel: SKLabelNode!
     
     override func sceneDidLoad() {
+        sound = Sound()
         initNodes()
         initObjects()
         //makeButtons()
         scaleScene()
+        sound.musicLoop(SoundName: "GetTheWater")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -102,6 +105,7 @@ class StartScene: SKScene {
         
         if playButton.hasTouched(touchLocation: touchLocation) {
             if GameData.settingsData.hasPlayedTutorial {
+                sound.stopMusic()
                 let tutorialScene = GameScene(fileNamed: "GameScene")
                 tutorialScene?.scaleMode = .aspectFill
                 view!.presentScene(tutorialScene!, transition: reveal)
