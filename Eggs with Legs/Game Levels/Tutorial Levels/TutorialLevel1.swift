@@ -48,6 +48,11 @@ class TutorialLevel1: GameScene {
         tutorialSetup()
         scaleScene()
         stage1()
+        
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "GetTheWater")
+        }
+        
     }
     
     

@@ -94,13 +94,19 @@ class Player {
             let fadeIn = SKAction.fadeAlpha(to: 1, duration: 0.15)
             self.tapBar.bar.color = UIColor.red
             
+            let normalDepletionRate = GameData.playerData.tapBarDepletionRate
+            let coolDownDepletionRate = normalDepletionRate + 0.004
+            
+            GameData.playerData.tapBarDepletionRate = coolDownDepletionRate
+            
             let blinkingSequence = SKAction.repeatForever(SKAction.sequence([fadeOut, fadeIn]))
             self.tapBar.bar.run(blinkingSequence, withKey: "blinking")
             
             let coolDownSequence = SKAction.sequence([ SKAction.wait(forDuration: 3.0), SKAction.run {
-                togglecanTap();
+                self.canTap = true
                 self.tapBar.bar.color = UIColor.black
                 self.tapBar.bar.removeAction(forKey: "blinking")
+                GameData.playerData.tapBarDepletionRate = normalDepletionRate
                 }])
             self.tapBar.bar.run(coolDownSequence)
             
@@ -116,6 +122,14 @@ class Player {
         } else if self.tapBar.bar.size.width >= 0 {
             self.tapBar.bar.size.width -= (CGFloat(self.tapBar.barMaxWidth) * CGFloat(GameData.playerData.tapBarDepletionRate))
         }
+        
+        if !self.canTap && self.tapBar.bar.size.width < CGFloat(10) {
+            self.canTap = true
+            //self.tapBar.bar.removeAction(forKey: "blinking")
+            self.tapBar.bar.color = UIColor.black
+            
+        }
+        
     }
     
     func playSound(SoundName: String) {

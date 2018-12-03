@@ -25,7 +25,12 @@ class GameData {
     
     struct settingsData {
         static var vibration = true
+        static var music = true
+        
         static var hasPlayedTutorial = false
+        
+        static var songCurrentlyPlaying = [""]
+        
     }
     
     struct levelData {

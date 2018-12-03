@@ -71,7 +71,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //startDayTimer()
         //drawPlayableArea()
         scaleScene()
-        sound.musicLoop(SoundName: "MainLoop")
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "MainLoop")
+        }
+        
+        
         makePauseButton()
         introScene()
         

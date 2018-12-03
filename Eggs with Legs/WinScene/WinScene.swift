@@ -55,7 +55,11 @@ class WinScene: SKScene {
         //saveLocalData()
         GameData.saveLocalData()
         sound = Sound()
-        sound.musicLoop(SoundName: "ShopSong")
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "ShopSong")
+        }
+        
+        //sound.musicLoop(SoundName: "ShopSong")
     }
     
     override func sceneDidLoad() {

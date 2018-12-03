@@ -26,7 +26,12 @@ class LoseScene: SKScene {
         sound = Sound()
         initNodes()
         gameScene = GameScene()
-        sound.musicLoop(SoundName: "GameOverSong")
+        
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "GameOverSong")
+        }
+        
+        //sound.musicLoop(SoundName: "GameOverSong")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

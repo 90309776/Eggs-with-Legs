@@ -27,6 +27,7 @@ class TutorialScene: SKScene {
         scaleScene()
         gameScene = GameScene()
         sound = Sound()
+        
         sound.musicLoop(SoundName: "MenuLoop")
     }
     
