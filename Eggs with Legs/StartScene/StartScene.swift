@@ -17,16 +17,26 @@ class StartScene: SKScene {
     
     var playButton: Button!
     var settingsButton: Button!
+    var creditsButton: Button!
+    
     var vibrationButton: Button!
+    var musicButton: Button!
+    
+    
+    var sound: Sound!
     
     var highScoreLabel: SKLabelNode!
     var eggCrackedLabel: SKLabelNode!
     
     override func sceneDidLoad() {
+        sound = Sound()
         initNodes()
         initObjects()
         //makeButtons()
         scaleScene()
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "GetTheWater")
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -36,8 +46,10 @@ class StartScene: SKScene {
 
         pressedPlayButton(touchLocation: touchLocation)
         pressedSettingsButton(touchLocation: touchLocation)
+        pressedCreditsButton(touchLocation: touchLocation)
         if !settingsLayer.isHidden {
             pressedVibrationButton(touchLocation: touchLocation)
+            pressedMusicButton(touchLocation: touchLocation)
         }
     }
 
@@ -92,9 +104,15 @@ class StartScene: SKScene {
         playButton = Button(children: menuLayer.children, name: "playButton")
         settingsButton = Button(children: menuLayer.children, name: "settingsButton")
         vibrationButton = Button(children: settingsLayer.children, name: "vibrationButton")
+        musicButton = Button(children: settingsLayer.children, name: "musicButton")
+        creditsButton = Button(children: menuLayer.children, name: "creditsButton")
         if !GameData.settingsData.vibration {
             vibrationButton.spriteButton.texture = SKTexture(imageNamed: "switch_off")
         }
+        if !GameData.settingsData.music {
+            musicButton.spriteButton.texture = SKTexture(imageNamed: "switch_off")
+        }
+        
     }
     
     func pressedPlayButton(touchLocation: CGPoint) {
@@ -102,10 +120,12 @@ class StartScene: SKScene {
         
         if playButton.hasTouched(touchLocation: touchLocation) {
             if GameData.settingsData.hasPlayedTutorial {
+                sound.stopMusic()
                 let tutorialScene = GameScene(fileNamed: "GameScene")
                 tutorialScene?.scaleMode = .aspectFill
                 view!.presentScene(tutorialScene!, transition: reveal)
             } else {
+                //sound.stopMusic()
                 let tutorialScene = TutorialLevel1(fileNamed: "TutorialLevel1")
                 GameData.settingsData.hasPlayedTutorial = true
                 tutorialScene?.scaleMode = .aspectFill
@@ -131,6 +151,30 @@ class StartScene: SKScene {
                 GameData.settingsData.vibration = true
                 vibrationButton.isTapped = !vibrationButton.isTapped
             }
+        }
+    }
+    
+    func pressedMusicButton(touchLocation: CGPoint) {
+        if musicButton.hasTouched(touchLocation: touchLocation) {
+            if musicButton.isTapped {
+                musicButton.spriteButton.texture = SKTexture(imageNamed: "switch_off")
+                sound.playStuffToo?.volume = 0
+                GameData.settingsData.music = false
+                musicButton.isTapped = !musicButton.isTapped
+            } else {
+                musicButton.spriteButton.texture = SKTexture(imageNamed: "switch_on")
+                sound.playStuffToo?.volume = 1
+                GameData.settingsData.music = true
+                musicButton.isTapped = !musicButton.isTapped
+            }
+        }
+    }
+    
+    func pressedCreditsButton(touchLocation: CGPoint) {
+        if creditsButton.hasTouched(touchLocation: touchLocation) {
+            let creditsScene = SettingsScene(fileNamed: "SettingsScene")
+            creditsScene?.scaleMode = .aspectFill
+            view!.presentScene(creditsScene!)
         }
     }
     

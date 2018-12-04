@@ -19,6 +19,7 @@ class TutorialLevel1: GameScene {
     var tutorialLayer: SKNode!
     var tutorialLabel: LabelSet!
     var tutorialLabel2: LabelSet!
+    //var sound: Sound!
     var touched = false
     
     var secretSkipTimeCounter: TimeInterval = 0
@@ -28,7 +29,7 @@ class TutorialLevel1: GameScene {
     var arrow: SKSpriteNode!
     
     var fingerTap: SKSpriteNode!
-    var maxEggs = 4
+    //var maxEggs = 4
 
     var tutorialStage = 1
     
@@ -41,12 +42,18 @@ class TutorialLevel1: GameScene {
     }
     
     override func didMove(to view: SKView) {
+        sound = Sound()
         initNodes() //initializes nodes such as various sprites and labels
         initObjects() //initizzes objects. //these are bootleg init functions
         tutorialSetup()
         scaleScene()
-        musicLoop(SoundName: "MainLoop")
         stage1()
+        maxEggs = 4
+        
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "GetTheWater")
+        }
+        
     }
     
     
@@ -205,7 +212,6 @@ class TutorialLevel1: GameScene {
         let touchLocation = touch.location(in: self)
         checkTappedEgg(touchLocation: touchLocation)
         //checkTappedWeapon(touchLocation: touchLocation)
-        gunshot()
         touched = true
         
     }
@@ -246,6 +252,7 @@ class TutorialLevel1: GameScene {
             secretSkipTimeCounter += currentTime - lastUpdateTime
             print(secretSkipTimeCounter)
             if secretSkipTimeCounter > 3 {
+                sound.stopMusic();
                 //print("hey")
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
@@ -289,6 +296,7 @@ class TutorialLevel1: GameScene {
             tutorialStage = 4
             stage5()
         } else if maxEggs == 0 && eggCount == 10 && tutorialStart && tutorialStage == 4 {
+            sound.stopMusic()
             print("4444")
             let gameScene = GameScene(fileNamed: "GameScene")
             GameData.playerData.coins = 0
@@ -423,37 +431,6 @@ class TutorialLevel1: GameScene {
     override func initObjects() {
         player = Player()
         addChild(player.tapBar.barBorder)
-    }
-    
-    override func playSound(SoundName: String) {
-        let path = Bundle.main.path(forResource: SoundName, ofType : "wav")!
-        let url = URL(fileURLWithPath : path)
-        do {
-            playStuff = try AVAudioPlayer(contentsOf: url)
-            playStuff?.play()
-        } catch {
-            print ("Something's gone terribly wrong")
-        }
-    }
-    
-    override func gunshot(){
-        if player.canTap {
-            let randomInt = Int.random(in: 0..<3)
-            playSound(SoundName: "Gunshot" + String(randomInt+1))
-        }
-    }
-    
-    override func musicLoop(SoundName: String) {
-        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: SoundName, ofType: "wav")!)
-        playStuffToo = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
-        playStuffToo!.prepareToPlay()
-        playStuffToo!.numberOfLoops = -1
-        playStuffToo!.play()
-    }
-    override func stopMusic(){
-        if (playStuffToo?.isPlaying ?? false){
-            playStuffToo!.stop()
-        }
     }
     
 }

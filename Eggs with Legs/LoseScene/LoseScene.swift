@@ -15,16 +15,23 @@ class LoseScene: SKScene {
 
     //var menuButtonSprite: SKSpriteNode!
     var gameScene: GameScene!
-
+    var sound: Sound!
+    
     var mainLayer: SKNode!
     var menuButtonSprite: Button!
     
 
     
     override func sceneDidLoad() {
+        sound = Sound()
         initNodes()
         gameScene = GameScene()
-        gameScene.musicLoop(SoundName: "GameOverSong")
+        
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "GameOverSong")
+        }
+        
+        //sound.musicLoop(SoundName: "GameOverSong")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -54,8 +61,7 @@ class LoseScene: SKScene {
         startScene?.scaleMode = .aspectFill
        
         if menuButtonSprite.hasTouched(touchLocation: touchLocation) {
-
-          gameScene.stopMusic()
+            sound.stopMusic()
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(startScene!, transition: reveal)
@@ -67,13 +73,21 @@ class LoseScene: SKScene {
     func resetGameData() {
         
         GameData.levelData.highscore = GameData.levelData.day
-        UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        
+        var highscore = UserDefaults.standard.value(forKey: "highScore") as! Int
+        
+        if GameData.levelData.day - 1 >= highscore {
+            UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        }
+        
+        
         
         GameData.levelData.day = 1
         
         GameData.levelData.eggSpawnInterval = 1
         GameData.levelData.maxEggs = 10
-        GameData.levelData.timeMax = 45
+        GameData.levelData.timeMax = 30
+        GameData.levelData.listOfEggs = ["BasicEgg"]
         
         GameData.playerData.coins = 0
         GameData.playerData.maxTapCount = 10

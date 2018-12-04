@@ -50,6 +50,8 @@
 		22B1BBC0219A3845005600EC /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22B1BBBF219A3844005600EC /* SettingsScene.sks */; };
 		22B1BBC3219A40B4005600EC /* LabelSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B1BBC2219A40B4005600EC /* LabelSet.swift */; };
 		22D0B645219F41E900D15F1A /* Level1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D0B644219F41E900D15F1A /* Level1.swift */; };
+		22E0AE9A21B635BA007BE132 /* RainbowEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0AE9921B635BA007BE132 /* RainbowEgg.swift */; };
+		22E0AE9C21B63B39007BE132 /* RussianEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0AE9B21B63B39007BE132 /* RussianEgg.swift */; };
 		9EB5FAF12199F6DC00C6BD21 /* Gunshot1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAF02199F6DB00C6BD21 /* Gunshot1.wav */; };
 		9EB5FAF32199F6E100C6BD21 /* Gunshot3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAF22199F6E000C6BD21 /* Gunshot3.wav */; };
 		9EB5FAF52199F6E800C6BD21 /* Gunshot2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAF42199F6E800C6BD21 /* Gunshot2.wav */; };
@@ -58,6 +60,8 @@
 		9EB5FAFD219CA62A00C6BD21 /* MenuLoop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAFC219CA62A00C6BD21 /* MenuLoop.wav */; };
 		9EB5FAFF219DC82600C6BD21 /* GameOverSong.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAFE219DC82500C6BD21 /* GameOverSong.wav */; };
 		9EB5FB01219DCC4100C6BD21 /* Roads.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FB00219DCC4100C6BD21 /* Roads.wav */; };
+		9EC51FAB21B06E1C002B6445 /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC51FAA21B06E1C002B6445 /* Sound.swift */; };
+		9EC51FAD21B1BC0D002B6445 /* GetTheWater.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EC51FAC21B1BC0D002B6445 /* GetTheWater.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +132,8 @@
 		22B1BBBF219A3844005600EC /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
 		22B1BBC2219A40B4005600EC /* LabelSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSet.swift; sourceTree = "<group>"; };
 		22D0B644219F41E900D15F1A /* Level1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level1.swift; sourceTree = "<group>"; };
+		22E0AE9921B635BA007BE132 /* RainbowEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowEgg.swift; sourceTree = "<group>"; };
+		22E0AE9B21B63B39007BE132 /* RussianEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianEgg.swift; sourceTree = "<group>"; };
 		9EB5FAF02199F6DB00C6BD21 /* Gunshot1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gunshot1.wav; sourceTree = "<group>"; };
 		9EB5FAF22199F6E000C6BD21 /* Gunshot3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gunshot3.wav; sourceTree = "<group>"; };
 		9EB5FAF42199F6E800C6BD21 /* Gunshot2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gunshot2.wav; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 		9EB5FAFC219CA62A00C6BD21 /* MenuLoop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = MenuLoop.wav; sourceTree = "<group>"; };
 		9EB5FAFE219DC82500C6BD21 /* GameOverSong.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameOverSong.wav; sourceTree = "<group>"; };
 		9EB5FB00219DCC4100C6BD21 /* Roads.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Roads.wav; sourceTree = "<group>"; };
+		9EC51FAA21B06E1C002B6445 /* Sound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
+		9EC51FAC21B1BC0D002B6445 /* GetTheWater.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GetTheWater.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +182,7 @@
 		2244E22621A3781400A04174 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				9EC51FAC21B1BC0D002B6445 /* GetTheWater.wav */,
 				9EB5FAF62199FC4600C6BD21 /* GunFullReload.wav */,
 				9EB5FAF22199F6E000C6BD21 /* Gunshot3.wav */,
 				9EB5FAF42199F6E800C6BD21 /* Gunshot2.wav */,
@@ -219,8 +228,10 @@
 				226C44A1216AC1040049A2E3 /* Egg.swift */,
 				226C44A3216C0C560049A2E3 /* BasicEgg.swift */,
 				226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */,
+				22E0AE9921B635BA007BE132 /* RainbowEgg.swift */,
 				22256473218A0F9A008C7F2A /* EggNog.swift */,
 				22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */,
+				22E0AE9B21B63B39007BE132 /* RussianEgg.swift */,
 			);
 			path = Eggs;
 			sourceTree = "<group>";
@@ -349,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				225DB0AB218E1D9A007C972F /* Button.swift */,
+				9EC51FAA21B06E1C002B6445 /* Sound.swift */,
 				22B1BBC2219A40B4005600EC /* LabelSet.swift */,
 				225DB13B21925AE2007C972F /* Bar.swift */,
 			);
@@ -486,6 +498,7 @@
 				9EB5FAF52199F6E800C6BD21 /* Gunshot2.wav in Resources */,
 				9EB5FAFF219DC82600C6BD21 /* GameOverSong.wav in Resources */,
 				2244E22521A33C3900A04174 /* ShopSong.wav in Resources */,
+				9EC51FAD21B1BC0D002B6445 /* GetTheWater.wav in Resources */,
 				22B1BBC0219A3845005600EC /* SettingsScene.sks in Resources */,
 				225DB1352190BC92007C972F /* TutorialScene.sks in Resources */,
 				227B1D932166BA4C005E0560 /* Tiles.sks in Resources */,
@@ -529,6 +542,7 @@
 				22AAB4BD2177F9FD0075B5E4 /* GameData.swift in Sources */,
 				225DB13C21925AE2007C972F /* Bar.swift in Sources */,
 				227B1D5F2166BA08005E0560 /* AppDelegate.swift in Sources */,
+				9EC51FAB21B06E1C002B6445 /* Sound.swift in Sources */,
 				224F6974219F9D75001A9C8B /* BaseScene.swift in Sources */,
 				226C44A2216AC1040049A2E3 /* Egg.swift in Sources */,
 				225DB1372190BCA1007C972F /* TutorialScene.swift in Sources */,
@@ -540,7 +554,9 @@
 				225DB0AC218E1D9A007C972F /* Button.swift in Sources */,
 				22256474218A0F9A008C7F2A /* EggNog.swift in Sources */,
 				226C44A9216C42460049A2E3 /* Fence.swift in Sources */,
+				22E0AE9A21B635BA007BE132 /* RainbowEgg.swift in Sources */,
 				226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */,
+				22E0AE9C21B63B39007BE132 /* RussianEgg.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,7 +747,7 @@
 				HEADER_SEARCH_PATHS = "";
 				"HEADER_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				INFOPLIST_FILE = "Eggs with Legs/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -757,7 +773,7 @@
 				FRAMEWORK_SEARCH_PATHS = "";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Eggs with Legs/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -25,13 +25,18 @@ class GameData {
     
     struct settingsData {
         static var vibration = true
+        static var music = true
+        
         static var hasPlayedTutorial = false
+        
+        static var songCurrentlyPlaying = [""]
+        
     }
     
     struct levelData {
         static var timeMax = 30
         static var day = 1
-        static var maxEggs = 10
+        static var maxEggs = 1000
         static var eggSpawnInterval: TimeInterval = 1
         static var listOfEggs = ["BasicEgg"]
         
@@ -84,6 +89,28 @@ class GameData {
             static var baseHealth = 20.0
             static var baseDamage = 3
             static var coinRange = [20, 100]
+        }
+        
+        struct rainbowEgg {
+            static var baseSpeed = 4.0
+            static var baseHealth = 15.0
+            static var baseDamage = 2
+            static var coinRange = [1, 150]
+        }
+        
+        struct russianEgg {
+            static var baseSpeed = 2.0
+            static var baseHealth = 80.0
+            static var baseDamage = 20
+            static var coinRange = [100, 400]
+            static var spawnAmount = 10
+        }
+        
+        struct rollerbladingEgg {
+            static var baseSpeed = 5.0
+            static var baseHealth = 8.0
+            static var baseDamage = 4
+            static var coinRange = [50, 90]
         }
         
         struct rollingEgg {

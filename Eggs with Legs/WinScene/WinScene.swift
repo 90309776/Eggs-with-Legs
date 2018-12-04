@@ -13,7 +13,7 @@ import AVFoundation
 
 class WinScene: SKScene {
     
-    var GameSceneMusical: GameScene!
+    var sound: Sound!
     
     var soundPlayer: AVAudioPlayer?
     
@@ -54,9 +54,12 @@ class WinScene: SKScene {
         scaleScene()
         //saveLocalData()
         GameData.saveLocalData()
-        GameSceneMusical = GameScene()
-        //GameSceneMusical.musicLoop(SoundName: "Roads")
-        musicLoop(SoundName: "ShopSong")
+        sound = Sound()
+        if GameData.settingsData.music {
+            sound.musicLoop(SoundName: "ShopSong")
+        }
+        
+        //sound.musicLoop(SoundName: "ShopSong")
     }
     
     override func sceneDidLoad() {
@@ -219,9 +222,11 @@ class WinScene: SKScene {
     
     
     func pressedNextButton(touchLocation: CGPoint) {
+        
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
         if  nextLevelButton.contains(touchLocation){
+            sound.stopMusic()
             changeEggData()
             changeListEggs()
             let reveal = SKTransition.fade(withDuration: 2)
@@ -325,7 +330,13 @@ class WinScene: SKScene {
         statsLayer.alpha = 1
         statsLayer.isHidden = true
         
-        UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        var tempHighscore = UserDefaults.standard.value(forKey: "highScore") as! Int
+        
+        if GameData.levelData.day >= tempHighscore {
+             UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
+        }
+        
+        //UserDefaults.standard.set(GameData.levelData.day, forKey: "highScore")
         
     }
     
@@ -361,20 +372,37 @@ class WinScene: SKScene {
         } else if GameData.levelData.day == 4 {
             GameData.levelData.listOfEggs = ["BasicEgg", "EggNog"]
             GameData.levelData.eggSpawnInterval = 1
+            
+        
         } else if GameData.levelData.day == 5 {
-            GameData.levelData.listOfEggs = ["EggNog"]
-            GameData.levelData.eggSpawnInterval = 1.3
+            GameData.levelData.listOfEggs = ["RussianEgg"]
+            GameData.levelData.eggSpawnInterval = 1
+            GameData.levelData.maxEggs = 1
+        }
+        else if GameData.levelData.day == 6 {
+            GameData.levelData.listOfEggs = ["rainbowEgg"]
+            GameData.levelData.maxEggs = 1000
+            GameData.levelData.eggSpawnInterval = 0.75
+            GameData.levelData.timeMax = 15
+        } else if GameData.levelData.day == 10 {
+            GameData.levelData.timeMax = 60
+            GameData.levelData.listOfEggs = ["RussianEgg"]
+            GameData.levelData.eggSpawnInterval = 5
+            GameData.levelData.maxEggs = 2
         } else {
+            GameData.levelData.timeMax = 30
             GameData.levelData.listOfEggs = ["BasicEgg", "RollingEgg", "EggNog"]
             GameData.levelData.eggSpawnInterval = 1.2
         }
         
         
+  
+        
     }
     
     func changeEggData() {
         GameData.levelData.day += 1
-        GameData.levelData.maxEggs += 5
+        //GameData.levelData.maxEggs += 5
         GameData.fenceData.baseHealth += 10
         
         //When day is less than 10
@@ -415,14 +443,6 @@ class WinScene: SKScene {
             GameData.playerData.tapBarIncreaseRate -= 0.01
         }
         
-    }
-    
-    func musicLoop(SoundName: String) {
-        let AssortedMusics = NSURL(fileURLWithPath: Bundle.main.path(forResource: SoundName, ofType: "wav")!)
-        soundPlayer = try! AVAudioPlayer(contentsOf: AssortedMusics as URL)
-        soundPlayer!.prepareToPlay()
-        soundPlayer!.numberOfLoops = -1
-        soundPlayer!.play()
     }
     
 }

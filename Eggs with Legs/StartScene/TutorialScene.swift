@@ -17,6 +17,7 @@ class TutorialScene: SKScene {
     var mainLayer: SKNode!
 
     var gameScene: GameScene!
+    var sound: Sound!
 
     var mainCamera: SKCameraNode!
 
@@ -25,7 +26,9 @@ class TutorialScene: SKScene {
         initNodes()
         scaleScene()
         gameScene = GameScene()
-        gameScene.musicLoop(SoundName: "MenuLoop")
+        sound = Sound()
+        
+        sound.musicLoop(SoundName: "MenuLoop")
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -44,7 +47,6 @@ class TutorialScene: SKScene {
 
         if nextButton.hasTouched(touchLocation: touchLocation) {
 
-          //gameScene!.stopMusic()
             let reveal = SKTransition.fade(withDuration: 1.5)
             view!.presentScene(gameScene!, transition: reveal)
         }
