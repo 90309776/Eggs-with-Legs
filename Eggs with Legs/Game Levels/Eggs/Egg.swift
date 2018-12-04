@@ -192,6 +192,10 @@ class Egg {
         }
     }
     
+    func addBabies() {
+        //filler
+    }
+    
     func checkShowHealthBar() {
         if (self.health <= self.maxhealth - 1 && !self.shownHealthBar) {
             self.healthBar.barBorder.isHidden = false

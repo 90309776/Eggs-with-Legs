@@ -50,6 +50,8 @@
 		22B1BBC0219A3845005600EC /* SettingsScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 22B1BBBF219A3844005600EC /* SettingsScene.sks */; };
 		22B1BBC3219A40B4005600EC /* LabelSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B1BBC2219A40B4005600EC /* LabelSet.swift */; };
 		22D0B645219F41E900D15F1A /* Level1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D0B644219F41E900D15F1A /* Level1.swift */; };
+		22E0AE9A21B635BA007BE132 /* RainbowEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0AE9921B635BA007BE132 /* RainbowEgg.swift */; };
+		22E0AE9C21B63B39007BE132 /* RussianEgg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E0AE9B21B63B39007BE132 /* RussianEgg.swift */; };
 		9EB5FAF12199F6DC00C6BD21 /* Gunshot1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAF02199F6DB00C6BD21 /* Gunshot1.wav */; };
 		9EB5FAF32199F6E100C6BD21 /* Gunshot3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAF22199F6E000C6BD21 /* Gunshot3.wav */; };
 		9EB5FAF52199F6E800C6BD21 /* Gunshot2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9EB5FAF42199F6E800C6BD21 /* Gunshot2.wav */; };
@@ -130,6 +132,8 @@
 		22B1BBBF219A3844005600EC /* SettingsScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SettingsScene.sks; sourceTree = "<group>"; };
 		22B1BBC2219A40B4005600EC /* LabelSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelSet.swift; sourceTree = "<group>"; };
 		22D0B644219F41E900D15F1A /* Level1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level1.swift; sourceTree = "<group>"; };
+		22E0AE9921B635BA007BE132 /* RainbowEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowEgg.swift; sourceTree = "<group>"; };
+		22E0AE9B21B63B39007BE132 /* RussianEgg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianEgg.swift; sourceTree = "<group>"; };
 		9EB5FAF02199F6DB00C6BD21 /* Gunshot1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gunshot1.wav; sourceTree = "<group>"; };
 		9EB5FAF22199F6E000C6BD21 /* Gunshot3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gunshot3.wav; sourceTree = "<group>"; };
 		9EB5FAF42199F6E800C6BD21 /* Gunshot2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Gunshot2.wav; sourceTree = "<group>"; };
@@ -224,8 +228,10 @@
 				226C44A1216AC1040049A2E3 /* Egg.swift */,
 				226C44A3216C0C560049A2E3 /* BasicEgg.swift */,
 				226C44A5216C0C6A0049A2E3 /* RollingEgg.swift */,
+				22E0AE9921B635BA007BE132 /* RainbowEgg.swift */,
 				22256473218A0F9A008C7F2A /* EggNog.swift */,
 				22256475218A0FB1008C7F2A /* RollerbladingEgg.swift */,
+				22E0AE9B21B63B39007BE132 /* RussianEgg.swift */,
 			);
 			path = Eggs;
 			sourceTree = "<group>";
@@ -548,7 +554,9 @@
 				225DB0AC218E1D9A007C972F /* Button.swift in Sources */,
 				22256474218A0F9A008C7F2A /* EggNog.swift in Sources */,
 				226C44A9216C42460049A2E3 /* Fence.swift in Sources */,
+				22E0AE9A21B635BA007BE132 /* RainbowEgg.swift in Sources */,
 				226C44A4216C0C570049A2E3 /* BasicEgg.swift in Sources */,
+				22E0AE9C21B63B39007BE132 /* RussianEgg.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

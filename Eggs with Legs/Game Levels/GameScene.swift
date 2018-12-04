@@ -14,7 +14,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     //Shoutout to global variables
     var eggCount = 0
-    
+    var maxEggs = GameData.levelData.maxEggs
     var eggArray: [Egg] = []
     var eggArrayNodes: [SKSpriteNode] = []
     var towerArray: [Tower] = []
@@ -75,6 +75,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             sound.musicLoop(SoundName: "MainLoop")
         }
         
+        print("\(maxEggs)")
         
         makePauseButton()
         introScene()
@@ -117,6 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let ranNum = Int.random(in: 0 ..< GameData.levelData.listOfEggs.count)
         let eggType = GameData.levelData.listOfEggs[ranNum]
         let egg: Egg
+        //eggCount -= 1
         
         if eggType == "BasicEgg" {
             egg = BasicEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"), scene: self)
@@ -126,6 +128,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             egg.addEgg()
         } else if eggType == "EggNog" {
             egg = EggNog(sprite: SKSpriteNode(imageNamed: "eggnog_0"), scene: self)
+            egg.addEgg()
+        } else if eggType == "RussianEgg" {
+            egg = RussianEgg(sprite: SKSpriteNode(imageNamed: "BE_RA_0"), scene: self)
             egg.addEgg()
         }
     }
@@ -222,9 +227,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
         spawnUpdateTime += currentTime - lastUpdateTime
-        if spawnUpdateTime >= GameData.levelData.eggSpawnInterval && startGame {
+        if spawnUpdateTime >= GameData.levelData.eggSpawnInterval && startGame && maxEggs > 0 {
             var ranSpawnAmount = Int.random(in: 0..<GameData.levelData.spawnAmountMaxNum)
-            
+            maxEggs -= 1
+            print(maxEggs)
             //for amount in ranSpawnAmount
             
             addEgg()
@@ -239,11 +245,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func checkTappedEgg(touchLocation: CGPoint) {
         //Checks if an egg has been tapped
-        if player.canTap {
+        if player.canTap && !(view?.scene?.isPaused)! {
             player.tapped()
             for egg in eggArray {
                 if egg.sprite.contains(touchLocation) {
                     egg.health -= GameData.playerData.playerDamage
+                    if egg.sprite.name == "RussianEgg" {
+                        egg.addBabies()
+                    }
                 }
             }
         }
@@ -300,6 +309,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let reveal = SKTransition.fade(withDuration: 1.5)
         
         if pauseMenuButton.hasTouched(touchLocation: touchLocation) && !pauseLayer.isHidden {
+            sound.stopMusic()
             print("")
             scene!.view?.isPaused = false
             let startScene = StartScene(fileNamed: "StartScene")
@@ -481,6 +491,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if GameData.towerData.tower_2Activated {
             tower_2.sprite.isHidden = false
         }
+        
+        eggCount = GameData.levelData.maxEggs
     }
     
     func initObjects() {

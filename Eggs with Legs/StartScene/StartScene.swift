@@ -125,7 +125,7 @@ class StartScene: SKScene {
                 tutorialScene?.scaleMode = .aspectFill
                 view!.presentScene(tutorialScene!, transition: reveal)
             } else {
-                sound.stopMusic()
+                //sound.stopMusic()
                 let tutorialScene = TutorialLevel1(fileNamed: "TutorialLevel1")
                 GameData.settingsData.hasPlayedTutorial = true
                 tutorialScene?.scaleMode = .aspectFill

@@ -61,8 +61,7 @@ class LoseScene: SKScene {
         startScene?.scaleMode = .aspectFill
        
         if menuButtonSprite.hasTouched(touchLocation: touchLocation) {
-
-          sound.stopMusic()
+            sound.stopMusic()
             resetGameData()
             let reveal = SKTransition.fade(withDuration: 3)
             view!.presentScene(startScene!, transition: reveal)
@@ -87,7 +86,7 @@ class LoseScene: SKScene {
         
         GameData.levelData.eggSpawnInterval = 1
         GameData.levelData.maxEggs = 10
-        GameData.levelData.timeMax = 45
+        GameData.levelData.timeMax = 30
         GameData.levelData.listOfEggs = ["BasicEgg"]
         
         GameData.playerData.coins = 0

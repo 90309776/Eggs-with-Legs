@@ -29,7 +29,7 @@ class TutorialLevel1: GameScene {
     var arrow: SKSpriteNode!
     
     var fingerTap: SKSpriteNode!
-    var maxEggs = 4
+    //var maxEggs = 4
 
     var tutorialStage = 1
     
@@ -48,6 +48,7 @@ class TutorialLevel1: GameScene {
         tutorialSetup()
         scaleScene()
         stage1()
+        maxEggs = 4
         
         if GameData.settingsData.music {
             sound.musicLoop(SoundName: "GetTheWater")
