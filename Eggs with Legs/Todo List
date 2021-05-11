@@ -1,0 +1,54 @@
+Level time is timer based, instead of max count of eggs
+
+Health bars for specific eggs [done]
+
+Database is used to store
+
+Stats listed under
+    current damage
+    ammo per mag
+    total eggs killed
+    current day
+    tower fire rate
+    
+
+fix reload
+
+vibration for reload
+
+WEIGHTED EGG SPAWNS
+
+FIX TOWER BUY BUTTON [fixed] kinda
+ EGG NOG
+
+
+RESOURCES USED
+https://free-game-assets.itch.io/platformer-game-free-tileset
+
+
+
+/*
+BUG LIST
+1. [KINDA FIXED] Invincible Eggs [Happens less now]
+DESC: Probably because the egg is being removed from the egg array
+and not being removed from the childnode.
+CAUSE: Possibly from eliminating an egg at the same time as the tower elims one
+
+2. [FIXED] Projectile still on screen and causing collision with other eggs [FIXED]
+CAUSE: Projectile is currently only removed from screen when it has been collided.
+So if the Egg the projectile is targeting was eliminated before the proj. hits, then
+projectile never gets removed.
+
+3. Some egg eliminations are not counting, therefore the level will not progress.
+
+4. Cracked Kicking Animation broken (basicEggs) [FiXED]
+DESC: If an egg is in cracked state before reaching the fence, once it reaches
+the fence, instead of changing to cracked kicking animation, it changes to
+normal egg kicking animation
+
+5. Game not removing Egg sprite from parent correctly
+DESC: When this happens, usually the egg is already been removed from the egg array.
+However the egg for some reason is not removed form the parent correctly. This causes
+The egg to still appear on the screen but not targettable, however it still was counted towards the
+total egg count goal.s
+*/

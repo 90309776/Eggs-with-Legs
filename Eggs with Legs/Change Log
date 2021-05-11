@@ -1,0 +1,24 @@
+GAMEPLAY
+    V 1.02
+    BasicEgg Coin Range [50, 80] -> [40, 70]
+    RollingEgg Coin Range [90, 150] -> [70, 120]
+
+
+hiltonj
+pass: smile
+
+Version 2.0.0 Stable
+
+MAJOR CHANGES
+* Supports all devices (doesn't make it look good, but it supports them :)
+* Days are now based on a timer rather than amount of eggs cracked
+* Eggs now display a health bar
+
+MINOR CHANGES
+* Added tab for statistics in the Scene after passed a day
+* Egg spawning is no longer tied to an SKAction and now is based of a programmed clock that is modifiable mid round
+* Loading scene added when game is launched (This is where the game calibrates the scene sizes to scale with every device)
+    - Future uses of this is to add loading local data
+* Win Scene now saves game data locally (Data is saved but not used for now)
+* Visual improvements like backgrounds and stuff
+*
