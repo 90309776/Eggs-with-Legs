@@ -1,7 +1,7 @@
 # Eggs-with-Legs
 Team Egg Beater
 
-* [Anderson Chauphan](https://github.com/chauphana)
+* [Anderson Chauphan](https://github.com/achauphan)
 * [Nico DiGiovanni](https://github.com/nicodigiovanni)
 * [Blake Blanvold](https://github.com/Underdoneboar4)
 
